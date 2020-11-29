@@ -25,7 +25,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'decort.com.ua', 'www.decort.com.ua', 'torsion.kiev.ua',
                  'www.torsion.kiev.ua', 'decort.kiev.ua', 'www.decort.kiev.ua',
-                 'ap-market.kiev.ua', 'www.ap-market.kiev.ua']
+                 'ap-market.com.ua', 'www.ap-market.com.ua']
 
 SITE_ID = 1
 
