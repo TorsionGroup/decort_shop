@@ -6,10 +6,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin-view/', admin.site.urls),
-    path('', include('shop.urls')),
 ]
 
 urlpatterns += i18n_patterns(
+    path('accounts/', include('allauth.urls')),
     path('', include('shop.urls')),
 )
 
