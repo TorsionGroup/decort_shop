@@ -11,13 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'ef+f63+@fls$+qig2r31q-*w=&w+2=g^yshu$pksqt+&t&a)f6'
@@ -25,10 +23,9 @@ SECRET_KEY = 'ef+f63+@fls$+qig2r31q-*w=&w+2=g^yshu$pksqt+&t&a)f6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
-# Application definition
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'decort.com.ua', 'www.decort.com.ua', 'torsion.kiev.ua',
+                 'www.torsion.kiev.ua', 'decort.kiev.ua', 'www.decort.kiev.ua',
+                 'ap-market.kiev.ua', 'www.ap-market.kiev.ua']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,6 +34,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'shop',
+
+    'creditcards',
+    'phonenumber_field',
+    'mptt',
+
 ]
 
 MIDDLEWARE = [
@@ -69,20 +72,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'decort_shop.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'decort_shop',
+        'USER': 'torsion_prog',
+        'PASSWORD': 'sdr%7ujK',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+    'tecdoc': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'td3q2017',
+        'USER': 'torsion_prog',
+        'PASSWORD': 'sdr%7ujK',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,13 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LANGUAGE_CODE = 'ru'
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
@@ -113,8 +116,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+WEB_URL = '/web/'
+WEB_ROOT = os.path.join(BASE_DIR, 'web')
