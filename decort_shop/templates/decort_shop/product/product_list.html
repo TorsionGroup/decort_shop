@@ -1,0 +1,304 @@
+{% extends 'decort_shop/product/main.html' %}
+{% load static %}
+{% load decort_shop_tag %}
+{% block  title_page %}
+    <title>Shop - Torsion Group</title>
+{% endblock title_page %}
+
+{% block product_page %}
+    <div class="shop-content_wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-5 order-2 order-lg-1 order-md-1">
+                <div class="torsion-sidebar-catagories_area">
+
+                    <div class="category-module torsion-sidebar_categories">
+
+                        <div class="category-module_heading">
+                            <h5>Categories</h5>
+                        </div>
+                        <div class="module-body">
+                            {% for catalogcategory in catalogcategories %}
+                                {% if catalogcategory.enabled %}
+                                    <ul class="module-list_item">
+
+                                        <li>
+
+                                            <a class="active"
+                                               href="{{ catalogcategory.get_absolute_url }}">{{ catalogcategory.name }}<span>(18)</span></a>
+                                            <ul class="module-sub-list_item">
+
+                                                <li>
+                                                    <a href="javascript:void(0)">!!!!!!!<span>(8)</span></a>
+
+                                                </li>
+                                            </ul>
+
+                                        </li>
+
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                    <form action="{% url 'filter' %} " method="get">
+                        <div class="torsion-sidebar_categories">
+                            <div class="torsion-categories_title">
+                                <h5>Brands</h5>
+                            </div>
+                            <ul class="sidebar-checkbox_list">
+                                <li>
+                                    <a href="#">brand.name</a>
+                                </li>
+                                {% for brand in views.get_brands %}
+                                    <li>
+                                        <a href="#">{{ brand.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </form>
+
+                    <div class="torsion-sidebar_categories">
+                        <div class="torsion-categories_title">
+                            <h5>Price</h5>
+                        </div>
+                        <div class="price-filter">
+                            <div id="slider-range"></div>
+                            <div class="price-slider-amount">
+                                <div class="label-input">
+                                    <label>price : </label>
+                                    <input type="text" id="amount" name="price" placeholder="Add Your Price"/>
+                                </div>
+                                <!-- <button type="button">Filter</button> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="torsion-sidebar_categories">
+                        <div class="torsion-categories_title">
+                            <h5>Offer</h5>
+                        </div>
+                        <ul class="sidebar-checkbox_list">
+                            {% for offer in views.get_offers %}
+                                <li>
+                                    <a href=" ">Offer <span>1</span></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="sidebar-banner_area">
+                    <div class="banner-item img-hover_effect">
+                        <a href="javascript:void(0)">
+                            <img src="assets/images/shop/1.jpg" alt="torsion's Shop Banner Image">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-9 col-md-7 order-1 order-lg-2 order-md-2">
+
+                <div class="shop-toolbar">
+                    <div class="product-view-mode">
+                        <a class="grid-1" data-target="gridview-1" data-toggle="tooltip" data-placement="top"
+                           title="1">1</a>
+                        <a class="grid-2" data-target="gridview-2" data-toggle="tooltip" data-placement="top"
+                           title="2">2</a>
+                        <a class="active grid-3" data-target="gridview-3" data-toggle="tooltip" data-placement="top"
+                           title="3">3</a>
+                        <a class="grid-4" data-target="gridview-4" data-toggle="tooltip" data-placement="top"
+                           title="4">4</a>
+                        <a class="grid-5" data-target="gridview-5" data-toggle="tooltip" data-placement="top"
+                           title="5">5</a>
+                        <a class="list" data-target="listview" data-toggle="tooltip" data-placement="top"
+                           title="List"><i class="fa fa-th-list"></i></a>
+                    </div>
+
+                    <div class="product-item-selection_area">
+                        <div class="product-short">
+                            <label class="select-label">Short By:</label>
+                            <select class="myniceselect nice-select">
+                                <option value="1">Default</option>
+                                <option value="2">Name, A to Z</option>
+                                <option value="3">Name, Z to A</option>
+                                <option value="4">Price, low to high</option>
+                                <option value="5">Price, high to low</option>
+                                <option value="5">Rating (Highest)</option>
+                                <option value="5">Rating (Lowest)</option>
+                                <option value="5">Model (A - Z)</option>
+                                <option value="5">Model (Z - A)</option>
+                            </select>
+                        </div>
+                        <div class="product-showing">
+                            <label class="select-label">Show:</label>
+                            <select class="myniceselect short-select nice-select">
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shop-product-wrap grid gridview-3 img-hover-effect_area row">
+
+                    {% for product in product_list %}
+                        {% if product.is_active %}
+
+                            <div class="col-lg-4">
+                                <div class="product-slide_item">
+                                    <div class="inner-slide">
+                                        <div class="single-product">
+                                            <div class="product-img">
+                                                <a href="{% url 'product_detail' product.id %}">
+                                                    <img class="primary-img"
+                                                         src="assets/images/product/large-size/1.jpg"
+                                                         alt="torsion's Product Image">
+                                                    <img class="secondary-img"
+                                                         src="assets/images/product/large-size/2.jpg"
+                                                         alt="torsion's Product Image">
+                                                </a>
+
+                                                <div class="add-actions">
+                                                    <ul>
+                                                        <li><a class="torsion-add_cart" href="cart.html"
+                                                               data-toggle="tooltip" data-placement="top"
+                                                               title="Add To Cart"><i
+                                                                class="ion-bag"></i></a>
+                                                        </li>
+                                                        <li><a class="torsion-wishlist" href="wishlist.html"
+                                                               data-toggle="tooltip" data-placement="top"
+                                                               title="Add To Wishlist"><i
+                                                                class="ion-android-favorite-outline"></i></a>
+                                                        </li>
+                                                        <li><a class="torsion-add_compare" href="compare.html"
+                                                               data-toggle="tooltip" data-placement="top"
+                                                               title="Compare This Product"><i
+                                                                class="ion-android-options"></i></a>
+                                                        </li>
+                                                        <li class="quick-view-btn" data-toggle="modal"
+                                                            data-target="#exampleModalCenter"><a
+                                                                href="javascript:void(0)"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top"
+                                                                title="Quick View"><i
+                                                                class="ion-android-open"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="product-content">
+                                                <div class="product-desc_info">
+                                                    <div class="rating-box">
+                                                        <ul>
+                                                            <li><i class="ion-android-star"></i></li>
+                                                            <li><i class="ion-android-star"></i></li>
+                                                            <li><i class="ion-android-star"></i></li>
+                                                            <li class="silver-color"><i class="ion-android-star"></i>
+                                                            </li>
+                                                            <li class="silver-color"><i class="ion-android-star"></i>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <h6><a class="product-name"
+                                                           href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+                                                    </h6>
+                                                    <div class="product-name">
+                                                        <span class="new-price">{{ product.brand_id }}</span>
+                                                    </div>
+                                                    <div class="product-name">
+                                                        <span class="new-price">{{ product.specification }}</span>
+                                                    </div>
+                                                    <div class="price-box">
+                                                        <span class="new-price">{{ product.sort_price }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-slide_item">
+                                    <div class="single-product">
+                                        <div class="product-img">
+                                            <a href="product_detail.html">
+                                                <img class="primary-img" src="assets/images/product/large-size/1.jpg"
+                                                     alt="torsion's Product Image">
+                                                <img class="secondary-img" src="assets/images/product/large-size/2.jpg"
+                                                     alt="torsion's Product Image">
+                                            </a>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-desc_info">
+                                                <div class="rating-box">
+                                                    <ul>
+                                                        <li><i class="ion-android-star"></i></li>
+                                                        <li><i class="ion-android-star"></i></li>
+                                                        <li><i class="ion-android-star"></i></li>
+                                                        <li class="silver-color"><i class="ion-android-star"></i>
+                                                        </li>
+                                                        <li class="silver-color"><i class="ion-android-star"></i>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <h6><a class="product-name"
+                                                       href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+                                                </h6>
+                                                <div class="product-name">
+                                                    <span class="new-price">{{ product.brand_id }}</span>
+                                                </div>
+                                                <div class="product-name">
+                                                    <span class="new-price">{{ product.specification }}</span>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="new-price">{{ product.sort_price }}</span>
+                                                </div>
+                                                <div class="product-short_desc">
+                                                    <p>{{ product.advanced_description }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="add-actions">
+                                                <ul>
+                                                    <li><a class="torsion-add_cart" href="cart.html"
+                                                           data-toggle="tooltip"
+                                                           data-placement="top" title="Add To Cart"><i
+                                                            class="ion-bag"></i></a>
+                                                    </li>
+                                                    <li><a class="torsion-wishlist" href="wishlist.html"
+                                                           data-toggle="tooltip" data-placement="top"
+                                                           title="Add To Wishlist"><i
+                                                            class="ion-android-favorite-outline"></i></a>
+                                                    </li>
+                                                    <li><a class="torsion-add_compare" href="compare.html"
+                                                           data-toggle="tooltip" data-placement="top"
+                                                           title="Compare This Product"><i
+                                                            class="ion-android-options"></i></a>
+                                                    </li>
+                                                    <li class="quick-view-btn" data-toggle="modal"
+                                                        data-target="#exampleModalCenter"><a href="javascript:void(0)"
+                                                                                             data-toggle="tooltip"
+                                                                                             data-placement="top"
+                                                                                             title="Quick View"><i
+                                                            class="ion-android-open"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% include 'decort_shop/include/pagination.html' %}
+
+            </div>
+        </div>
+    </div>
+{% endblock product_page %}

@@ -32,20 +32,20 @@ class BrandOffer:
 class IndexView(BrandOffer, ListView):
     model = Manager
     queryset = Manager.objects.all()
-    template_name = 'torsion_shop/index.html'
+    template_name = 'decort_shop/index.html'
 
 
 class ProductView(BrandOffer, ListView):
     model = Product
     queryset = Product.objects.all()
     paginate_by = 20
-    template_name = 'torsion_shop/product/product_list.html'
+    template_name = 'decort_shop/product/product_list.html'
 
 
 class ProductDetailView(BrandOffer, DetailView):
     model = Product
     context_object_name = 'product_detail'
-    template_name = 'torsion_shop/product/product_detail.html'
+    template_name = 'decort_shop/product/product_detail.html'
 
 
 class NewsView(ListView):
@@ -53,14 +53,14 @@ class NewsView(ListView):
     queryset = Content.objects.filter(category_id=2)
     context_object_name = 'news_list'
     paginate_by = 10
-    template_name = 'torsion_shop/news/news_list.html'
+    template_name = 'decort_shop/news/news_list.html'
 
 
 class NewsDetailView(DetailView):
     model = Content
     slug_field = 'alias'
     context_object_name = 'news_detail'
-    template_name = 'torsion_shop/news/news_detail.html'
+    template_name = 'decort_shop/news/news_detail.html'
 
 
 class AddReviewContent(View):
@@ -137,48 +137,48 @@ class AboutUsView(ListView):
     model = Content
     queryset = Content.objects.filter(category_id=4)
     context_object_name = 'aboutus_list'
-    template_name = 'torsion_shop/about-us.html'
+    template_name = 'decort_shop/about-us.html'
 
 
 class ContactsView(ListView):
     model = Content
     queryset = Content.objects.filter(category_id=5)
     context_object_name = 'contacts_list'
-    template_name = 'torsion_shop/contacts.html'
+    template_name = 'decort_shop/contacts.html'
 
 
 def login(request):
-    return render(request, 'torsion_shop/account/login.html')
+    return render(request, 'decort_shop/account/login.html')
 
 
 def account(request):
-    return render(request, 'torsion_shop/account/account.html')
+    return render(request, 'decort_shop/account/account.html')
 
 
 def wishlist(request):
-    return render(request, 'torsion_shop/wishlist.html')
+    return render(request, 'decort_shop/wishlist.html')
 
 
 def faq(request):
-    return render(request, 'torsion_shop/faq.html')
+    return render(request, 'decort_shop/faq.html')
 
 
 class CartView(View):
     def cart(self, request):
-        return render(request, 'torsion_shop/cart.html')
+        return render(request, 'decort_shop/cart.html')
 
 
 def compare(request):
-    return render(request, 'torsion_shop/compare.html')
+    return render(request, 'decort_shop/compare.html')
 
 
 class CheckoutView(View):
     def checkout(self, request):
-        return render(request, 'torsion_shop/checkout.html')
+        return render(request, 'decort_shop/checkout.html')
 
 
 class RegistrationView(CreateView):
-    template_name = 'torsion_shop/account/login.html'
+    template_name = 'decort_shop/account/login.html'
     form_class = RegistrationForm
 
     def get_context_data(self, *args, **kwargs):
@@ -198,7 +198,7 @@ class RegistrationView(CreateView):
 class ProfileView(UpdateView):
     model = Account
     fields = ['username', 'phone', 'date_of_birth', 'picture']
-    template_name = 'torsion_shop/account/account.html'
+    template_name = 'decort_shop/account/account.html'
 
     def get_success_url(self):
         return reverse('index')

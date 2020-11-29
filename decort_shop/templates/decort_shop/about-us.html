@@ -1,0 +1,58 @@
+{% extends 'decort_shop/main.html' %}
+{% load static %}
+{% block  title_page %}
+    <title>About Us - Torsion Group</title>
+{% endblock title_page %}
+
+{% block content_page %}
+    {% for aboutus in aboutus_list %}
+        {% if aboutus.published %}
+
+                <div class="about-us-area">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-5">
+                                <div class="overview-img text-center img-hover_effect">
+                                    <a href="#">
+                                        <img class="img-full" src="{{ aboutus.main_image.url }}"
+                                             alt="Torsion Group About Us Image">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-7 d-flex align-items-center">
+                                <div class="overview-content">
+                                    <h2>Welcome To <span>Torsion Group</span> Store!</h2>
+                                    <p class="short_desc">
+
+                                        {{ aboutus.full_text|safe }}
+
+                                    </p>
+                                    <div class="torsion-about-us_btn-area">
+                                        <a class="about-us_btn" href="{% url 'product' %}">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-area">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="team-member">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        {% endif %}
+    {% endfor %}
+{% endblock content_page %}

@@ -1,0 +1,41 @@
+{% extends 'decort_shop/news/main.html' %}
+{% load static %}
+{% block  title_page %}
+    <title>News - Torsion Group</title>
+{% endblock title_page %}
+
+{% block news_page %}
+
+    <div class="col-lg-9 order-lg-2 order-1">
+        {% for news in news_list %}
+            {% if news.published %}
+
+                <div class="row blog-item_wrap">
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="blog-item">
+                            <div class="blog-img img-hover_effect">
+                                <a href="{% url 'news_detail' news.alias %}">
+                                    <img src="{{ news.main_image.url }}" alt="Torsion News Image">
+                                </a>
+                                <span class="post-date">{{ news.created_date }}</span>
+                            </div>
+                            <div class="blog-content">
+                                <h3><a href="{% url 'news_detail' news.alias %}">{{ news.title }}</a></h3>
+                                <p>{{ news.intro_text }}</p>
+                                <div class="torsion-btn-ps_left">
+                                    <a class="torsion-btn-2" href="{% url 'news_detail' news.alias %}">Read
+                                        More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {% include 'decort_shop/include/pagination.html' %}
+
+    </div>
+
+{% endblock news_page %}

@@ -1,0 +1,11 @@
+{% extends 'decort_shop/main.html' %}
+{% load static %}
+{% load decort_shop_tag %}
+{% block content_page %}
+
+    {% include 'decort_shop/product/product_sidebar.html' %}
+
+    {% block product_page %}
+    {% endblock product_page %}
+
+{% endblock content_page %}

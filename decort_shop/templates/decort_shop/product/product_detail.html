@@ -1,0 +1,325 @@
+{% extends 'decort_shop/product/main.html' %}
+{% load static %}
+{% block  title_page %}
+    <title>Shop - Torsion Group</title>
+{% endblock title_page %}
+
+{% block product_page %}
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <h2>Single Product Style</h2>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li class="active">Tab Style Right</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- torsion's Breadcrumb Area End Here -->
+
+    <div class="sp-area sp-tab-style_left sp-tab-style_right">
+
+
+        <div class="container-fluid">
+            <div class="sp-nav">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="sp-img_area">
+
+                                <div class="sp-img_slider slick-img-slider torsion-slick-slider" data-slick-options='{
+                                                                    "slidesToShow": 1,
+                                                                    "arrows": false,
+                                                                    "fade": true,
+                                                                    "draggable": false,
+                                                                    "swipe": false,
+                                                                    "asNavFor": ".sp-img_slider-nav"
+                                                                    }'>
+                                    <div class="single-slide red zoom">
+                                        <img src=" "
+                                             alt="Torsion's Product Image">
+                                    </div>
+
+                                </div>
+                                <div class="sp-img_slider-nav slick-slider-nav torsion-slick-slider slider-navigation_style-4"
+                                     data-slick-options='{
+                                                                    "slidesToShow": 3,
+                                                                    "asNavFor": ".sp-img_slider",
+                                                                    "focusOnSelect": true,
+                                                                    "arrows" : true,
+                                                                    "vertical" : true
+                                                                    }'>
+                                    <div class="single-slide red">
+                                        <img src="assets/images/product/small-size/1.jpg"
+                                             alt="torsion's Product Thumnail">
+                                    </div>
+                                    <div class="single-slide orange">
+                                        <img src="assets/images/product/small-size/2.jpg"
+                                             alt="torsion's Product Thumnail">
+                                    </div>
+                                    <div class="single-slide brown">
+                                        <img src="assets/images/product/small-size/3.jpg"
+                                             alt="torsion's Product Thumnail">
+                                    </div>
+                                    <div class="single-slide umber">
+                                        <img src="assets/images/product/small-size/4.jpg"
+                                             alt="torsion's Product Thumnail">
+                                    </div>
+                                    <div class="single-slide red">
+                                        <img src="assets/images/product/small-size/5.jpg"
+                                             alt="torsion's Product Thumnail">
+                                    </div>
+                                    <div class="single-slide orange">
+                                        <img src="assets/images/product/small-size/6.jpg"
+                                             alt="torsion's Product Thumnail">
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="sp-content">
+                            <div class="sp-heading">
+                                <h5><a href="#">{{ product_detail.name }}</a></h5>
+                            </div>
+                            <span class="reference">Reference: demo_1</span>
+                            <div class="rating-box">
+                                <ul>
+                                    <li><i class="ion-android-star"></i></li>
+                                    <li><i class="ion-android-star"></i></li>
+                                    <li><i class="ion-android-star"></i></li>
+                                    <li class="silver-color"><i class="ion-android-star"></i></li>
+                                    <li class="silver-color"><i class="ion-android-star"></i></li>
+                                </ul>
+                            </div>
+                            <div class="sp-essential_stuff">
+                                <ul>
+                                    <li>Brands: {{ product_detail.brand_id.name }}</li>
+                                    <li>Product Code: {{ product_detail.article }}</li>
+                                    <li>Reward Points: <a href="javascript:void(0)">100</a></li>
+                                    <li>Availability: <a href="javascript:void(0)">{{ product_detail.article }}</a></li>
+                                    <li>EX Tax: <a href="javascript:void(0)"><span>{{ product_detail.pack_qty }}</span></a>
+                                    </li>
+                                    <li>Price in reward points: <a href="javascript:void(0)">400</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="quantity">
+                                <label>Quantity</label>
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="text">
+                                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                </div>
+                            </div>
+                            <div class="qty-btn_area">
+                                <ul>
+                                    <li><a class="qty-cart_btn" href="cart.html">Add To Cart</a></li>
+                                    <li><a class="qty-wishlist_btn" href="wishlist.html" data-toggle="tooltip"
+                                           title="Add To Wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                    </li>
+                                    <li><a class="qty-compare_btn" href="compare.html" data-toggle="tooltip"
+                                           title="Compare This Product"><i class="ion-ios-shuffle-strong"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="torsion-tag-line">
+                                <h6>Tags:</h6>
+                                <a href="javascript:void(0)">vehicle</a>,
+                                <a href="javascript:void(0)">car</a>,
+                                <a href="javascript:void(0)">bike</a>
+                            </div>
+                            <div class="torsion-social_link">
+                                <ul>
+                                    <li class="facebook">
+                                        <a href="https://www.facebook.com/" data-toggle="tooltip" target="_blank"
+                                           title="Facebook">
+                                            <i class="fab fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li class="twitter">
+                                        <a href="https://twitter.com/" data-toggle="tooltip" target="_blank"
+                                           title="Twitter">
+                                            <i class="fab fa-twitter-square"></i>
+                                        </a>
+                                    </li>
+                                    <li class="youtube">
+                                        <a href="https://www.youtube.com/" data-toggle="tooltip" target="_blank"
+                                           title="Youtube">
+                                            <i class="fab fa-youtube"></i>
+                                        </a>
+                                    </li>
+                                    <li class="google-plus">
+                                        <a href="https://www.plus.google.com/discover" data-toggle="tooltip"
+                                           target="_blank" title="Google Plus">
+                                            <i class="fab fa-google-plus"></i>
+                                        </a>
+                                    </li>
+                                    <li class="instagram">
+                                        <a href="https://rss.com/" data-toggle="tooltip" target="_blank"
+                                           title="Instagram">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- torsion's Tab Style Right Area End Here -->
+
+    <!-- Begin torsion's Single Product Tab Area -->
+    <div class="sp-product-tab_area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sp-product-tab_nav">
+                        <div class="product-tab">
+                            <ul class="nav product-menu">
+                                <li><a class="active" data-toggle="tab" href="#description"><span>Description</span></a>
+                                </li>
+                                <li><a data-toggle="tab" href="#cross_code"><span>Cross Code</span></a></li>
+                                <li><a data-toggle="tab" href="#specification"><span>Specification</span></a></li>
+                                <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content torsion-tab_content">
+
+                            <div id="description" class="tab-pane active show" role="tabpanel">
+
+                                <div class="product-description">
+                                    <ul>
+                                        {{ product_detail.advanced_description }}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="cross_code" class="tab-pane" role="tabpanel">
+
+                                <div class="product-description">
+                                    <ul>
+                                        {{ product_detail.advanced_description }}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="specification" class="tab-pane" role="tabpanel">
+
+                                <table class="table table-bordered specification-inner_stuff">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="2"><strong>Memory</strong></td>
+                                    </tr>
+                                    </tbody>
+                                    <tbody>
+                                    <tr>
+                                        <td>test 1</td>
+                                        <td>8gb</td>
+                                    </tr>
+                                    </tbody>
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="2"><strong>Processor</strong></td>
+                                    </tr>
+                                    </tbody>
+                                    <tbody>
+                                    <tr>
+                                        <td>No. of Cores</td>
+                                        <td>1</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="reviews" class="tab-pane" role="tabpanel">
+
+                                <div class="tab-pane active" id="tab-review">
+                                    <form class="form-horizontal" id="form-review">
+
+                                        <div id="review">
+
+                                            <table class="table table-striped table-bordered">
+                                                <tbody>
+                                                <tr>
+                                                    <td style="width: 50%;"><strong>Customer</strong></td>
+                                                    <td class="text-right">15/09/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <p>Good product! Thank you very much</p>
+                                                        <div class="rating-box">
+                                                            <ul>
+                                                                <li><i class="ion-android-star"></i></li>
+                                                                <li><i class="ion-android-star"></i></li>
+                                                                <li><i class="ion-android-star"></i></li>
+                                                                <li><i class="ion-android-star"></i></li>
+                                                                <li><i class="ion-android-star"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                        <h2>Write a review</h2>
+
+                                        <div class="form-group required">
+                                            <div class="col-sm-12 p-0">
+                                                <label>Your Email <span class="required">*</span></label>
+                                                <input class="review-input" type="email" name="con_email" id="con_email"
+                                                       required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group required second-child">
+                                            <div class="col-sm-12 p-0">
+                                                <label class="control-label">Share your opinion</label>
+                                                <textarea class="review-textarea" name="con_message"
+                                                          id="con_message"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group last-child required">
+                                            <div class="col-sm-12 p-0">
+                                                <div class="your-opinion">
+                                                    <label>Your Rating</label>
+                                                    <span>
+                                                    <select class="star-rating">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
+                                                </span>
+                                                </div>
+                                            </div>
+                                            <div class="torsion-btn-ps_right">
+                                                <button class="torsion-btn-2">Continue</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="torsion-brand_area">
+        <div class="container-fluid">
+
+        </div>
+    </div>
+{% endblock product_page %}
