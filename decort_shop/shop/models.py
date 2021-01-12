@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.contenttypes.models import ContentType
 
 
 class Manager(models.Model):
@@ -235,6 +236,38 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = "ProductImage"
         verbose_name_plural = "ProductImages"
+
+
+class CartProduct(models.Model):
+    account = models.ForeignKey('Account', on_delete=models.CASCADE, verbose_name='cartproduct_account')
+    cart = models.ForeignKey('Cart', on_delete=models.CASCADE, verbose_name='cartproduct_cart',
+                             related_name='related_cartproduct_cart')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='cartproduct_product')
+
+    qty = models.PositiveIntegerField(default=1)
+    final_price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name='cartproduct_finalprice')
+
+    def __str__(self):
+        return "Product: {} (for cart)".format(self.product.name)
+
+    class Meta:
+        verbose_name = "CartProduct"
+        verbose_name_plural = "CartProducts"
+
+
+class Cart(models.Model):
+    account = models.ForeignKey('Account', on_delete=models.CASCADE, verbose_name='cart_account')
+    product = models.ManyToManyField(CartProduct, blank=True, verbose_name='cart_cartproduct',
+                                     related_name='related_cart_product')
+    total_products = models.PositiveIntegerField(default=0)
+    final_price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name='cart_finalprice')
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        verbose_name = "Cart"
+        verbose_name_plural = "Carts"
 
 
 class Currency(models.Model):
@@ -1348,4 +1381,3 @@ class ReviewContent(models.Model):
     class Meta:
         verbose_name = "ReviewContent"
         verbose_name_plural = "ReviewContents"
-
