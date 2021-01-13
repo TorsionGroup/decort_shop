@@ -8,6 +8,7 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class Manager(models.Model):
@@ -242,8 +243,9 @@ class CartProduct(models.Model):
     account = models.ForeignKey('Account', on_delete=models.CASCADE, verbose_name='cartproduct_account')
     cart = models.ForeignKey('Cart', on_delete=models.CASCADE, verbose_name='cartproduct_cart',
                              related_name='related_cartproduct_cart')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='cartproduct_product')
-
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
     qty = models.PositiveIntegerField(default=1)
     final_price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name='cartproduct_finalprice')
 
