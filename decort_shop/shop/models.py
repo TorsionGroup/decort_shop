@@ -250,7 +250,7 @@ class CartProduct(models.Model):
     final_price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name='cartproduct_finalprice')
 
     def __str__(self):
-        return "Product: {} (for cart)".format(self.product.name)
+        return "Product: {} (for cart)".format(self.content_object.title)
 
     def save(self, *args, **kwargs):
         self.final_price = self.qty * self.content_object.price
