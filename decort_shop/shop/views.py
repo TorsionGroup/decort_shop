@@ -1,24 +1,27 @@
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
-from django.db import models
+from django.db import models, transaction
 from django.conf import settings
 from django.db.models import Q, OuterRef, Subquery, Case, When
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import json
 import datetime
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse
-from .utils import cookieCart, cartData, guestOrder
+from django.contrib.contenttypes.models import ContentType
+
+from .utils import cookieCart, cartData, guestOrder, recalc_cart
 from .models import *
-from .forms import RegistrationForm, ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm
+from .forms import RegistrationForm, ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm, OrderForm
+from .mixins import CategoryDetailMixin, CartMixin
 
 
 class BrandOffer:
