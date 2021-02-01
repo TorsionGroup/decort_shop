@@ -252,6 +252,10 @@ class CartProduct(models.Model):
     def __str__(self):
         return "Product: {} (for cart)".format(self.product.name)
 
+    def save(self, *args, **kwargs):
+        self.final_price = self.qty * self.content_object.price
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = "CartProduct"
         verbose_name_plural = "CartProducts"
@@ -262,7 +266,9 @@ class Cart(models.Model):
     product = models.ManyToManyField(CartProduct, blank=True, verbose_name='cart_cartproduct',
                                      related_name='related_cart_product')
     total_products = models.PositiveIntegerField(default=0)
-    final_price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name='cart_finalprice')
+    final_price = models.DecimalField(max_digits=15, decimal_places=2, default=0, verbose_name='cart_finalprice')
+    in_order = models.BooleanField(default=False)
+    for_anonymous_user = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)
