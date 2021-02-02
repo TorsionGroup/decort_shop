@@ -252,7 +252,7 @@ class FilterProductView(ListView):
 
 
 class Search(ListView):
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
         return Product.objects.filter(title__icontains=self.request.GET.get("q"))
