@@ -20,7 +20,8 @@ from django.contrib.contenttypes.models import ContentType
 
 from .utils import cookieCart, cartData, guestOrder, recalc_cart
 from .models import *
-from .forms import RegistrationForm, ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm, OrderForm
+from .forms import RegistrationForm, ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm, \
+    OrderForm
 from .mixins import CategoryDetailMixin, CartMixin
 
 
