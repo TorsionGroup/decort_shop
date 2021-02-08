@@ -27,7 +27,7 @@ class LoadData:
         brands = self.client.service.GetData('brands')
         data = base64.b64decode(brands)
         with open('cache/brands.csv', 'w', newline='', encoding='utf-8') as file:
-            writer = csv.writer(file)
+            writer = csv.writer(file, dialect='excel')
             writer.writerow([data])
 
     def load_currency(self):
