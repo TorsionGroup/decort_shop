@@ -23,11 +23,11 @@ class LoadData:
         transport = Transport(session=session)
         self.client = Client('http://192.168.75.115:8005/live/ws/b2b?wsdl', transport=transport)
 
-    def load_brand(self):
+    def load_brands(self):
         brands = self.client.service.GetData('brands')
         data = base64.b64decode(brands)
         with open('cache/brands.csv', 'w', newline='', encoding='utf-8') as file:
-            writer = csv.writer(file, dialect='excel')
+            writer = csv.writer(file)
             writer.writerow([data])
 
     def load_currency(self):
@@ -207,7 +207,7 @@ class LoadData:
 
 
 loadData = LoadData()
-loadData.load_brand()
+loadData.load_brands()
 loadData.load_currency()
 # loadData.load_price_types()
 # loadData.load_price_categories()
