@@ -26,12 +26,9 @@ class LoadData:
     def load_brand(self):
         brands = self.client.service.GetData('brands')
         data = base64.b64decode(brands)
-        # file = open('cache/brands.csv', 'w', encoding='utf-8')
-        # file.write(str(data))
-        # file.close()
-        with open('cache/brands.csv', 'w', encoding='utf-8') as file:
+        with open('cache/brands.csv', 'w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
-            writer.writerows([data])
+            writer.writerow([data])
 
     def load_currency(self):
         currencies = self.client.service.GetData('currencies')
@@ -210,8 +207,8 @@ class LoadData:
 
 
 loadData = LoadData()
-loadData.load_currency()
 loadData.load_brand()
+loadData.load_currency()
 # loadData.load_price_types()
 # loadData.load_price_categories()
 # loadData.load_product_price_categories()
@@ -236,5 +233,3 @@ loadData.load_brand()
 # loadData.load_orders()
 # loadData.load_order_items()
 # loadData.load_declaration_numbers()
-
-
