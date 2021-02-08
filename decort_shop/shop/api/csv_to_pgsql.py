@@ -10,15 +10,9 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
+with open('download/currencies.csv', 'r+', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_currency', columns=('source_id', 'code', 'name', 'title', 'rate', 'mult'), sep='|')
 
-class SqlData:
+conn.commit()
 
-    def sql_brands(self):
-        with open('download/brands.csv', 'r') as file:
-            cur.copy_from(file, 'shop_brand', columns=('source_id', 'name'), sep='(|)')
-
-    conn.commit()
-
-
-sql = SqlData()
-sql.sql_brands()
+print('Connection closed')

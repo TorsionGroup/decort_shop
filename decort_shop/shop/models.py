@@ -319,7 +319,7 @@ class Currency(models.Model):
     source_id = models.CharField(max_length=300, null=True, blank=True)
     rate = models.DecimalField(max_digits=15, decimal_places=5)
     mult = models.IntegerField()
-    name_eng = models.CharField(max_length=250, blank=True)
+    name_eng = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return self.title

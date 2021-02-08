@@ -21,7 +21,7 @@ class LoadData:
         session = Session()
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session)
-        self.client = Client('http://192.168.75.115:8005/live/ws/b2b?wsdl', transport=transport)
+        self.client = Client('http://192.168.75.115:8005/alexey/ws/decort?wsdl', transport=transport)
 
     def load_brands(self):
         brands = self.client.service.GetData('brands')
@@ -30,7 +30,7 @@ class LoadData:
             writer = csv.writer(file)
             writer.writerow([data])
 
-    def load_currency(self):
+    def load_currencies(self):
         currencies = self.client.service.GetData('currencies')
         data = base64.b64decode(currencies)
         file = open('cache/currencies.csv', 'w', encoding='utf-8')
@@ -208,7 +208,7 @@ class LoadData:
 
 loadData = LoadData()
 loadData.load_brands()
-loadData.load_currency()
+loadData.load_currencies()
 # loadData.load_price_types()
 # loadData.load_price_categories()
 # loadData.load_product_price_categories()
