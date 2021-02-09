@@ -10,7 +10,7 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-t_sql = '''CREATE TABLE shop_currency_buffer (
+t_sql = '''CREATE TEMP TABLE shop_currency_buffer (
     code character varying(250),
     name character varying(250),
     title character varying(250),
