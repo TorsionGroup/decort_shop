@@ -1,8 +1,5 @@
 import base64
-import json
-import csv
-import requests
-from zeep import Client
+from zeep import Client, Settings
 from requests import Session
 from requests.auth import HTTPBasicAuth
 from zeep.transports import Transport
@@ -20,7 +17,8 @@ class LoadData:
         session = Session()
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
-        self.client = Client('http://192.168.75.115:8005/alexey/ws/decort?wsdl', transport=transport)
+        settings = Settings(xml_huge_tree=True)
+        self.client = Client('http://192.168.75.115:8005/alexey/ws/decort?wsdl', transport=transport, settings=settings)
 
     def load_brands(self):
         brands = self.client.service.GetData('brands')
@@ -206,29 +204,29 @@ class LoadData:
 
 
 loadData = LoadData()
-# loadData.load_brands()
-# loadData.load_currencies()
-# loadData.load_price_types()
-# loadData.load_price_categories()
-# loadData.load_product_price_categories()
-# loadData.load_categories()
-# loadData.load_managers()
-# loadData.load_customers()
-# loadData.load_customer_points()
-# loadData.load_customer_agreements()
-# loadData.load_customer_discounts()
-# loadData.load_balances()
-# loadData.load_dropshipping_wallet()
-# loadData.load_sales()
-# loadData.load_sale_tasks()
-# loadData.load_offers()
-# loadData.load_products()
-# loadData.load_description()
-# loadData.load_applicability()
+loadData.load_brands()
+loadData.load_currencies()
+loadData.load_price_types()
+loadData.load_price_categories()
+loadData.load_product_price_categories()
+loadData.load_categories()
+loadData.load_managers()
+loadData.load_customers()
+loadData.load_customer_points()
+loadData.load_customer_agreements()
+loadData.load_customer_discounts()
+loadData.load_balances()
+loadData.load_dropshipping_wallet()
+loadData.load_sales()
+loadData.load_sale_tasks()
+loadData.load_offers()
+loadData.load_products()
+loadData.load_description()
+loadData.load_applicability()
 loadData.load_prices()
-# loadData.load_cross()
-# loadData.load_stocks()
-# loadData.load_deficit()
-# loadData.load_orders()
-# loadData.load_order_items()
-# loadData.load_declaration_numbers()
+loadData.load_cross()
+loadData.load_stocks()
+loadData.load_deficit()
+loadData.load_orders()
+loadData.load_order_items()
+loadData.load_declaration_numbers()
