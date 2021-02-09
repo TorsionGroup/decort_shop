@@ -6,7 +6,6 @@ from zeep import Client
 from requests import Session
 from requests.auth import HTTPBasicAuth
 from zeep.transports import Transport
-from zeep.cache import SqliteCache
 
 # session = Session()
 # session.auth = HTTPBasicAuth('Robot', 'Robot')
@@ -20,7 +19,7 @@ class LoadData:
     def __init__(self):
         session = Session()
         session.auth = HTTPBasicAuth('Robot', 'Robot')
-        transport = Transport(session=session)
+        transport = Transport(session=session, timeout=600)
         self.client = Client('http://192.168.75.115:8005/alexey/ws/decort?wsdl', transport=transport)
 
     def load_brands(self):
@@ -207,8 +206,8 @@ class LoadData:
 
 
 loadData = LoadData()
-loadData.load_brands()
-loadData.load_currencies()
+# loadData.load_brands()
+# loadData.load_currencies()
 # loadData.load_price_types()
 # loadData.load_price_categories()
 # loadData.load_product_price_categories()
@@ -226,7 +225,7 @@ loadData.load_currencies()
 # loadData.load_products()
 # loadData.load_description()
 # loadData.load_applicability()
-# loadData.load_prices()
+loadData.load_prices()
 # loadData.load_cross()
 # loadData.load_stocks()
 # loadData.load_deficit()
