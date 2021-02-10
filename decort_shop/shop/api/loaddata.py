@@ -14,15 +14,7 @@ class LoadData:
         settings = Settings(xml_huge_tree=True)
         self.client = Client('http://192.168.75.115:8005/alexey/ws/decort?wsdl', transport=transport, settings=settings)
 
-        conn = psycopg2.connect(
-            host="localhost",
-            port="5432",
-            database="decort_shop",
-            user="torsion_prog",
-            password="sdr%7ujK")
-        self.cur = conn.cursor()
-
-        self.connect = psycopg2.connect(
+        self.conn = psycopg2.connect(
             host="localhost",
             port="5432",
             database="decort_shop",
@@ -43,6 +35,8 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
         t_sql = '''CREATE TEMP TABLE shop_currency_buffer (
             code character varying(250),
             name character varying(250),
@@ -51,13 +45,13 @@ class LoadData:
             rate numeric(15,5),
             mult integer );'''
 
-        self.cur.execute(t_sql)
-        self.connect.commit()
+        cur.execute(t_sql)
+        self.conn.commit()
 
         with open('cache/currencies.csv', 'r', encoding='utf-8') as file:
-            self.cur.copy_from(file, 'shop_currency_buffer', columns=('source_id', 'code', 'name', 'title', 'rate', 'mult'), sep='|')
+            cur.copy_from(file, 'shop_currency_buffer', columns=('source_id', 'code', 'name', 'title', 'rate', 'mult'), sep='|')
 
-        self.connect.commit()
+        self.conn.commit()
 
         copy_sql = '''UPDATE shop_currency c
             SET
@@ -69,9 +63,9 @@ class LoadData:
             FROM shop_currency_buffer b
             WHERE c.source_id = b.source_id;'''
 
-        self.cur.execute(copy_sql)
-        self.connect.commit()
-        self.connect.close()
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
 
     def load_price_types(self):
         price_types = self.client.service.GetData('price_types')
