@@ -20,7 +20,7 @@ t_sql = '''CREATE TEMP TABLE shop_currency_buffer (
 cur.execute(t_sql)
 conn.commit()
 
-with open('download/currencies.csv', 'r+', encoding='utf-8') as file:
+with open('download/currencies.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_currency_buffer', columns=('source_id', 'code', 'name', 'title', 'rate', 'mult'), sep='|')
 
 conn.commit()

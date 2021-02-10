@@ -14,6 +14,21 @@ class LoadData:
         settings = Settings(xml_huge_tree=True)
         self.client = Client('http://192.168.75.115:8005/alexey/ws/decort?wsdl', transport=transport, settings=settings)
 
+        conn = psycopg2.connect(
+            host="localhost",
+            port="5432",
+            database="decort_shop",
+            user="torsion_prog",
+            password="sdr%7ujK")
+        self.cur = conn.cursor()
+
+        self.connect = psycopg2.connect(
+            host="localhost",
+            port="5432",
+            database="decort_shop",
+            user="torsion_prog",
+            password="sdr%7ujK")
+
     def load_brands(self):
         brands = self.client.service.GetData('brands')
         data = base64.b64decode(brands)
@@ -27,6 +42,36 @@ class LoadData:
         file = open('cache/currencies.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
+
+        t_sql = '''CREATE TEMP TABLE shop_currency_buffer (
+            code character varying(250),
+            name character varying(250),
+            title character varying(250),
+            source_id character varying(300),
+            rate numeric(15,5),
+            mult integer );'''
+
+        self.cur.execute(t_sql)
+        self.connect.commit()
+
+        with open('cache/currencies.csv', 'r', encoding='utf-8') as file:
+            self.cur.copy_from(file, 'shop_currency_buffer', columns=('source_id', 'code', 'name', 'title', 'rate', 'mult'), sep='|')
+
+        self.connect.commit()
+
+        copy_sql = '''UPDATE shop_currency c
+            SET
+               code  = b.code,
+               name  = b.name,
+               title = b.title,
+               rate  = b.rate,
+               mult  = b.mult
+            FROM shop_currency_buffer b
+            WHERE c.source_id = b.source_id;'''
+
+        self.cur.execute(copy_sql)
+        self.connect.commit()
+        self.connect.close()
 
     def load_price_types(self):
         price_types = self.client.service.GetData('price_types')
@@ -198,29 +243,29 @@ class LoadData:
 
 
 loadData = LoadData()
-loadData.load_brands()
+# loadData.load_brands()
 loadData.load_currencies()
-loadData.load_price_types()
-loadData.load_price_categories()
-loadData.load_product_price_categories()
-loadData.load_categories()
-loadData.load_managers()
-loadData.load_customers()
-loadData.load_customer_points()
-loadData.load_customer_agreements()
-loadData.load_customer_discounts()
-loadData.load_balances()
-loadData.load_dropshipping_wallet()
-loadData.load_sales()
-loadData.load_sale_tasks()
-loadData.load_offers()
-loadData.load_products()
-loadData.load_description()
-loadData.load_applicability()
-loadData.load_prices()
-loadData.load_cross()
-loadData.load_stocks()
-loadData.load_deficit()
-loadData.load_orders()
-loadData.load_order_items()
-loadData.load_declaration_numbers()
+# loadData.load_price_types()
+# loadData.load_price_categories()
+# loadData.load_product_price_categories()
+# loadData.load_categories()
+# loadData.load_managers()
+# loadData.load_customers()
+# loadData.load_customer_points()
+# loadData.load_customer_agreements()
+# loadData.load_customer_discounts()
+# loadData.load_balances()
+# loadData.load_dropshipping_wallet()
+# loadData.load_sales()
+# loadData.load_sale_tasks()
+# loadData.load_offers()
+# loadData.load_products()
+# loadData.load_description()
+# loadData.load_applicability()
+# loadData.load_prices()
+# loadData.load_cross()
+# loadData.load_stocks()
+# loadData.load_deficit()
+# loadData.load_orders()
+# loadData.load_order_items()
+# loadData.load_declaration_numbers()
