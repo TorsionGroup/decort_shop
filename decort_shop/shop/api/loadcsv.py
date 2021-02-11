@@ -28,74 +28,12 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_manager_buffer (
-            source_id character varying(300),
-            name character varying(250));'''
-
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/managers.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_manager_buffer', columns=('source_id', 'name'), sep='|')
-
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_manager m
-            SET               
-               inner_name  = b.name,               
-            FROM shop_currency_buffer b
-            WHERE m.source_id = b.source_id;'''
-
-        cur.execute(copy_sql)
-        self.conn.commit()
-        self.conn.close()
-
     def load_customers(self):
         customers = self.client.service.GetData('customers')
         data = base64.b64decode(customers)
         file = open('cache/customers.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
-
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_customer_buffer (
-            source_id character varying(300),
-            main_source_id character varying(300),
-            manager_source_id character varying(300),
-            code character varying(300),
-            name character varying(250)
-            sale_policy character varying(300),
-            city character varying(300),
-            region_id character varying(300));'''
-
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/customers.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_customer_buffer', columns=(
-                'source_id', 'main_source_id', 'manager_source_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
-                          sep='|')
-
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_customer c
-            SET               
-                main_source_id  = b.main_source_id,  
-                manager_source_id = b.manager_source_id, 
-                code = b.code, 
-                name = b.name, 
-                sale_policy = b.sale_policy, 
-                city = b.city, 
-                region_id = b.region_id,             
-            FROM shop_customer_buffer b
-            WHERE c.source_id = b.source_id;'''
-
-        cur.execute(copy_sql)
-        self.conn.commit()
-        self.conn.close()
 
     def load_brands(self):
         brands = self.client.service.GetData('brands')
@@ -104,69 +42,12 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_brand_buffer (
-            source_id character varying(300),
-            name character varying(250));'''
-
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/brands.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_brand_buffer', columns=('source_id', 'name'), sep='|')
-
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_brand s
-            SET               
-                name  = b.name,               
-            FROM shop_brand_buffer b
-            WHERE s.source_id = b.source_id;'''
-
-        cur.execute(copy_sql)
-        self.conn.commit()
-        self.conn.close()
-
     def load_currencies(self):
         currencies = self.client.service.GetData('currencies')
         data = base64.b64decode(currencies)
         file = open('cache/currencies.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
-
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_currency_buffer (
-            code character varying(250),
-            name character varying(250),
-            title character varying(250),
-            source_id character varying(300),
-            rate numeric(15,5),
-            mult integer );'''
-
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/currencies.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_currency_buffer', columns=('source_id', 'code', 'name', 'title', 'rate', 'mult'),
-                          sep='|')
-
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_currency c
-            SET
-               code  = b.code,
-               name  = b.name,
-               title = b.title,
-               rate  = b.rate,
-               mult  = b.mult
-            FROM shop_currency_buffer b
-            WHERE c.source_id = b.source_id;'''
-
-        cur.execute(copy_sql)
-        self.conn.commit()
-        self.conn.close()
 
     def load_price_types(self):
         price_types = self.client.service.GetData('price_types')
@@ -175,30 +56,6 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_price_type_buffer (
-            source_id character varying(300),
-            name character varying(250));'''
-
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/price_types.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_price_type_buffer', columns=('source_id', 'name'), sep='|')
-
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_price_type p
-            SET               
-                name  = b.name,               
-            FROM shop_price_type_buffer b
-            WHERE p.source_id = b.source_id;'''
-
-        cur.execute(copy_sql)
-        self.conn.commit()
-        self.conn.close()
-
     def load_price_categories(self):
         price_categories = self.client.service.GetData('price_categories')
         data = base64.b64decode(price_categories)
@@ -206,67 +63,12 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_price_category_buffer (
-            source_id character varying(300),
-            inner_name character varying(250));'''
-
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/price_categories.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_price_category_buffer', columns=('source_id', 'inner_name'), sep='|')
-
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_price_category p
-            SET               
-                inner_name  = b.inner_name,               
-            FROM shop_price_category_buffer b
-            WHERE p.source_id = b.source_id;'''
-
-        cur.execute(copy_sql)
-        self.conn.commit()
-        self.conn.close()
-
     def load_categories(self):
         categories = self.client.service.GetData('categories')
         data = base64.b64decode(categories)
         file = open('cache/categories.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
-
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_catalogcategory_buffer (
-            source_id character varying(300),
-            parent_id character varying(300)
-            name character varying(250)
-            name_ukr character varying(250)
-            name character varying(250));'''
-
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/categories.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_catalogcategory_buffer',
-                          columns=('source_id', 'parent_id', 'name', 'name_ukr', 'name_en'), sep='|')
-
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_catalogcategory p
-            SET               
-                parent_id = b.parent_id,
-                name = b.name,
-                name_ukr = b.name_ukr,
-                name_en = b.name_en,             
-            FROM shop_catalogcategory_buffer b
-            WHERE p.source_id = b.source_id;'''
-
-        cur.execute(copy_sql)
-        self.conn.commit()
-        self.conn.close()
 
     def load_product_price_categories(self):
         product_price_categories = self.client.service.GetData('product_price_categories')
@@ -281,35 +83,6 @@ class LoadData:
         file = open('cache/offers.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
-
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_offer_buffer (
-            source_id character varying(300),
-            name character varying(250)
-            group character varying(250)
-            title character varying(250));'''
-
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/offers.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_offer_buffer',
-                          columns=('source_id', 'name', 'group', 'title'), sep='|')
-
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_offer o
-            SET               
-                name = b.name,
-                group = b.group,
-                title = b.title,             
-            FROM shop_offer_buffer b
-            WHERE o.source_id = b.source_id;'''
-
-        cur.execute(copy_sql)
-        self.conn.commit()
-        self.conn.close()
 
     def load_products(self):
         products = self.client.service.GetData('products')
@@ -432,29 +205,29 @@ class LoadData:
 
 
 loadData = LoadData()
-# loadData.load_managers()
-# loadData.load_customers()
-# loadData.load_brands()
-# loadData.load_currencies()
-# loadData.load_price_types()
-# loadData.load_price_categories()
-# loadData.load_categories()
-# loadData.load_product_price_categories()
-# loadData.load_offers()
-# loadData.load_products()
-# loadData.load_customer_points()
-# loadData.load_customer_agreements()
-# loadData.load_customer_discounts()
-# loadData.load_balances()
-# loadData.load_dropshipping_wallet()
-# loadData.load_sales()
-# loadData.load_sale_tasks()
-# loadData.load_description()
-# loadData.load_applicability()
-# loadData.load_prices()
-# loadData.load_cross()
-# loadData.load_stocks()
-# loadData.load_deficit()
-# loadData.load_orders()
-# loadData.load_order_items()
-# loadData.load_declaration_numbers()
+loadData.load_managers()
+loadData.load_customers()
+loadData.load_brands()
+loadData.load_currencies()
+loadData.load_price_types()
+loadData.load_price_categories()
+loadData.load_categories()
+loadData.load_product_price_categories()
+loadData.load_offers()
+loadData.load_products()
+loadData.load_customer_points()
+loadData.load_customer_agreements()
+loadData.load_customer_discounts()
+loadData.load_balances()
+loadData.load_dropshipping_wallet()
+loadData.load_sales()
+loadData.load_sale_tasks()
+loadData.load_description()
+loadData.load_applicability()
+loadData.load_prices()
+loadData.load_cross()
+loadData.load_stocks()
+loadData.load_deficit()
+loadData.load_orders()
+loadData.load_order_items()
+loadData.load_declaration_numbers()

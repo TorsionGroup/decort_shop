@@ -21,7 +21,8 @@ print('Load Currencies')
 
 with open('cache/customers.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_customer', columns=(
-    'source_id', 'main_source_id', 'manager_source_id', 'code', 'name', 'sale_policy', 'city', 'region_id'), sep='|')
+        'source_id', 'main_source_id', 'manager_source_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
+                  sep='|')
 conn.commit()
 print('Load Customers')
 
@@ -39,6 +40,18 @@ with open('cache/price_categories.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_price_category_buffer', columns=('source_id', 'inner_name'), sep='|')
 conn.commit()
 print('Load Price Category')
+
+with open('cache/categories.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_catalogcategory_buffer',
+                  columns=('source_id', 'parent_id', 'name', 'name_ukr', 'name_en'), sep='|')
+conn.commit()
+print('Load Catalog Category')
+
+with open('cache/offers.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_offer',
+                  columns=('source_id', 'name', 'group', 'title'), sep='|')
+conn.commit()
+print('Load Offer')
 
 conn.close()
 print('Connection closed')
