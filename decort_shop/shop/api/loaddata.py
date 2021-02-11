@@ -52,6 +52,51 @@ class LoadData:
         self.conn.commit()
         self.conn.close()
 
+    def load_customers(self):
+        customers = self.client.service.GetData('customers')
+        data = base64.b64decode(customers)
+        file = open('cache/customers.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_customer_buffer (
+            source_id character varying(300),
+            main_source_id character varying(300),
+            manager_source_id character varying(300),
+            code character varying(300),
+            name character varying(250)
+            sale_policy character varying(300),
+            city character varying(300),
+            region_id character varying(300));'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/customers.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_customer_buffer', columns=(
+            'source_id', 'main_source_id', 'manager_source_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
+                          sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_customer c
+            SET               
+                main_source_id  = b.main_source_id,  
+                manager_source_id = b.manager_source_id, 
+                code = b.code, 
+                name = b.name, 
+                sale_policy = b.sale_policy, 
+                city = b.city, 
+                region_id = b.region_id,             
+            FROM shop_customer_buffer b
+            WHERE c.source_id = b.source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_brands(self):
         brands = self.client.service.GetData('brands')
         data = base64.b64decode(brands)
@@ -123,13 +168,6 @@ class LoadData:
         categories = self.client.service.GetData('categories')
         data = base64.b64decode(categories)
         file = open('cache/categories.csv', 'w', newline='', encoding='utf-8')
-        file.write(str(data.decode('utf-8')))
-        file.close()
-
-    def load_customers(self):
-        customers = self.client.service.GetData('customers')
-        data = base64.b64decode(customers)
-        file = open('cache/customers.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
 
@@ -262,13 +300,13 @@ class LoadData:
 
 loadData = LoadData()
 # loadData.load_managers()
+# loadData.load_customers()
 # loadData.load_brands()
 # loadData.load_currencies()
 # loadData.load_price_types()
 # loadData.load_price_categories()
 # loadData.load_product_price_categories()
 # loadData.load_categories()
-# loadData.load_customers()
 # loadData.load_customer_points()
 # loadData.load_customer_agreements()
 # loadData.load_customer_discounts()
