@@ -47,11 +47,11 @@ class LatestProducts:
 
 class Manager(models.Model):
     inner_name = models.CharField(max_length=250)
-    name = models.CharField(max_length=250, blank=True)
-    email = models.EmailField(blank=True)
-    phone = PhoneNumberField(blank=True)
-    skype = models.CharField(max_length=250, blank=True)
-    comment = models.CharField(max_length=500, blank=True)
+    name = models.CharField(max_length=250, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    phone = PhoneNumberField(blank=True, null=True)
+    skype = models.CharField(max_length=250, blank=True, null=True)
+    comment = models.CharField(max_length=500, blank=True, null=True)
     source_id = models.CharField(max_length=300, blank=True)
 
     def __str__(self):
