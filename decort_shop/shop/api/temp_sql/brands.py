@@ -1,5 +1,8 @@
 static function loadBrand(){
-        $sql = 'CREATE TEMPORARY TABLE t_brand_buffer (`source_id` VARCHAR(100) NOT NULL ,  `name` VARCHAR(45) NULL ,  PRIMARY KEY (`source_id`) );';
+        $sql = 'CREATE TEMPORARY TABLE t_brand_buffer (' \
+               '`source_id` VARCHAR(100) NOT NULL ,' \
+               '  `name` VARCHAR(45) NULL ,  ' \
+               'PRIMARY KEY (`source_id`) );';
         Yii::$app->db->createCommand($sql)->execute();
 
         $data = base64_decode(self::getData('brands'));

@@ -76,7 +76,7 @@ class LoadData:
 
         with open('cache/customers.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_customer_buffer', columns=(
-            'source_id', 'main_source_id', 'manager_source_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
+                'source_id', 'main_source_id', 'manager_source_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
                           sep='|')
 
         self.conn.commit()
@@ -104,6 +104,30 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_brand_buffer (
+            source_id character varying(300),
+            name character varying(250));'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/brands.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_brand_buffer', columns=('source_id', 'name'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_brand s
+            SET               
+                name  = b.name,               
+            FROM shop_brand_buffer b
+            WHERE s.source_id = b.source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_currencies(self):
         currencies = self.client.service.GetData('currencies')
         data = base64.b64decode(currencies)
@@ -125,7 +149,8 @@ class LoadData:
         self.conn.commit()
 
         with open('cache/currencies.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_currency_buffer', columns=('source_id', 'code', 'name', 'title', 'rate', 'mult'), sep='|')
+            cur.copy_from(file, 'shop_currency_buffer', columns=('source_id', 'code', 'name', 'title', 'rate', 'mult'),
+                          sep='|')
 
         self.conn.commit()
 

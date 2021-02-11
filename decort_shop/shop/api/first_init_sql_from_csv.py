@@ -28,5 +28,11 @@ with open('cache/customers.csv', 'r', encoding='utf-8') as file:
 conn.commit()
 print('Load Customers')
 
+with open('cache/brands.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_brand', columns=('source_id', 'name'), sep='|')
+
+conn.commit()
+print('Load Brands')
+
 conn.close()
 print('Connection closed')
