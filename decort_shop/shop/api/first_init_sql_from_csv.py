@@ -35,5 +35,10 @@ with open('cache/price_types.csv', 'r', encoding='utf-8') as file:
 conn.commit()
 print('Load Price Types')
 
+with open('cache/price_categories.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_price_category_buffer', columns=('source_id', 'inner_name'), sep='|')
+conn.commit()
+print('Load Price Category')
+
 conn.close()
 print('Connection closed')
