@@ -37,12 +37,12 @@ conn.commit()
 print('Load Price Types')
 
 with open('cache/price_categories.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_price_category_buffer', columns=('source_id', 'inner_name'), sep='|')
+    cur.copy_from(file, 'shop_price_category', columns=('source_id', 'inner_name'), sep='|')
 conn.commit()
 print('Load Price Category')
 
 with open('cache/categories.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_catalogcategory_buffer',
+    cur.copy_from(file, 'shop_catalogcategory',
                   columns=('source_id', 'parent_id', 'name', 'name_ukr', 'name_en'), sep='|')
 conn.commit()
 print('Load Catalog Category')
@@ -52,6 +52,16 @@ with open('cache/offers.csv', 'r', encoding='utf-8') as file:
                   columns=('source_id', 'name', 'group', 'title'), sep='|')
 conn.commit()
 print('Load Offer')
+
+with open('cache/products.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_product_buffer',
+                  columns=(
+                      'source_id', 'category_id', 'brand_id', 'offer_id', 'code', 'name', 'name_ukr', 'name_en',
+                      'comment', 'comment_ukr', 'comment_en', 'article', 'specification', 'ABC', 'price_category',
+                      'advanced_description', 'weight', 'pack_qty', 'product_type', 'create_date',
+                      'income_date'), sep='|')
+conn.commit()
+print('Load Product')
 
 conn.close()
 print('Connection closed')

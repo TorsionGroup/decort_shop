@@ -192,8 +192,6 @@ class CatalogCategory(MPTTModel):
     sort_index = models.IntegerField(default=999)
     content_id = models.IntegerField(null=True, blank=True)
     name = models.CharField(max_length=500)
-    name_ukr = models.CharField(max_length=500, null=True, blank=True)
-    name_en = models.CharField(max_length=500, null=True, blank=True)
     comment = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):

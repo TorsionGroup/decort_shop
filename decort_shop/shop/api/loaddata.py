@@ -318,6 +318,73 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_product_buffer (
+            source_id character varying(300),
+            category_id character varying(300),
+            brand_id character varying(300),
+            offer_id character varying(300),
+            code character varying(300),
+            name character varying(500),
+            name_ukr character varying(500),
+            name_en character varying(500),
+            comment character varying(500),
+            comment_ukr character varying(500),
+            comment_en character varying(500),
+            article character varying(300),
+            specification character varying(300),
+            ABC character varying(300),
+            price_category character varying(300),
+            advanced_description text,
+            weight numeric(15,3),
+            pack_qty integer,
+            product_type integer,
+            create_date timestamp with time zone,
+            income_date timestamp with time zone);'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/products.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_product_buffer',
+                          columns=(
+                          'source_id', 'category_id', 'brand_id', 'offer_id', 'code', 'name', 'name_ukr', 'name_en',
+                          'comment', 'comment_ukr', 'comment_en', 'article', 'specification', 'ABC', 'price_category',
+                          'advanced_description', 'weight', 'pack_qty', 'product_type', 'create_date',
+                          'income_date'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_product p
+            SET               
+                category_id = b.category_id,
+                brand_id = b.brand_id,
+                offer_id = b.offer_id,
+                code = b.code,
+                name = b.name,
+                name_ukr = b.name_ukr,
+                name_en = b.name_en,
+                comment = b.comment,
+                comment_ukr = b.comment_ukr,
+                comment_en = b.comment_en,
+                article = b.article,
+                specification = b.specification,
+                ABC = b.ABC,
+                price_category = b.price_category,
+                advanced_description = b.advanced_description,
+                weight = b.weight,
+                pack_qty = b.pack_qty,
+                product_type = b.product_type,
+                create_date = b.create_date,
+                income_date = b.income_date                       
+            FROM shop_product_buffer b
+            WHERE p.source_id = b.source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_customer_points(self):
         customer_points = self.client.service.GetData('customer_points')
         data = base64.b64decode(customer_points)
