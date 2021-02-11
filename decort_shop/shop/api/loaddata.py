@@ -175,6 +175,30 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_price_type_buffer (
+            source_id character varying(300),
+            name character varying(250));'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/price_types.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_price_type_buffer', columns=('source_id', 'name'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_price_type p
+            SET               
+                name  = b.name,               
+            FROM shop_price_type_buffer b
+            WHERE p.source_id = b.source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_price_categories(self):
         price_categories = self.client.service.GetData('price_categories')
         data = base64.b64decode(price_categories)
