@@ -488,9 +488,6 @@ class LoadData:
         cur.execute(t_sql)
         self.conn.commit()
 
-        cur.execute(t_sql)
-        self.conn.commit()
-
         with open('cache/balances.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_balance_buffer',
                           columns=('customer_source', 'agreement_source', 'currency_source', 'balance',
@@ -517,6 +514,40 @@ class LoadData:
         file = open('cache/customer_discounts.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_customerdiscount_buffer (
+            criteria_source_id character varying(300),
+            customer_source_id character varying(300), 
+            agreement_source_id character varying(300), 
+            price_type_source_id character varying(300), 
+            criteria_type character varying(300), 
+            discount numeric(15, 2) );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/customer_discounts.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_customerdiscount_buffer',
+                          columns=('criteria_source_id', 'customer_source_id', 'agreement_source_id',
+                                   'price_type_source_id', 'criteria_type', 'discount'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_customerdiscount c
+            SET
+                criteria_source_id = b.criteria_source_id,
+                agreement_source_id = b.agreement_source_id, 
+                price_type_source_id = b.price_type_source_id, 
+                criteria_type = b.criteria_type,
+                discount = b.discount            
+            FROM shop_customerdiscount_buffer b
+            WHERE c.customer_source_id = b.customer_source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
 
     def load_dropshipping_wallet(self):
         dropshipping_wallet = self.client.service.GetData('dropshipping_wallet')

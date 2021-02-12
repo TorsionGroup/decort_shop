@@ -81,6 +81,13 @@ with open('cache/balances.csv', 'r', encoding='utf-8') as file:
 conn.commit()
 print('Load Balance')
 
+with open('cache/customer_discounts.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_customerdiscount_buffer',
+                  columns=('criteria_source_id', 'customer_source_id', 'agreement_source_id',
+                           'price_type_source_id', 'criteria_type', 'discount'), sep='|')
+conn.commit()
+print('Load Customer Discount')
+
 
 conn.close()
 print('Connection closed')
