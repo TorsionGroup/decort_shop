@@ -54,7 +54,7 @@ conn.commit()
 print('Load Offer')
 
 with open('cache/products.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_product_buffer',
+    cur.copy_from(file, 'shop_product',
                   columns=(
                       'source_id', 'category_id', 'brand_id', 'offer_id', 'code', 'name', 'name_ukr', 'name_en',
                       'comment', 'comment_ukr', 'comment_en', 'article', 'specification', 'ABC', 'price_category',
@@ -62,6 +62,12 @@ with open('cache/products.csv', 'r', encoding='utf-8') as file:
                       'income_date'), sep='|')
 conn.commit()
 print('Load Product')
+
+with open('cache/customer_points.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_customerpoint', columns=('customer_source_id', 'source_id', 'name', 'add'), sep='|')
+conn.commit()
+print('Load Customer Point')
+
 
 conn.close()
 print('Connection closed')

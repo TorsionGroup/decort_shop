@@ -427,6 +427,7 @@ class CustomerPoint(models.Model):
         Customer, on_delete=models.CASCADE, related_name="point_customer", null=True, blank=True)
     name = models.CharField(max_length=500)
     source_id = models.CharField(max_length=300, null=True, blank=True)
+    add = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
         return self.name

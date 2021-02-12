@@ -392,6 +392,34 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_customerpoint_buffer (
+            customer_source_id character varying(300),        
+            source_id character varying(300),
+            name character varying(300)
+            add character varying(300));'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/customer_points.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_customerpoint_buffer',
+                          columns=('customer_source_id', 'source_id', 'name', 'add'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_customerpoint c
+            SET               
+                name = b.name,
+                add = b.add                           
+            FROM shop_customerpoint_buffer b
+            WHERE c.source_id = b.source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_customer_agreements(self):
         customer_agreements = self.client.service.GetData('customer_agreements')
         data = base64.b64decode(customer_agreements)
@@ -420,6 +448,13 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    def load_prices(self):
+        prices = self.client.service.GetData('prices')
+        data = base64.b64decode(prices)
+        file = open('cache/prices.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
     def load_sales(self):
         sales = self.client.service.GetData('sales')
         data = base64.b64decode(sales)
@@ -431,6 +466,20 @@ class LoadData:
         sale_tasks = self.client.service.GetData('sale_tasks')
         data = base64.b64decode(sale_tasks)
         file = open('cache/sale_tasks.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+    def load_stocks(self):
+        stocks = self.client.service.GetData('stocks')
+        data = base64.b64decode(stocks)
+        file = open('cache/stocks.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+    def load_deficit(self):
+        deficit = self.client.service.GetData('deficit')
+        data = base64.b64decode(deficit)
+        file = open('cache/deficit.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
 
@@ -448,31 +497,10 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
-    def load_prices(self):
-        prices = self.client.service.GetData('prices')
-        data = base64.b64decode(prices)
-        file = open('cache/prices.csv', 'w', newline='', encoding='utf-8')
-        file.write(str(data.decode('utf-8')))
-        file.close()
-
     def load_cross(self):
         cross = self.client.service.GetData('cross')
         data = base64.b64decode(cross)
         file = open('cache/cross.csv', 'w', newline='', encoding='utf-8')
-        file.write(str(data.decode('utf-8')))
-        file.close()
-
-    def load_stocks(self):
-        stocks = self.client.service.GetData('stocks')
-        data = base64.b64decode(stocks)
-        file = open('cache/stocks.csv', 'w', newline='', encoding='utf-8')
-        file.write(str(data.decode('utf-8')))
-        file.close()
-
-    def load_deficit(self):
-        deficit = self.client.service.GetData('deficit')
-        data = base64.b64decode(deficit)
-        file = open('cache/deficit.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
 
