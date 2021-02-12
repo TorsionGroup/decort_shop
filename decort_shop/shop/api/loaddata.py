@@ -476,6 +476,41 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_balance_buffer (
+            customer_source character varying(300),
+            agreement_source character varying(300), 
+            currency_source character varying(300), 
+            balance numeric(15,2), 
+            past_due numeric(15,2) );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/balances.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_balance_buffer',
+                          columns=('customer_source', 'agreement_source', 'currency_source', 'balance',
+                                   'past_due'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_customeragreement c
+            SET
+                agreement_source = b.agreement_source,
+                currency_source = b.currency_source, 
+                balance = b.balance, 
+                past_due = b.past_due            
+            FROM shop_customeragreement_buffer b
+            WHERE c.customer_source = b.customer_source;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_customer_discounts(self):
         customer_discounts = self.client.service.GetData('customer_discounts')
         data = base64.b64decode(customer_discounts)
