@@ -427,6 +427,48 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_customeragreement_buffer (
+            source_id character varying(300),
+            customer_source_id character varying(300), 
+            currency_source_id character varying(300), 
+            price_type_source_id character varying(300), 
+            code character varying(300), 
+            name character varying(300),
+            number character varying(300),
+            discount character varying(300),
+            is_status character varying(300),
+            is_active character varying(300) );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/customer_agreements.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_customeragreement_buffer',
+                          columns=('source_id', 'customer_source_id', 'currency_source_id', 'price_type_source_id',
+                                   'code', 'name', 'number', 'discount', 'is_status', 'is_active'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_customeragreement c
+            SET
+                customer_source_id = b.customer_source_id,
+                currency_source_id = b.currency_source_id,
+                price_type_source_id = b.price_type_source_id,
+                code = b.code,
+                name = b.name,               
+                number = b.number,
+                discount = b.discount,
+                is_status = b.is_status,
+                is_active = b.is_active                                   
+            FROM shop_customerpoint_buffer b
+            WHERE c.source_id = b.source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_balances(self):
         balances = self.client.service.GetData('balances')
         data = base64.b64decode(balances)

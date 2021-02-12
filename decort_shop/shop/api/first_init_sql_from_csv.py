@@ -68,6 +68,13 @@ with open('cache/customer_points.csv', 'r', encoding='utf-8') as file:
 conn.commit()
 print('Load Customer Point')
 
+with open('cache/customer_agreements.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_customeragreement',
+                  columns=('source_id', 'customer_source_id', 'currency_source_id', 'price_type_source_id',
+                           'code', 'name', 'number', 'discount', 'is_status', 'is_active'), sep='|')
+conn.commit()
+print('Load Customer Agreement')
+
 
 conn.close()
 print('Connection closed')
