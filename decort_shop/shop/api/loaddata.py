@@ -876,6 +876,46 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    cur = self.conn.cursor()
+
+    t_sql = '''CREATE TEMP TABLE shop_order_buffer (
+            order_source character varying(300),
+            agreement_source_id character varying(300),                
+            order_number character varying(300),
+            waybill_number character varying(300),
+            comment character varying(300),
+            source_type character varying(300),
+            has_precept integer,
+            has_waybill integer,
+            order_date timestamp with time zone );'''
+
+    cur.execute(t_sql)
+    self.conn.commit()
+
+    with open('cache/orders.csv', 'r', encoding='utf-8') as file:
+        cur.copy_from(file, 'shop_order_buffer',
+                      columns=('order_source', 'agreement_source_id', 'order_number', 'waybill_number',
+                               'comment', 'source_type', 'has_precept', 'has_waybill', 'order_date'), sep='|')
+
+    self.conn.commit()
+
+    copy_sql = '''UPDATE shop_order o
+            SET
+                agreement_source_id = b.agreement_source_id,
+                order_number = b.order_number,
+                waybill_number = b.waybill_number,
+                comment = b.comment,
+                source_type = b.source_type,
+                has_precept = b.has_precept,
+                has_waybill = b.has_waybill,
+                order_date = b.order_date                                       
+            FROM shop_order_buffer b
+            WHERE p.order_source = b.order_source;'''
+
+    cur.execute(copy_sql)
+    self.conn.commit()
+    self.conn.close()
+
     def load_order_items(self):
         order_items = self.client.service.GetData('order_items')
         data = base64.b64decode(order_items)
@@ -883,12 +923,79 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    cur = self.conn.cursor()
+
+    t_sql = '''CREATE TEMP TABLE shop_orderitem_buffer (
+            order_source character varying(300),
+            product_source_id character varying(300),                
+            currency_source_id character varying(300),
+            qty integer,
+            reserved integer,
+            executed integer,
+            order_id integer,
+            product_id integer,
+            price numeric(15, 2),
+            key character varying(300) );'''
+
+    cur.execute(t_sql)
+    self.conn.commit()
+
+    with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
+        cur.copy_from(file, 'shop_orderitem_buffer',
+                      columns=('order_source', 'product_source_id', 'currency_source_id', 'qty',
+                               'reserved', 'executed', 'order_id', 'product_id', 'price', 'key'), sep='|')
+
+    self.conn.commit()
+
+    copy_sql = '''UPDATE shop_orderitem o
+            SET
+                product_source_id = b.product_source_id,
+                currency_source_id = b.currency_source_id,
+                qty = b.qty,
+                reserved = b.reserved,
+                executed = b.executed,
+                order_id = b.order_id,
+                product_id = b.product_id,
+                price = b.price,
+                key = b.key                                       
+            FROM shop_orderitem_buffer b
+            WHERE p.order_source = b.order_source;'''
+
+    cur.execute(copy_sql)
+    self.conn.commit()
+    self.conn.close()
+
     def load_declaration_numbers(self):
         declaration_numbers = self.client.service.GetData('declaration_numbers')
         data = base64.b64decode(declaration_numbers)
         file = open('cache/declaration_numbers.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_declarationnumber_buffer (
+                order_source character varying(300),
+                declaration_number character varying(300) );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/declaration_numbers.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_declarationnumber_buffer',
+                          columns=('order_source', 'declaration_number'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_order o
+                SET
+                    declaration_number = b.declaration_number                       
+                FROM shop_declarationnumber_buffer b
+                WHERE o.order_source = b.order_source;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
 
 
 loadData = LoadData()

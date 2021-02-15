@@ -142,6 +142,19 @@ with open('cache/cross.csv', 'r', encoding='utf-8') as file:
 conn.commit()
 print('Load Cross')
 
+with open('cache/orders.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_order',
+                  columns=('order_source', 'agreement_source_id', 'order_number', 'waybill_number',
+                           'comment', 'source_type', 'has_precept', 'has_waybill', 'order_date'), sep='|')
+conn.commit()
+print('Load Order')
+
+with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_orderitem',
+                  columns=('order_source', 'product_source_id', 'currency_source_id', 'qty',
+                           'reserved', 'executed', 'order_id', 'product_id', 'price', 'key'), sep='|')
+conn.commit()
+print('Load Order Item')
 
 
 conn.close()
