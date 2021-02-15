@@ -332,7 +332,7 @@ class LoadData:
             comment_en character varying(500),
             article character varying(300),
             specification character varying(300),
-            ABC character varying(300),
+            abc character varying(300),
             price_category character varying(300),
             advanced_description text,
             weight numeric(15,3),
@@ -348,7 +348,7 @@ class LoadData:
             cur.copy_from(file, 'shop_product_buffer',
                           columns=(
                           'source_id', 'category', 'brand', 'offer', 'code', 'name', 'name_uk', 'name_en',
-                          'comment', 'comment_uk', 'comment_en', 'article', 'specification', 'ABC', 'price_category',
+                          'comment', 'comment_uk', 'comment_en', 'article', 'specification', 'abc', 'price_category',
                           'advanced_description', 'weight', 'pack_qty', 'product_type', 'create_date',
                           'income_date'), sep='|')
 
@@ -368,7 +368,7 @@ class LoadData:
                 comment_en = b.comment_en,
                 article = b.article,
                 specification = b.specification,
-                ABC = b.ABC,
+                abc = b.abc,
                 price_category = b.price_category,
                 advanced_description = b.advanced_description,
                 weight = b.weight,

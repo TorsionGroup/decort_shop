@@ -236,7 +236,7 @@ class Product(models.Model):
     is_active = models.BooleanField(default=1, null=True)
     weight = models.DecimalField(max_digits=15, decimal_places=3, default=0, blank=True)
     pack_qty = models.IntegerField(default=0, blank=True)
-    ABC = models.CharField(max_length=1, null=True, blank=True)
+    abc = models.CharField(max_length=300, null=True, blank=True)
     is_exists = models.BooleanField(default=0, null=True)
     code = models.CharField(max_length=250, null=True, blank=True)
     source_type = models.CharField(max_length=250, default='1C', null=True, blank=True)
@@ -251,6 +251,8 @@ class Product(models.Model):
     offer = models.CharField(max_length=300, null=True, blank=True)
     category = models.CharField(max_length=300, null=True, blank=True)
     price_category = models.CharField(max_length=300, null=True, blank=True)
+    create_date = models.DateTimeField(default=datetime.today, null=True)
+    income_date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return str(self.id)
@@ -493,7 +495,7 @@ class PriceBuffer(models.Model):
         CustomerAgreement, on_delete=models.CASCADE, related_name="price_buffer_agreement", null=True, blank=True)
     sort_index = models.CharField(max_length=300, null=True, blank=True)
     pack_qty = models.IntegerField(null=True, blank=True)
-    create_date = models.DateTimeField(default=datetime.today)
+    create_date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.code
@@ -545,8 +547,8 @@ class Constant(models.Model):
 
 class Content(models.Model):
     alias = models.SlugField(max_length=300, unique=True)
-    created_date = models.DateTimeField(default=datetime.today)
-    updated_date = models.DateTimeField(default=datetime.today)
+    created_date = models.DateTimeField(default=datetime.today, null=True)
+    updated_date = models.DateTimeField(default=datetime.today, null=True)
     published = models.BooleanField(default=0)
     main_image = models.ImageField(upload_to="content/main_image/", blank=True, null=True)
     category_id = models.ForeignKey(
@@ -608,7 +610,7 @@ class CrossErrorStatistic(models.Model):
     comment = models.CharField(max_length=500, null=True, blank=True)
     customer_id = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name="cross_error_customer", null=True, blank=True)
-    date = models.DateTimeField(default=datetime.today)
+    date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.search_number
@@ -655,8 +657,8 @@ class ProductErrorStatistic(models.Model):
         Account, on_delete=models.SET_NULL, null=True, blank=True)
     error_comment = models.CharField(max_length=1000, null=True, blank=True)
     status = models.CharField(max_length=250)
-    created_date = models.DateTimeField(default=datetime.today)
-    updated_date = models.DateTimeField(default=datetime.today)
+    created_date = models.DateTimeField(default=datetime.today, null=True)
+    updated_date = models.DateTimeField(default=datetime.today, null=True)
     admin_comment = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
@@ -726,8 +728,8 @@ class DeliveryCity(models.Model):
     region = models.CharField(max_length=250, null=True, blank=True)
     ref = models.CharField(max_length=250, null=True, blank=True)
     name = models.CharField(max_length=250)
-    create_date = models.DateTimeField(default=datetime.today)
-    update_date = models.DateTimeField(default=datetime.today)
+    create_date = models.DateTimeField(default=datetime.today, null=True)
+    update_date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.name
@@ -779,7 +781,7 @@ class CacheApi(models.Model):
         PartnerApi, on_delete=models.CASCADE, related_name="cache_partner", null=True, blank=True)
     search_number = models.CharField(max_length=250)
     response_api = models.TextField(null=True, blank=True)
-    response_date = models.DateTimeField(default=datetime.today)
+    response_date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.search_number
@@ -793,7 +795,7 @@ class PartnerApiCache(models.Model):
     partner_code = models.ForeignKey(
         PartnerApi, on_delete=models.CASCADE, related_name="apicache_partner", null=True, blank=True)
     search_number = models.CharField(max_length=250, null=True, blank=True)
-    response_date = models.DateTimeField(default=datetime.today)
+    response_date = models.DateTimeField(default=datetime.today, null=True)
     product_json = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -809,7 +811,7 @@ class PartnerCategory(models.Model):
         PartnerApi, on_delete=models.CASCADE, related_name="category_partner", null=True, blank=True)
     name = models.CharField(max_length=250, null=True, blank=True)
     parent_id = models.ForeignKey('self', on_delete=models.SET_NULL, default=0, null=True)
-    response_date = models.DateTimeField(default=datetime.today)
+    response_date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.name
@@ -839,7 +841,7 @@ class PartnerCategoryCache(models.Model):
         PartnerApi, on_delete=models.CASCADE, related_name="category_cache_partner", null=True, blank=True)
     category_id = models.ForeignKey(
         PartnerCategory, on_delete=models.CASCADE, related_name="category_cache_category", null=True, blank=True)
-    response_date = models.DateTimeField(default=datetime.today)
+    response_date = models.DateTimeField(default=datetime.today, null=True)
     product_json = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -891,8 +893,8 @@ class Order(models.Model):
     complete = models.BooleanField(default=0)
     delivery_method = models.ForeignKey(
         DeliveryMethod, on_delete=models.SET_NULL, related_name="order_delivery", null=True, blank=True)
-    create_date = models.DateTimeField(default=datetime.today)
-    update_date = models.DateTimeField(default=datetime.today)
+    create_date = models.DateTimeField(default=datetime.today, null=True)
+    update_date = models.DateTimeField(default=datetime.today, null=True)
     comment = models.TextField(null=True, blank=True)
     point_id = models.ForeignKey(
         CustomerPoint, on_delete=models.SET_NULL, related_name="order_customer_point", null=True, blank=True)
@@ -989,7 +991,7 @@ class OrderPayment(models.Model):
     order_id = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="order_payment_order", null=True, blank=True)
     sum = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    date_payment = models.DateTimeField(default=datetime.today)
+    date_payment = models.DateTimeField(default=datetime.today, null=True)
     currency_id = models.ForeignKey(
         Currency, on_delete=models.CASCADE, related_name="order_payment_currency", null=True, blank=True)
     payment_sum = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
@@ -1011,7 +1013,7 @@ class OrderSourceStatistic(models.Model):
     customer_id = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name="order_statistic_customer", null=True, blank=True)
     source_type = models.CharField(max_length=250, null=True, blank=True)
-    add_date = models.DateTimeField(default=datetime.today)
+    add_date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.product_id
@@ -1048,7 +1050,7 @@ class DropshippingWalletTransfer(models.Model):
     sum = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
     currency_id = models.ForeignKey(
         Currency, on_delete=models.CASCADE, related_name="d_transfer_currency", null=True, blank=True)
-    date = models.DateTimeField(default=datetime.today)
+    date = models.DateTimeField(default=datetime.today, null=True)
     card = CardNumberField(null=True, blank=True)
 
     def __str__(self):
@@ -1077,8 +1079,8 @@ class PromoSale(models.Model):
 
 
 class RunString(models.Model):
-    created_date = models.DateTimeField(default=datetime.today)
-    updated_date = models.DateTimeField(default=datetime.today)
+    created_date = models.DateTimeField(default=datetime.today, null=True)
+    updated_date = models.DateTimeField(default=datetime.today, null=True)
     full_text = models.CharField(max_length=1000)
     comment = models.CharField(max_length=500, null=True, blank=True)
     published = models.BooleanField(default=0)
@@ -1097,7 +1099,7 @@ class Sale(models.Model):
     customer_id = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name="sale_customer", null=True, blank=True)
     qty = models.IntegerField(null=True, blank=True)
-    date = models.DateTimeField(default=datetime.today)
+    date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.product_id
@@ -1175,7 +1177,7 @@ class SearchRequest(models.Model):
     product_list = models.TextField(null=True, blank=True)
     is_added_in_cart = models.BooleanField(default=0, null=True)
     product_add_in_cart = models.TextField(null=True, blank=True)
-    date = models.DateTimeField(default=datetime.today)
+    date = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.search_keyword
@@ -1215,7 +1217,7 @@ class Token(models.Model):
     user_id = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True, blank=True)
     code = models.CharField(max_length=300)
-    created_at = models.DateTimeField(default=datetime.today)
+    created_at = models.DateTimeField(default=datetime.today, null=True)
     type = models.SmallIntegerField(null=True, blank=True)
 
     def __str__(self):
@@ -1228,7 +1230,7 @@ class Token(models.Model):
 
 class UploadProduct(models.Model):
     upload_id = models.IntegerField(null=True, blank=True)
-    created = models.DateTimeField(default=datetime.today)
+    created = models.DateTimeField(default=datetime.today, null=True)
     name = models.CharField(max_length=300, null=True, blank=True)
     article = models.CharField(max_length=300, null=True, blank=True)
     search_key = models.CharField(max_length=300, null=True, blank=True)
@@ -1276,7 +1278,7 @@ class UserRequest(models.Model):
     request_type_id = models.IntegerField(null=True, blank=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
     checked = models.BooleanField(default=0)
-    date_request = models.DateTimeField(default=datetime.today)
+    date_request = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.subject
@@ -1305,7 +1307,7 @@ class WaitList(models.Model):
         Product, on_delete=models.CASCADE, related_name="wait_list_product", null=True, blank=True)
     user_id = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True, blank=True)
-    date_add = models.DateTimeField(default=datetime.today)
+    date_add = models.DateTimeField(default=datetime.today, null=True)
     send_message = models.BooleanField(default=0)
     is_active = models.BooleanField(default=0)
 
@@ -1321,8 +1323,8 @@ class Action(models.Model):
     content_id = models.ForeignKey(
         Content, on_delete=models.CASCADE, related_name="action_content", null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
-    start_at = models.DateTimeField(default=datetime.today)
-    finish_at = models.DateTimeField(default=datetime.today)
+    start_at = models.DateTimeField(default=datetime.today, null=True)
+    finish_at = models.DateTimeField(default=datetime.today, null=True)
 
     def __str__(self):
         return self.content_id

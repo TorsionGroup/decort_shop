@@ -131,6 +131,8 @@ LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Kiev'
 
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+
 USE_I18N = True
 
 USE_L10N = True

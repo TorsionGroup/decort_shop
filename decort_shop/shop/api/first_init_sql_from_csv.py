@@ -56,7 +56,7 @@ with open('cache/products.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_product',
                   columns=(
                       'source_id', 'category', 'brand', 'offer', 'code', 'name', 'name_uk', 'name_en',
-                      'comment', 'comment_uk', 'comment_en', 'article', 'specification', 'ABC', 'price_category',
+                      'comment', 'comment_uk', 'comment_en', 'article', 'specification', 'abc', 'price_category',
                       'advanced_description', 'weight', 'pack_qty', 'product_type', 'create_date',
                       'income_date'), sep='|')
 conn.commit()
