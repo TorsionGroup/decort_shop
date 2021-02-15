@@ -88,6 +88,18 @@ with open('cache/customer_discounts.csv', 'r', encoding='utf-8') as file:
 conn.commit()
 print('Load Customer Discount')
 
+with open('cache/dropshipping_wallet.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_dropshippingwallet',
+                  columns=('agreement_source', 'order_source', 'credit', 'debit', 'balance'), sep='|')
+conn.commit()
+print('Load Dropshipping Wallet')
+
+with open('cache/prices.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_price',
+                  columns=('product_source_id', 'price_type_source_id', 'currency_source_id', 'price'), sep='|')
+conn.commit()
+print('Load Price')
+
 
 conn.close()
 print('Connection closed')

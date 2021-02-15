@@ -556,6 +556,37 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_dropshippingwallet_buffer (
+                agreement_source character varying(300),
+                order_source character varying(300), 
+                credit numeric(15, 2), 
+                debit numeric(15, 2), 
+                balance numeric(15, 2) );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/dropshipping_wallet.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_dropshippingwallet_buffer',
+                          columns=('agreement_source', 'order_source', 'credit', 'debit', 'balance'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_dropshippingwallet d
+                SET
+                    agreement_source = b.agreement_source,
+                    credit = b.price_type_source_id, 
+                    debit = b.debit,
+                    balance = b.balance            
+                FROM shop_dropshippingwallet_buffer b
+                WHERE d.order_source = b.order_source;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_prices(self):
         prices = self.client.service.GetData('prices')
         data = base64.b64decode(prices)
@@ -563,7 +594,36 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
-    def load_sales(self):
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_price_buffer (
+                product_source_id character varying(300),
+                price_type_source_id character varying(300), 
+                currency_source_id character varying(300), 
+                price numeric(15, 2) );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/prices.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_price_buffer',
+                          columns=('product_source_id', 'price_type_source_id', 'currency_source_id', 'price'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_price p
+                SET
+                    price_type_source_id = b.price_type_source_id,
+                    currency_source_id = b.currency_source_id, 
+                    price = b.price          
+                FROM shop_price_buffer b
+                WHERE p.product_source_id = b.product_source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
+def load_sales(self):
         sales = self.client.service.GetData('sales')
         data = base64.b64decode(sales)
         file = open('cache/sales.csv', 'w', newline='', encoding='utf-8')
