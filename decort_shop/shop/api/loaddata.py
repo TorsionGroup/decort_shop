@@ -338,8 +338,8 @@ class LoadData:
             weight numeric(15,3),
             pack_qty integer,
             product_type integer,
-            create_date timestamp with time zone,
-            income_date timestamp with time zone );'''
+            create_date character varying(300),
+            income_date character varying(300) );'''
 
         cur.execute(t_sql)
         self.conn.commit()
