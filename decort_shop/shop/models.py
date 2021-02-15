@@ -65,16 +65,18 @@ class Manager(models.Model):
 class Customer(models.Model):
     code = models.CharField(max_length=250, null=True)
     name = models.CharField(max_length=300)
-    main_customer_id = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    main_customer_id = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
     manager_id = models.ForeignKey(
         Manager, on_delete=models.SET_NULL, related_name="customer_manager", null=True, blank=True)
     sale_policy = models.CharField(max_length=250, null=True, blank=True)
     city = models.CharField(max_length=250, null=True, blank=True)
-    region_id = models.IntegerField(null=True, blank=True)
+    region_id = models.CharField(max_length=300, null=True, blank=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
-    no_show_balance = models.BooleanField(default=0)
-    deficit_available = models.BooleanField(default=0)
-    online_reserve = models.BooleanField(default=0)
+    no_show_balance = models.BooleanField(default=0, null=True)
+    deficit_available = models.BooleanField(default=0, null=True)
+    online_reserve = models.BooleanField(default=0, null=True)
+    main_customer = models.CharField(max_length=300, null=True, blank=True)
+    manager = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -154,15 +156,15 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
 class Brand(models.Model):
     name = models.CharField(max_length=300)
-    enabled = models.BooleanField(default=1)
+    enabled = models.BooleanField(default=1, null=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
-    wait_list = models.BooleanField(default=0)
-    is_recommended = models.BooleanField(default=0)
-    sort_index = models.IntegerField(default=999)
-    source_type = models.CharField(max_length=250, default='1C')
-    gallery_attribute = models.CharField(max_length=250, default='article')
+    wait_list = models.BooleanField(default=0, null=True)
+    is_recommended = models.BooleanField(default=0, null=True)
+    sort_index = models.IntegerField(default=999, null=True)
+    source_type = models.CharField(max_length=250, default='1C', null=True)
+    gallery_attribute = models.CharField(max_length=250, default='article', null=True)
     gallery_name = models.CharField(max_length=250, null=True, blank=True)
-    kind = models.CharField(max_length=250, default='secondary')
+    kind = models.CharField(max_length=250, default='secondary', null=True)
     brand_image = models.ImageField(upload_to="content/brand_image/", blank=True, null=True)
 
     def __str__(self):
@@ -185,14 +187,15 @@ class PriceCategory(models.Model):
         verbose_name_plural = "PriceCategories"
 
 
-class CatalogCategory(MPTTModel):
-    parent_id = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+class CatalogCategory(models.Model):
+    parent_id = TreeForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
     source_id = models.CharField(max_length=300, null=True, blank=True)
-    enabled = models.BooleanField(default=1)
-    sort_index = models.IntegerField(default=999)
+    enabled = models.BooleanField(default=1, null=True)
+    sort_index = models.IntegerField(default=999, null=True)
     content_id = models.IntegerField(null=True, blank=True)
     name = models.CharField(max_length=500)
     comment = models.CharField(max_length=500, null=True, blank=True)
+    parent = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -207,7 +210,7 @@ class CatalogCategory(MPTTModel):
 
 class Offer(models.Model):
     name = models.CharField(max_length=300, default='Offer')
-    group = models.CharField(max_length=300, null=True, blank=True)
+    group_name = models.CharField(max_length=300, null=True, blank=True)
     title = models.CharField(max_length=300, null=True, blank=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
 
@@ -230,20 +233,24 @@ class Product(models.Model):
     source_id = models.CharField(max_length=300, null=True, blank=True)
     search_key = models.CharField(max_length=250, null=True, blank=True)
     sort_price = models.DecimalField(max_digits=15, decimal_places=2, default=0, blank=True)
-    is_active = models.BooleanField(default=1)
+    is_active = models.BooleanField(default=1, null=True)
     weight = models.DecimalField(max_digits=15, decimal_places=3, default=0, blank=True)
     pack_qty = models.IntegerField(default=0, blank=True)
     ABC = models.CharField(max_length=1, null=True, blank=True)
-    is_exists = models.BooleanField(default=0)
+    is_exists = models.BooleanField(default=0, null=True)
     code = models.CharField(max_length=250, null=True, blank=True)
     source_type = models.CharField(max_length=250, default='1C', null=True, blank=True)
-    price_category = models.ForeignKey(PriceCategory, on_delete=models.SET_NULL, blank=True, null=True)
+    price_category_id = models.ForeignKey(PriceCategory, on_delete=models.SET_NULL, blank=True, null=True)
     product_type = models.IntegerField(null=True, blank=True)
-    delete_flag = models.BooleanField(default=0)
+    delete_flag = models.BooleanField(default=0, null=True)
     advanced_description = models.TextField("Advanced description", null=True, blank=True)
     name = models.CharField(max_length=500, default='Product')
     comment = models.CharField(max_length=500, null=True, blank=True)
     keywords = models.CharField(max_length=500, null=True, blank=True)
+    brand = models.CharField(max_length=300, null=True, blank=True)
+    offer = models.CharField(max_length=300, null=True, blank=True)
+    category = models.CharField(max_length=300, null=True, blank=True)
+    price_category = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)
@@ -332,9 +339,6 @@ class Currency(models.Model):
 class PriceType(models.Model):
     name = models.CharField(max_length=300)
     source_id = models.CharField(max_length=300, null=True, blank=True)
-    enabled = models.BooleanField(default=1)
-    sort_index = models.IntegerField(default=999, null=True)
-    access_policy_data = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return self.name

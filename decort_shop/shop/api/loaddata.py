@@ -63,28 +63,26 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_customer_buffer (
             source_id character varying(300),
-            main_source_id character varying(300),
-            manager_source_id character varying(300),
+            main_customer_id character varying(300),
+            manager_id character varying(300),
             code character varying(300),
-            name character varying(250)
+            name character varying(250),
             sale_policy character varying(300),
             city character varying(300),
-            region_id character varying(300));'''
+            region_id character varying(300) );'''
 
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/customers.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_customer_buffer', columns=(
-                'source_id', 'main_source_id', 'manager_source_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
+                'source_id', 'main_customer_id', 'manager_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
                           sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_customer c
             SET               
-                main_source_id  = b.main_source_id,  
-                manager_source_id = b.manager_source_id, 
                 code = b.code, 
                 name = b.name, 
                 sale_policy = b.sale_policy, 
@@ -177,7 +175,7 @@ class LoadData:
 
         cur = self.conn.cursor()
 
-        t_sql = '''CREATE TEMP TABLE shop_price_type_buffer (
+        t_sql = '''CREATE TEMP TABLE shop_pricetype_buffer (
             source_id character varying(300),
             name character varying(250));'''
 
@@ -185,14 +183,14 @@ class LoadData:
         self.conn.commit()
 
         with open('cache/price_types.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_price_type_buffer', columns=('source_id', 'name'), sep='|')
+            cur.copy_from(file, 'shop_pricetype_buffer', columns=('source_id', 'name'), sep='|')
 
         self.conn.commit()
 
-        copy_sql = '''UPDATE shop_price_type p
+        copy_sql = '''UPDATE shop_pricetype p
             SET               
                 name  = b.name,               
-            FROM shop_price_type_buffer b
+            FROM shop_price_typebuffer b
             WHERE p.source_id = b.source_id;'''
 
         cur.execute(copy_sql)
@@ -208,7 +206,7 @@ class LoadData:
 
         cur = self.conn.cursor()
 
-        t_sql = '''CREATE TEMP TABLE shop_price_category_buffer (
+        t_sql = '''CREATE TEMP TABLE shop_pricecategory_buffer (
             source_id character varying(300),
             inner_name character varying(250));'''
 
@@ -216,14 +214,14 @@ class LoadData:
         self.conn.commit()
 
         with open('cache/price_categories.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_price_category_buffer', columns=('source_id', 'inner_name'), sep='|')
+            cur.copy_from(file, 'shop_pricecategory_buffer', columns=('source_id', 'inner_name'), sep='|')
 
         self.conn.commit()
 
-        copy_sql = '''UPDATE shop_price_category p
+        copy_sql = '''UPDATE shop_pricecategory p
             SET               
                 inner_name  = b.inner_name,               
-            FROM shop_price_category_buffer b
+            FROM shop_pricecategory_buffer b
             WHERE p.source_id = b.source_id;'''
 
         cur.execute(copy_sql)
@@ -241,25 +239,25 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_catalogcategory_buffer (
             source_id character varying(300),
-            parent_id character varying(300)
-            name character varying(250)
-            name_ukr character varying(250)
-            name character varying(250));'''
+            parent character varying(300),
+            name character varying(250),
+            name_ukr character varying(250),
+            name character varying(250) );'''
 
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_catalogcategory_buffer',
-                          columns=('source_id', 'parent_id', 'name', 'name_ukr', 'name_en'), sep='|')
+                          columns=('source_id', 'parent', 'name', 'name_ukr', 'name_en'), sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_catalogcategory p
             SET               
-                parent_id = b.parent_id,
+                parent = b.parent,
                 name = b.name,
-                name_ukr = b.name_ukr,
+                name_uk = b.name_uk,
                 name_en = b.name_en,             
             FROM shop_catalogcategory_buffer b
             WHERE p.source_id = b.source_id;'''
@@ -286,23 +284,23 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_offer_buffer (
             source_id character varying(300),
-            name character varying(250)
-            group character varying(250)
-            title character varying(250));'''
+            name character varying(250),
+            group_name character varying(250),
+            title character varying(250) );'''
 
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/offers.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_offer_buffer',
-                          columns=('source_id', 'name', 'group', 'title'), sep='|')
+                          columns=('source_id', 'name', 'group_name', 'title'), sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_offer o
             SET               
                 name = b.name,
-                group = b.group,
+                group_name = b.group_name,
                 title = b.title,             
             FROM shop_offer_buffer b
             WHERE o.source_id = b.source_id;'''
@@ -322,15 +320,15 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_product_buffer (
             source_id character varying(300),
-            category_id character varying(300),
-            brand_id character varying(300),
-            offer_id character varying(300),
+            category character varying(300),
+            brand character varying(300),
+            offer character varying(300),
             code character varying(300),
             name character varying(500),
-            name_ukr character varying(500),
+            name_uk character varying(500),
             name_en character varying(500),
             comment character varying(500),
-            comment_ukr character varying(500),
+            comment_uk character varying(500),
             comment_en character varying(500),
             article character varying(300),
             specification character varying(300),
@@ -341,7 +339,7 @@ class LoadData:
             pack_qty integer,
             product_type integer,
             create_date timestamp with time zone,
-            income_date timestamp with time zone);'''
+            income_date timestamp with time zone );'''
 
         cur.execute(t_sql)
         self.conn.commit()
@@ -349,8 +347,8 @@ class LoadData:
         with open('cache/products.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_product_buffer',
                           columns=(
-                          'source_id', 'category_id', 'brand_id', 'offer_id', 'code', 'name', 'name_ukr', 'name_en',
-                          'comment', 'comment_ukr', 'comment_en', 'article', 'specification', 'ABC', 'price_category',
+                          'source_id', 'category', 'brand', 'offer', 'code', 'name', 'name_uk', 'name_en',
+                          'comment', 'comment_uk', 'comment_en', 'article', 'specification', 'ABC', 'price_category',
                           'advanced_description', 'weight', 'pack_qty', 'product_type', 'create_date',
                           'income_date'), sep='|')
 
@@ -358,15 +356,15 @@ class LoadData:
 
         copy_sql = '''UPDATE shop_product p
             SET               
-                category_id = b.category_id,
-                brand_id = b.brand_id,
-                offer_id = b.offer_id,
+                category = b.category,
+                brand = b.brand,
+                offer = b.offer,
                 code = b.code,
                 name = b.name,
-                name_ukr = b.name_ukr,
+                name_uk = b.name_uk,
                 name_en = b.name_en,
                 comment = b.comment,
-                comment_ukr = b.comment_ukr,
+                comment_uk = b.comment_uk,
                 comment_en = b.comment_en,
                 article = b.article,
                 specification = b.specification,
@@ -397,8 +395,8 @@ class LoadData:
         t_sql = '''CREATE TEMP TABLE shop_customerpoint_buffer (
             customer_source_id character varying(300),        
             source_id character varying(300),
-            name character varying(300)
-            add character varying(300));'''
+            name character varying(300),
+            add character varying(300) );'''
 
         cur.execute(t_sql)
         self.conn.commit()
@@ -705,7 +703,7 @@ class LoadData:
         t_sql = '''CREATE TEMP TABLE shop_stock_buffer (
                 product_source_id character varying(300),
                 stock_name character varying(300), 
-                amount_total integer 
+                amount_total integer, 
                 amount_account integer );'''
 
         cur.execute(t_sql)
