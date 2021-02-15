@@ -770,6 +770,33 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_productdescription_buffer (
+                product_source_id character varying(300),
+                property character varying(300), 
+                value text );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/description.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_productdescription_buffer',
+                          columns=('product_source_id', 'property', 'value'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_productdescription p
+                SET
+                    property = b.property,
+                    value = b.value                         
+                FROM shop_productdescription_buffer b
+                WHERE p.product_source_id = b.product_source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_applicability(self):
         applicability = self.client.service.GetData('applicability')
         data = base64.b64decode(applicability)
@@ -777,12 +804,70 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_productapplicability_buffer (
+                product_source_id character varying(300),
+                vehicle character varying(300),
+                modification character varying(300), 
+                engine character varying(300), 
+                year character varying(300) );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/applicability.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_productapplicability_buffer',
+                          columns=('product_source_id', 'vehicle', 'modification', 'engine', 'year'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_productapplicability p
+                SET
+                    vehicle = b.vehicle,
+                    modification = b.modification,
+                    engine = b.engine,
+                    year = b.year                         
+                FROM shop_productapplicability_buffer b
+                WHERE p.product_source_id = b.product_source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_cross(self):
         cross = self.client.service.GetData('cross')
         data = base64.b64decode(cross)
         file = open('cache/cross.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_cross_buffer (
+                product_source_id character varying(300),
+                brand_name character varying(300),                
+                article_nr character varying(300) );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/cross.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_cross_buffer',
+                          columns=('product_source_id', 'brand_name', 'article_nr'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_cross p
+                SET
+                    brand_name = b.brand_name,
+                    article_nr = b.article_nr                       
+                FROM shop_cross_buffer b
+                WHERE p.product_source_id = b.product_source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
 
     def load_orders(self):
         orders = self.client.service.GetData('orders')

@@ -124,6 +124,25 @@ with open('cache/deficit.csv', 'r', encoding='utf-8') as file:
 conn.commit()
 print('Load Deficit Reserve')
 
+with open('cache/description.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_productdescription',
+                  columns=('product_source_id', 'property', 'value'), sep='|')
+conn.commit()
+print('Load Product Description')
+
+with open('cache/applicability.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_productapplicability',
+                  columns=('product_source_id', 'vehicle', 'modification', 'engine', 'year'), sep='|')
+conn.commit()
+print('Load Product Applicability')
+
+with open('cache/cross.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_cross',
+                  columns=('product_source_id', 'brand_name', 'article_nr'), sep='|')
+conn.commit()
+print('Load Cross')
+
+
 
 conn.close()
 print('Connection closed')
