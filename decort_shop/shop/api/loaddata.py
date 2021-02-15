@@ -393,7 +393,7 @@ class LoadData:
         cur = self.conn.cursor()
 
         t_sql = '''CREATE TEMP TABLE shop_customerpoint_buffer (
-            customer_source_id character varying(300),        
+            customer character varying(300),        
             source_id character varying(300),
             name character varying(300),
             add character varying(300) );'''
@@ -403,12 +403,13 @@ class LoadData:
 
         with open('cache/customer_points.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_customerpoint_buffer',
-                          columns=('customer_source_id', 'source_id', 'name', 'add'), sep='|')
+                          columns=('customer', 'source_id', 'name', 'add'), sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_customerpoint c
-            SET               
+            SET 
+                customer = b.customer,              
                 name = b.name,
                 add = b.add                           
             FROM shop_customerpoint_buffer b

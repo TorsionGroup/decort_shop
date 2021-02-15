@@ -63,7 +63,7 @@ conn.commit()
 print('Load Product')
 
 with open('cache/customer_points.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_customerpoint', columns=('customer_source_id', 'source_id', 'name', 'add'), sep='|')
+    cur.copy_from(file, 'shop_customerpoint', columns=('customer', 'source_id', 'name', 'add'), sep='|')
 conn.commit()
 print('Load Customer Point')
 
