@@ -100,6 +100,30 @@ with open('cache/prices.csv', 'r', encoding='utf-8') as file:
 conn.commit()
 print('Load Price')
 
+with open('cache/sales.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_sale',
+                  columns=('product_source', 'customer_source', 'qty', 'date'), sep='|')
+conn.commit()
+print('Load Sale')
+
+with open('cache/sale_tasks.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_saletask',
+                  columns=('product_source', 'customer_source', 'qty'), sep='|')
+conn.commit()
+print('Load Sale Task')
+
+with open('cache/stocks.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_stock',
+                  columns=('product_source_id', 'stock_name', 'amount_total', 'amount_total'), sep='|')
+conn.commit()
+print('Load Stock')
+
+with open('cache/deficit.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'shop_deficitreserve',
+                  columns=('product_source_id', 'sale_policy', 'amount_account'), sep='|')
+conn.commit()
+print('Load Deficit Reserve')
+
 
 conn.close()
 print('Connection closed')

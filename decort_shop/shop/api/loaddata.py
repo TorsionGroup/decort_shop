@@ -623,12 +623,41 @@ class LoadData:
         self.conn.commit()
         self.conn.close()
 
-def load_sales(self):
+    def load_sales(self):
         sales = self.client.service.GetData('sales')
         data = base64.b64decode(sales)
         file = open('cache/sales.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_sale_buffer (
+                product_source character varying(300),
+                customer_source character varying(300), 
+                qty integer, 
+                date timestamp with time zone );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/sales.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_sale_buffer',
+                          columns=('product_source', 'customer_source', 'qty', 'date'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_sale s
+                SET
+                    customer_source = b.customer_source,
+                    qty = b.qty, 
+                    date = b.date          
+                FROM shop_sale_buffer b
+                WHERE s.product_source = b.product_source;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
 
     def load_sale_tasks(self):
         sale_tasks = self.client.service.GetData('sale_tasks')
@@ -637,6 +666,33 @@ def load_sales(self):
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_sale_buffer (
+                product_source character varying(300),
+                customer_source character varying(300), 
+                qty integer );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/sale_tasks.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_saletask_buffer',
+                          columns=('product_source', 'customer_source', 'qty'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_saletask s
+                SET
+                    customer_source = b.customer_source,
+                    qty = b.qty                             
+                FROM shop_saletask_buffer b
+                WHERE s.product_source = b.product_source;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_stocks(self):
         stocks = self.client.service.GetData('stocks')
         data = base64.b64decode(stocks)
@@ -644,12 +700,68 @@ def load_sales(self):
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_stock_buffer (
+                product_source_id character varying(300),
+                stock_name character varying(300), 
+                amount_total integer 
+                amount_account integer );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/stocks.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_stock_buffer',
+                          columns=('product_source_id', 'stock_name', 'amount_total', 'amount_account'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_stock s
+                SET
+                    stock_name = b.stock_name,
+                    amount_total = b.amount_total, 
+                    amount_account = b.amount_account                             
+                FROM shop_stock_buffer b
+                WHERE s.product_source_id = b.product_source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_deficit(self):
         deficit = self.client.service.GetData('deficit')
         data = base64.b64decode(deficit)
         file = open('cache/deficit.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_deficitreserve_buffer (
+                product_source_id character varying(300),
+                sale_policy character varying(300), 
+                amount_account integer );'''
+
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/deficit.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_deficitreserve_buffer',
+                          columns=('product_source_id', 'sale_policy', 'amount_account'), sep='|')
+
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_deficitreserve d
+                SET
+                    sale_policy = b.sale_policy,
+                    amount_account = b.amount_account                         
+                FROM shop_deficitreserve_buffer b
+                WHERE d.product_source_id = b.product_source_id;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
 
     def load_description(self):
         description = self.client.service.GetData('description')
