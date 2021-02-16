@@ -881,28 +881,28 @@ class LoadData:
 
     t_sql = '''CREATE TEMP TABLE shop_order_buffer (
             order_source character varying(300),
-            agreement_source_id character varying(300),                
+            agreement character varying(300),                
             order_number character varying(300),
             waybill_number character varying(300),
             comment character varying(300),
             source_type character varying(300),
             has_precept integer,
             has_waybill integer,
-            order_date timestamp with time zone );'''
+            order_date character varying(300) );'''
 
     cur.execute(t_sql)
     self.conn.commit()
 
     with open('cache/orders.csv', 'r', encoding='utf-8') as file:
         cur.copy_from(file, 'shop_order_buffer',
-                      columns=('order_source', 'agreement_source_id', 'order_number', 'waybill_number',
+                      columns=('order_source', 'agreement', 'order_number', 'waybill_number',
                                'comment', 'source_type', 'has_precept', 'has_waybill', 'order_date'), sep='|')
 
     self.conn.commit()
 
     copy_sql = '''UPDATE shop_order o
             SET
-                agreement_source_id = b.agreement_source_id,
+                agreement = b.agreement,
                 order_number = b.order_number,
                 waybill_number = b.waybill_number,
                 comment = b.comment,
@@ -928,37 +928,30 @@ class LoadData:
 
     t_sql = '''CREATE TEMP TABLE shop_orderitem_buffer (
             order_source character varying(300),
-            product_source_id character varying(300),                
-            currency_source_id character varying(300),
+            product character varying(300),                
+            currency character varying(300),
             qty integer,
-            reserved integer,
-            executed integer,
-            order_id integer,
-            product_id integer,
             price numeric(15, 2),
-            key character varying(300) );'''
+            reserved integer,
+            executed integer );'''
 
     cur.execute(t_sql)
     self.conn.commit()
 
     with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
         cur.copy_from(file, 'shop_orderitem_buffer',
-                      columns=('order_source', 'product_source_id', 'currency_source_id', 'qty',
-                               'reserved', 'executed', 'order_id', 'product_id', 'price', 'key'), sep='|')
+                      columns=('order_source', 'product', 'currency', 'qty', 'price', 'reserved', 'executed'), sep='|')
 
     self.conn.commit()
 
     copy_sql = '''UPDATE shop_orderitem o
             SET
-                product_source_id = b.product_source_id,
-                currency_source_id = b.currency_source_id,
+                product = b.product,
+                currency = b.currency,
                 qty = b.qty,
+                price = b.price
                 reserved = b.reserved,
-                executed = b.executed,
-                order_id = b.order_id,
-                product_id = b.product_id,
-                price = b.price,
-                key = b.key                                       
+                executed = b.executed                            
             FROM shop_orderitem_buffer b
             WHERE p.order_source = b.order_source;'''
 
