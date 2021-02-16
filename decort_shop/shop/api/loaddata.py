@@ -430,9 +430,9 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_customeragreement_buffer (
             source_id character varying(300),
-            customer_source_id character varying(300), 
-            currency_source_id character varying(300), 
-            price_type_source_id character varying(300), 
+            customer character varying(300), 
+            currency character varying(300), 
+            price_type character varying(300), 
             code character varying(300), 
             name character varying(300),
             number character varying(300),
@@ -445,16 +445,16 @@ class LoadData:
 
         with open('cache/customer_agreements.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_customeragreement_buffer',
-                          columns=('source_id', 'customer_source_id', 'currency_source_id', 'price_type_source_id',
+                          columns=('source_id', 'customer', 'currency', 'price_type',
                                    'code', 'name', 'number', 'discount', 'is_status', 'is_active'), sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_customeragreement c
             SET
-                customer_source_id = b.customer_source_id,
-                currency_source_id = b.currency_source_id,
-                price_type_source_id = b.price_type_source_id,
+                customer = b.customer,
+                currency = b.currency,
+                price_type = b.price_type,
                 code = b.code,
                 name = b.name,               
                 number = b.number,
@@ -478,9 +478,9 @@ class LoadData:
         cur = self.conn.cursor()
 
         t_sql = '''CREATE TEMP TABLE shop_balance_buffer (
-            customer_source character varying(300),
-            agreement_source character varying(300), 
-            currency_source character varying(300), 
+            customer character varying(300),
+            agreement character varying(300), 
+            currency character varying(300), 
             balance numeric(15,2), 
             past_due numeric(15,2) );'''
 
@@ -489,19 +489,19 @@ class LoadData:
 
         with open('cache/balances.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_balance_buffer',
-                          columns=('customer_source', 'agreement_source', 'currency_source', 'balance',
+                          columns=('customer', 'agreement', 'currency', 'balance',
                                    'past_due'), sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_customeragreement c
             SET
-                agreement_source = b.agreement_source,
-                currency_source = b.currency_source, 
+                agreement = b.agreement,
+                currency = b.currency, 
                 balance = b.balance, 
                 past_due = b.past_due            
             FROM shop_customeragreement_buffer b
-            WHERE c.customer_source = b.customer_source;'''
+            WHERE c.customer = b.customer;'''
 
         cur.execute(copy_sql)
         self.conn.commit()
@@ -517,10 +517,10 @@ class LoadData:
         cur = self.conn.cursor()
 
         t_sql = '''CREATE TEMP TABLE shop_customerdiscount_buffer (
-            criteria_source_id character varying(300),
-            customer_source_id character varying(300), 
-            agreement_source_id character varying(300), 
-            price_type_source_id character varying(300), 
+            source_id character varying(300),
+            customer character varying(300), 
+            agreement character varying(300), 
+            price_type character varying(300), 
             criteria_type character varying(300), 
             discount numeric(15, 2) );'''
 
@@ -529,20 +529,20 @@ class LoadData:
 
         with open('cache/customer_discounts.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_customerdiscount_buffer',
-                          columns=('criteria_source_id', 'customer_source_id', 'agreement_source_id',
-                                   'price_type_source_id', 'criteria_type', 'discount'), sep='|')
+                          columns=('source_id', 'customer', 'agreement',
+                                   'price_type', 'criteria_type', 'discount'), sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_customerdiscount c
             SET
-                criteria_source_id = b.criteria_source_id,
-                agreement_source_id = b.agreement_source_id, 
-                price_type_source_id = b.price_type_source_id, 
+                source_id = b.source_id,
+                agreement = b.agreement, 
+                price_type = b.price_type, 
                 criteria_type = b.criteria_type,
                 discount = b.discount            
             FROM shop_customerdiscount_buffer b
-            WHERE c.customer_source_id = b.customer_source_id;'''
+            WHERE c.customer= b.customer;'''
 
         cur.execute(copy_sql)
         self.conn.commit()

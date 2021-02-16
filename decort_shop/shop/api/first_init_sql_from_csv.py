@@ -69,21 +69,21 @@ print('Load Customer Point')
 
 with open('cache/customer_agreements.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_customeragreement',
-                  columns=('source_id', 'customer_source_id', 'currency_source_id', 'price_type_source_id',
+                  columns=('source_id', 'customer', 'currency', 'price_type',
                            'code', 'name', 'number', 'discount', 'is_status', 'is_active'), sep='|')
 conn.commit()
 print('Load Customer Agreement')
 
 with open('cache/balances.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_balance',
-                  columns=('customer_source', 'agreement_source', 'currency_source', 'balance', 'past_due'), sep='|')
+                  columns=('customer', 'agreement', 'currency', 'balance', 'past_due'), sep='|')
 conn.commit()
 print('Load Balance')
 
 with open('cache/customer_discounts.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_customerdiscount_buffer',
-                  columns=('criteria_source_id', 'customer_source_id', 'agreement_source_id',
-                           'price_type_source_id', 'criteria_type', 'discount'), sep='|')
+    cur.copy_from(file, 'shop_customerdiscount',
+                  columns=('source_id', 'customer', 'agreement',
+                           'price_type', 'criteria_type', 'discount'), sep='|')
 conn.commit()
 print('Load Customer Discount')
 

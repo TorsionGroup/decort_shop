@@ -362,12 +362,15 @@ class CustomerAgreement(models.Model):
         PriceType, on_delete=models.CASCADE, related_name="agreement_price_type", null=True, blank=True)
     is_status = models.BooleanField()
     discount = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    is_active = models.BooleanField(default=1)
+    is_active = models.BooleanField(default=1, null=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
-    api_available = models.BooleanField(default=0)
+    api_available = models.BooleanField(default=0, null=True)
     api_token = models.CharField(max_length=250, null=True, blank=True)
     api_user_id = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True, blank=True)
+    customer = models.CharField(max_length=300, null=True, blank=True)
+    currency = models.CharField(max_length=300, null=True, blank=True)
+    price_type = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -414,11 +417,14 @@ class CustomerDiscount(models.Model):
         Customer, on_delete=models.CASCADE, related_name="discount_customer_customer", null=True, blank=True)
     agreement_id = models.ForeignKey(
         CustomerAgreement, on_delete=models.CASCADE, related_name="discount_customer_agreement", null=True, blank=True)
-    criteria_id = models.IntegerField(null=True, blank=True)
+    source_id = models.CharField(max_length=300, null=True, blank=True)
     criteria_type = models.CharField(max_length=250, null=True, blank=True)
-    discount = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    discount = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=0)
     price_type_id = models.ForeignKey(
         PriceType, on_delete=models.CASCADE, related_name="discount_customer_price_type", null=True, blank=True)
+    customer = models.CharField(max_length=300, null=True, blank=True)
+    agreement = models.CharField(max_length=300, null=True, blank=True)
+    price_type = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)
@@ -449,10 +455,13 @@ class Balance(models.Model):
         Customer, on_delete=models.CASCADE, related_name="balance_customer", null=True, blank=True)
     currency_id = models.ForeignKey(
         Currency, on_delete=models.CASCADE, related_name="balance_currency", null=True, blank=True)
-    balance = models.DecimalField(max_digits=15, decimal_places=2)
-    past_due = models.DecimalField(max_digits=15, decimal_places=2)
+    balance = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=0)
+    past_due = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=0)
     agreement_id = models.ForeignKey(
         CustomerAgreement, on_delete=models.CASCADE, related_name="balance_agreement", null=True, blank=True)
+    customer = models.CharField(max_length=300, null=True, blank=True)
+    currency = models.CharField(max_length=300, null=True, blank=True)
+    agreement = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.balance
