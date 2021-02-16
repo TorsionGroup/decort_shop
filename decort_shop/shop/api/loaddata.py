@@ -560,8 +560,8 @@ class LoadData:
         cur = self.conn.cursor()
 
         t_sql = '''CREATE TEMP TABLE shop_dropshippingwallet_buffer (
-                agreement_source character varying(300),
-                order_source character varying(300), 
+                agreement character varying(300),
+                order_order character varying(300), 
                 credit numeric(15, 2), 
                 debit numeric(15, 2), 
                 balance numeric(15, 2) );'''
@@ -571,18 +571,18 @@ class LoadData:
 
         with open('cache/dropshipping_wallet.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_dropshippingwallet_buffer',
-                          columns=('agreement_source', 'order_source', 'credit', 'debit', 'balance'), sep='|')
+                          columns=('agreement', 'order_order', 'credit', 'debit', 'balance'), sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_dropshippingwallet d
                 SET
-                    agreement_source = b.agreement_source,
-                    credit = b.price_type_source_id, 
+                    agreement = b.agreement,
+                    credit = b.credit, 
                     debit = b.debit,
                     balance = b.balance            
                 FROM shop_dropshippingwallet_buffer b
-                WHERE d.order_source = b.order_source;'''
+                WHERE d.order_order = b.order_order;'''
 
         cur.execute(copy_sql)
         self.conn.commit()

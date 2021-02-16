@@ -499,7 +499,7 @@ class PriceBuffer(models.Model):
     specification = models.CharField(max_length=250, null=True, blank=True)
     article = models.CharField(max_length=250, null=True, blank=True)
     name = models.CharField(max_length=250, null=True, blank=True)
-    price = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=0)
     currency = models.CharField(max_length=250, null=True, blank=True)
     rest = models.IntegerField(null=True, blank=True)
     agreement_id = models.ForeignKey(
@@ -1041,9 +1041,11 @@ class DropshippingWallet(models.Model):
         CustomerAgreement, on_delete=models.CASCADE, related_name="d_wallet_agreement", null=True, blank=True)
     currency_id = models.ForeignKey(
         Currency, on_delete=models.CASCADE, related_name="d_wallet_currency", null=True, blank=True)
-    debit = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    credit = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    balance = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    debit = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=0)
+    credit = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=0)
+    balance = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=0)
+    order_order = models.CharField(max_length=300, null=True, blank=True)
+    agreement = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.order_id

@@ -89,7 +89,7 @@ print('Load Customer Discount')
 
 with open('cache/dropshipping_wallet.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_dropshippingwallet',
-                  columns=('agreement_source', 'order_source', 'credit', 'debit', 'balance'), sep='|')
+                  columns=('agreement', 'order_order', 'credit', 'debit', 'balance'), sep='|')
 conn.commit()
 print('Load Dropshipping Wallet')
 
