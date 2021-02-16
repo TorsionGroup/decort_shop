@@ -425,6 +425,7 @@ class CustomerDiscount(models.Model):
     customer = models.CharField(max_length=300, null=True, blank=True)
     agreement = models.CharField(max_length=300, null=True, blank=True)
     price_type = models.CharField(max_length=300, null=True, blank=True)
+    brand = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)

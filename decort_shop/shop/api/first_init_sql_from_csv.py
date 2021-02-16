@@ -82,7 +82,7 @@ print('Load Balance')
 
 with open('cache/customer_discounts.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_customerdiscount',
-                  columns=('source_id', 'customer', 'agreement',
+                  columns=('source_id', 'brand', 'customer', 'agreement',
                            'price_type', 'criteria_type', 'discount'), sep='|')
 conn.commit()
 print('Load Customer Discount')

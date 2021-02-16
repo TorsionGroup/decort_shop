@@ -518,6 +518,7 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_customerdiscount_buffer (
             source_id character varying(300),
+            brand character varying(300),
             customer character varying(300), 
             agreement character varying(300), 
             price_type character varying(300), 
@@ -529,7 +530,7 @@ class LoadData:
 
         with open('cache/customer_discounts.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_customerdiscount_buffer',
-                          columns=('source_id', 'customer', 'agreement',
+                          columns=('source_id', 'brand', 'customer', 'agreement',
                                    'price_type', 'criteria_type', 'discount'), sep='|')
 
         self.conn.commit()
@@ -537,6 +538,7 @@ class LoadData:
         copy_sql = '''UPDATE shop_customerdiscount c
             SET
                 source_id = b.source_id,
+                brand = b.brand,
                 agreement = b.agreement, 
                 price_type = b.price_type, 
                 criteria_type = b.criteria_type,
