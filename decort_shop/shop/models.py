@@ -187,13 +187,13 @@ class PriceCategory(models.Model):
         verbose_name_plural = "PriceCategories"
 
 
-class CatalogCategory(models.Model):
+class CatalogCategory(MPTTModel):
     parent_id = TreeForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
     source_id = models.CharField(max_length=300, null=True, blank=True)
     enabled = models.BooleanField(default=1, null=True)
     sort_index = models.IntegerField(default=999, null=True)
     content_id = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=500, null=True, blank=True)
+    name = models.CharField(max_length=500, null=True, default='Catalog')
     comment = models.CharField(max_length=500, null=True, blank=True)
     parent = models.CharField(max_length=500, null=True, blank=True)
 
