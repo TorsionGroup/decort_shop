@@ -240,23 +240,23 @@ class LoadData:
         t_sql = '''CREATE TEMP TABLE shop_catalogcategory_buffer (
             source_id character varying(300),
             parent character varying(300),
-            name character varying(250),
+            name_ru character varying(250),
             name_ukr character varying(250),
-            name character varying(250) );'''
+            name_en character varying(250) );'''
 
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_catalogcategory_buffer',
-                          columns=('source_id', 'parent', 'name', 'name_ukr', 'name_en'), sep='|')
+                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en'), sep='|')
 
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_catalogcategory p
             SET               
                 parent = b.parent,
-                name = b.name,
+                name_ru = b.name_ru,
                 name_uk = b.name_uk,
                 name_en = b.name_en,             
             FROM shop_catalogcategory_buffer b
@@ -324,10 +324,10 @@ class LoadData:
             brand character varying(300),
             offer character varying(300),
             code character varying(300),
-            name character varying(500),
+            name_ru character varying(500),
             name_uk character varying(500),
             name_en character varying(500),
-            comment character varying(500),
+            comment_ru character varying(500),
             comment_uk character varying(500),
             comment_en character varying(500),
             article character varying(300),
@@ -347,8 +347,8 @@ class LoadData:
         with open('cache/products.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_product_buffer',
                           columns=(
-                          'source_id', 'category', 'brand', 'offer', 'code', 'name', 'name_uk', 'name_en',
-                          'comment', 'comment_uk', 'comment_en', 'article', 'specification', 'abc', 'price_category',
+                          'source_id', 'category', 'brand', 'offer', 'code', 'name_ru', 'name_uk', 'name_en',
+                          'comment_ru', 'comment_uk', 'comment_en', 'article', 'specification', 'abc', 'price_category',
                           'advanced_description', 'weight', 'pack_qty', 'product_type', 'create_date',
                           'income_date'), sep='|')
 
@@ -360,10 +360,10 @@ class LoadData:
                 brand = b.brand,
                 offer = b.offer,
                 code = b.code,
-                name = b.name,
+                name_ru = b.name_ru,
                 name_uk = b.name_uk,
                 name_en = b.name_en,
-                comment = b.comment,
+                comment_ru = b.comment_ru,
                 comment_uk = b.comment_uk,
                 comment_en = b.comment_en,
                 article = b.article,

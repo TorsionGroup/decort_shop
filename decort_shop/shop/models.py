@@ -193,7 +193,7 @@ class CatalogCategory(models.Model):
     enabled = models.BooleanField(default=1, null=True)
     sort_index = models.IntegerField(default=999, null=True)
     content_id = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=500, null=True, blank=True)
     comment = models.CharField(max_length=500, null=True, blank=True)
     parent = models.CharField(max_length=500, null=True, blank=True)
 
@@ -244,7 +244,7 @@ class Product(models.Model):
     product_type = models.IntegerField(null=True, blank=True)
     delete_flag = models.BooleanField(default=0, null=True)
     advanced_description = models.TextField("Advanced description", null=True, blank=True)
-    name = models.CharField(max_length=500, default='Product')
+    name = models.CharField(max_length=500, null=True, blank=True)
     comment = models.CharField(max_length=500, null=True, blank=True)
     keywords = models.CharField(max_length=500, null=True, blank=True)
     brand = models.CharField(max_length=300, null=True, blank=True)
