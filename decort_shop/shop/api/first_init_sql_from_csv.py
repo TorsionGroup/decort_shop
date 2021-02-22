@@ -43,7 +43,7 @@ print('Load Price Category')
 
 with open('cache/categories.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_catalogcategory',
-                  columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en'), sep='|')
+                  columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'enabled'), sep='|')
 conn.commit()
 print('Load Catalog Category')
 

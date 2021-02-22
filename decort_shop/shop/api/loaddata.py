@@ -242,14 +242,15 @@ class LoadData:
             parent character varying(300),
             name_ru character varying(250),
             name_ukr character varying(250),
-            name_en character varying(250) );'''
+            name_en character varying(250),
+            enabled character varying(250) );'''
 
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_catalogcategory_buffer',
-                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en'), sep='|')
+                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'enabled'), sep='|')
 
         self.conn.commit()
 
@@ -258,7 +259,8 @@ class LoadData:
                 parent = b.parent,
                 name_ru = b.name_ru,
                 name_uk = b.name_uk,
-                name_en = b.name_en,             
+                name_en = b.name_en,
+                enabled = b.enabled,             
             FROM shop_catalogcategory_buffer b
             WHERE p.source_id = b.source_id;'''
 
