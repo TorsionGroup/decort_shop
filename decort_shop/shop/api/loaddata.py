@@ -250,7 +250,8 @@ class LoadData:
 
         with open('cache/categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_catalogcategory_buffer',
-                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'enabled'), sep='|')
+                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'enabled', 'level', 'lft',
+                                   'rght', 'tree_id'), sep='|')
 
         self.conn.commit()
 
@@ -260,7 +261,11 @@ class LoadData:
                 name_ru = b.name_ru,
                 name_uk = b.name_uk,
                 name_en = b.name_en,
-                enabled = b.enabled,             
+                enabled = b.enabled,
+                level = b.level,
+                lft = b.lft,
+                rght = b.rght,
+                tree_id = b.tree_id,        
             FROM shop_catalogcategory_buffer b
             WHERE p.source_id = b.source_id;'''
 
