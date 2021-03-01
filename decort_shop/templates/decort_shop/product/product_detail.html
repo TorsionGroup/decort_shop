@@ -1,10 +1,13 @@
 {% extends 'decort_shop/product/main.html' %}
 {% load static %}
 {% block  title_page %}
-    <title>Shop - Torsion Group</title>
+<title>Shop - Torsion Group</title>
 {% endblock title_page %}
 
 {% block product_page %}
+
+<div class="col-lg-9 col-md-7 order-1 order-lg-2 order-md-2">
+
     <div class="breadcrumb-area">
         <div class="container">
             <div class="breadcrumb-content">
@@ -27,7 +30,7 @@
                     <div class="col-lg-5">
                         <div class="sp-img_area">
 
-                                <div class="sp-img_slider slick-img-slider torsion-slick-slider" data-slick-options='{
+                            <div class="sp-img_slider slick-img-slider torsion-slick-slider" data-slick-options='{
                                                                     "slidesToShow": 1,
                                                                     "arrows": false,
                                                                     "fade": true,
@@ -35,45 +38,45 @@
                                                                     "swipe": false,
                                                                     "asNavFor": ".sp-img_slider-nav"
                                                                     }'>
-                                    <div class="single-slide red zoom">
-                                        <img src=" "
-                                             alt="Torsion's Product Image">
-                                    </div>
-
+                                <div class="single-slide red zoom">
+                                    <img src=" "
+                                         alt="Torsion's Product Image">
                                 </div>
-                                <div class="sp-img_slider-nav slick-slider-nav torsion-slick-slider slider-navigation_style-4"
-                                     data-slick-options='{
+
+                            </div>
+                            <div class="sp-img_slider-nav slick-slider-nav torsion-slick-slider slider-navigation_style-4"
+                                 data-slick-options='{
                                                                     "slidesToShow": 3,
                                                                     "asNavFor": ".sp-img_slider",
                                                                     "focusOnSelect": true,
                                                                     "arrows" : true,
                                                                     "vertical" : true
                                                                     }'>
-                                    <div class="single-slide red">
-                                        <img src="assets/images/product/small-size/1.jpg"
-                                             alt="torsion's Product Thumnail">
-                                    </div>
-                                    <div class="single-slide orange">
-                                        <img src="assets/images/product/small-size/2.jpg"
-                                             alt="torsion's Product Thumnail">
-                                    </div>
-                                    <div class="single-slide brown">
-                                        <img src="assets/images/product/small-size/3.jpg"
-                                             alt="torsion's Product Thumnail">
-                                    </div>
-                                    <div class="single-slide umber">
-                                        <img src="assets/images/product/small-size/4.jpg"
-                                             alt="torsion's Product Thumnail">
-                                    </div>
-                                    <div class="single-slide red">
-                                        <img src="assets/images/product/small-size/5.jpg"
-                                             alt="torsion's Product Thumnail">
-                                    </div>
-                                    <div class="single-slide orange">
-                                        <img src="assets/images/product/small-size/6.jpg"
-                                             alt="torsion's Product Thumnail">
-                                    </div>
+                                <div class="single-slide red">
+                                    <img src="assets/images/product/small-size/1.jpg"
+                                         alt="torsion's Product Thumnail">
                                 </div>
+                                <div class="single-slide orange">
+                                    <img src="assets/images/product/small-size/2.jpg"
+                                         alt="torsion's Product Thumnail">
+                                </div>
+                                <div class="single-slide brown">
+                                    <img src="assets/images/product/small-size/3.jpg"
+                                         alt="torsion's Product Thumnail">
+                                </div>
+                                <div class="single-slide umber">
+                                    <img src="assets/images/product/small-size/4.jpg"
+                                         alt="torsion's Product Thumnail">
+                                </div>
+                                <div class="single-slide red">
+                                    <img src="assets/images/product/small-size/5.jpg"
+                                         alt="torsion's Product Thumnail">
+                                </div>
+                                <div class="single-slide orange">
+                                    <img src="assets/images/product/small-size/6.jpg"
+                                         alt="torsion's Product Thumnail">
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -193,7 +196,7 @@
 
                                 <div class="product-description">
                                     <ul>
-                                        {{ product_detail.advanced_description }}
+                                        {{ product_detail.advanced_description|safe }}
                                     </ul>
                                 </div>
                             </div>
@@ -202,7 +205,7 @@
 
                                 <div class="product-description">
                                     <ul>
-                                        {{ product_detail.advanced_description }}
+                                        {{ product_detail.advanced_description|safe }}
                                     </ul>
                                 </div>
                             </div>
@@ -322,4 +325,6 @@
 
         </div>
     </div>
+
+</div>
 {% endblock product_page %}

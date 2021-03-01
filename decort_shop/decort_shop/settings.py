@@ -234,3 +234,6 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+MPTT_ADMIN_LEVEL_INDENT = 30
+

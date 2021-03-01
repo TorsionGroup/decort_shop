@@ -4,6 +4,7 @@ from django import forms
 from modeltranslation.admin import TranslationAdmin
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.utils.safestring import mark_safe
+from mptt.admin import MPTTModelAdmin
 
 from .models import *
 from .forms import UserCreationForm, UserChangeForm
@@ -117,7 +118,7 @@ class AccountAdmin(BaseUserAdmin):
 
 
 admin.site.register(CatalogCategory)
-class CatalogCategoryAdmin(TranslationAdmin):
+class CatalogCategoryAdmin(TranslationAdmin, MPTTModelAdmin):
     list_display = ('id', 'parent_id', 'name', 'comment', 'enabled', 'sort_index', 'content_id')
     list_display_links = ('name',)
     search_fields = ('name',)

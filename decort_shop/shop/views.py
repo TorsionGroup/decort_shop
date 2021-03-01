@@ -33,15 +33,18 @@ class BrandOffer:
 
 
 class IndexView(BrandOffer, ListView):
-    model = Manager
-    queryset = Manager.objects.all()
+    model = CatalogCategory
+    context_object_name = 'catalogs'
+    queryset = CatalogCategory.objects.all()
     template_name = 'decort_shop/index.html'
 
+# def show_catalogs(request):
+#     return render(request, 'decort_shop/product/product_sidebar.html', {'catalogs': CatalogCategory.objects.all()})
 
 class ProductView(BrandOffer, ListView):
     model = Product
     queryset = Product.objects.all()
-    paginate_by = 20
+    paginate_by = 30
     template_name = 'decort_shop/product/product_list.html'
 
 
@@ -346,3 +349,4 @@ class MakeOrderView(CartMixin, View):
             messages.add_message(request, messages.INFO, 'Спасибо за заказ! Менеджер с Вами свяжется')
             return HttpResponseRedirect('/')
         return HttpResponseRedirect('/checkout/')
+

@@ -3,9 +3,17 @@
 {% load decort_shop_tag %}
 {% block content_page %}
 
-    {% include 'decort_shop/product/product_sidebar.html' %}
+<div class="shop-content_wrapper">
+    <div class="container-fluid">
+        <div class="row">
 
-    {% block product_page %}
-    {% endblock product_page %}
+            {% include 'decort_shop/product/product_sidebar.html' %}
+
+            {% block product_page %}
+            {% endblock product_page %}
+
+        </div>
+    </div>
+</div>
 
 {% endblock content_page %}
