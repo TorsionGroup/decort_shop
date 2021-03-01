@@ -15,15 +15,19 @@
                 {% for catalogcategory in catalogcategories %}
                 {% if catalogcategory.enabled %}
                 <ul class="module-list_item">
+                    {% if not catalogcategory.parent_id %}
                     <li>
                         <a class="active"
                            href="{{ catalogcategory.get_absolute_url }}">{{ catalogcategory.name }}</a>
                         <ul class="module-sub-list_item">
                             <li>
-                                <a href="javascript:void(0)">!!!!!!!</a>
+                                {% if catalogcategory.parent_id %}
+                                <a href="{{ catalogcategory.get_absolute_url }}">{{ catalogcategory.name }}</a>
+                                {% endif %}
                             </li>
                         </ul>
                     </li>
+                    {% endif %}
                 </ul>
                 {% endif %}
                 {% endfor %}

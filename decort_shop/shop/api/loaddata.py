@@ -12,7 +12,7 @@ class LoadData:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/alexey/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -241,9 +241,13 @@ class LoadData:
             source_id character varying(300),
             parent character varying(300),
             name_ru character varying(250),
-            name_ukr character varying(250),
+            name_uk character varying(250),
             name_en character varying(250),
-            enabled character varying(250) );'''
+            enabled boolean,
+            level integer,
+            lft integer,
+            rght integer,
+            tree_id integer );'''
 
         cur.execute(t_sql)
         self.conn.commit()
@@ -265,12 +269,21 @@ class LoadData:
                 level = b.level,
                 lft = b.lft,
                 rght = b.rght,
-                tree_id = b.tree_id,        
+                tree_id = b.tree_id   
             FROM shop_catalogcategory_buffer b
             WHERE p.source_id = b.source_id;'''
 
         cur.execute(copy_sql)
         self.conn.commit()
+
+        copy_sql = '''UPDATE shop_catalogcategory p
+            SET parent_id_id = c.id
+            FROM shop_catalogcategory c
+            WHERE p.source_id = c.parent;'''
+
+        cur.execute(copy_sql)
+        self.conn.commit()
+
         self.conn.close()
 
     def load_product_price_categories(self):
@@ -884,9 +897,9 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
-    cur = self.conn.cursor()
+        cur = self.conn.cursor()
 
-    t_sql = '''CREATE TEMP TABLE shop_order_buffer (
+        t_sql = '''CREATE TEMP TABLE shop_order_buffer (
             order_source character varying(300),
             agreement character varying(300),                
             order_number character varying(300),
@@ -897,17 +910,17 @@ class LoadData:
             has_waybill integer,
             order_date character varying(300) );'''
 
-    cur.execute(t_sql)
-    self.conn.commit()
+        cur.execute(t_sql)
+        self.conn.commit()
 
-    with open('cache/orders.csv', 'r', encoding='utf-8') as file:
-        cur.copy_from(file, 'shop_order_buffer',
+        with open('cache/orders.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_order_buffer',
                       columns=('order_source', 'agreement', 'order_number', 'waybill_number',
                                'comment', 'source_type', 'has_precept', 'has_waybill', 'order_date'), sep='|')
 
-    self.conn.commit()
+        self.conn.commit()
 
-    copy_sql = '''UPDATE shop_order o
+        copy_sql = '''UPDATE shop_order o
             SET
                 agreement = b.agreement,
                 order_number = b.order_number,
@@ -920,9 +933,9 @@ class LoadData:
             FROM shop_order_buffer b
             WHERE p.order_source = b.order_source;'''
 
-    cur.execute(copy_sql)
-    self.conn.commit()
-    self.conn.close()
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
 
     def load_order_items(self):
         order_items = self.client.service.GetData('order_items')
@@ -931,9 +944,9 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
-    cur = self.conn.cursor()
+        cur = self.conn.cursor()
 
-    t_sql = '''CREATE TEMP TABLE shop_orderitem_buffer (
+        t_sql = '''CREATE TEMP TABLE shop_orderitem_buffer (
             order_source character varying(300),
             product character varying(300),                
             currency character varying(300),
@@ -942,16 +955,16 @@ class LoadData:
             reserved integer,
             executed integer );'''
 
-    cur.execute(t_sql)
-    self.conn.commit()
+        cur.execute(t_sql)
+        self.conn.commit()
 
-    with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
-        cur.copy_from(file, 'shop_orderitem_buffer',
+        with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_orderitem_buffer',
                       columns=('order_source', 'product', 'currency', 'qty', 'price', 'reserved', 'executed'), sep='|')
 
-    self.conn.commit()
+        self.conn.commit()
 
-    copy_sql = '''UPDATE shop_orderitem o
+        copy_sql = '''UPDATE shop_orderitem o
             SET
                 product = b.product,
                 currency = b.currency,
@@ -962,9 +975,9 @@ class LoadData:
             FROM shop_orderitem_buffer b
             WHERE p.order_source = b.order_source;'''
 
-    cur.execute(copy_sql)
-    self.conn.commit()
-    self.conn.close()
+        cur.execute(copy_sql)
+        self.conn.commit()
+        self.conn.close()
 
     def load_declaration_numbers(self):
         declaration_numbers = self.client.service.GetData('declaration_numbers')
@@ -1006,7 +1019,7 @@ loadData = LoadData()
 # loadData.load_currencies()
 # loadData.load_price_types()
 # loadData.load_price_categories()
-# loadData.load_categories()
+loadData.load_categories()
 # loadData.load_product_price_categories()
 # loadData.load_offers()
 # loadData.load_products()

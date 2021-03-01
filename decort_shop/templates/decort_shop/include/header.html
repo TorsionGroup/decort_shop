@@ -135,7 +135,7 @@
                                 {% get_catalogcategories as catalogcategories %}
                                 {% for catalogcategory in catalogcategories %}
                                 {% if catalogcategory.enabled and not catalogcategory.parent_id %}
-                                <li><a href="/product/">{{ catalogcategory.name }}</a></li>
+                                <li><a href="{{ catalogcategory.get_absolute_url }}">{{ catalogcategory.name }}</a></li>
                                 {% endif %}
                                 {% endfor %}
                             </ul>
