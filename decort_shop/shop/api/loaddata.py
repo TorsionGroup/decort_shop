@@ -284,6 +284,31 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_product_price_categories_buffer (
+            product_source character varying(300),
+            price_categories_source character varying(300),
+            product_name character varying(300),
+            price_categories_name character varying(300) );'''
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/product_price_categories.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_product_price_categories_buffer',
+                          columns=('product_source', 'price_categories_source', 'product_name',
+                                   'price_categories_name'), sep='|')
+        self.conn.commit()
+
+        upd_sql = '''UPDATE shop_product p
+            SET p.price_category_id_id = c.id
+            FROM shop_price_category c JOIN shop_product_price_categories_buffer b 
+            ON b.price_categories_source = c.source_id
+            WHERE p.source_id = b.product_source;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
+        self.conn.close()
+
     def load_offers(self):
         offers = self.client.service.GetData('offers')
         data = base64.b64decode(offers)
@@ -1172,7 +1197,7 @@ loadData = LoadData()
 # loadData.load_price_types()
 # loadData.load_price_categories()
 # loadData.load_categories()
-# loadData.load_product_price_categories()
+loadData.load_product_price_categories()
 # loadData.load_offers()
 # loadData.load_products()
 # loadData.load_customer_points()
@@ -1189,5 +1214,5 @@ loadData = LoadData()
 # loadData.load_applicability()
 # loadData.load_cross()
 # loadData.load_orders()
-loadData.load_order_items()
+# loadData.load_order_items()
 # loadData.load_declaration_numbers()

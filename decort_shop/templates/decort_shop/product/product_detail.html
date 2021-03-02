@@ -7,7 +7,6 @@
 {% block product_page %}
 
 <div class="col-lg-9 col-md-7 order-1 order-lg-2 order-md-2">
-
     <div class="breadcrumb-area">
         <div class="container">
             <div class="breadcrumb-content">
@@ -22,36 +21,21 @@
     <!-- torsion's Breadcrumb Area End Here -->
 
     <div class="sp-area sp-tab-style_left sp-tab-style_right">
-
-
         <div class="container-fluid">
             <div class="sp-nav">
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="sp-img_area">
-
                             <div class="sp-img_slider slick-img-slider torsion-slick-slider" data-slick-options='{
-                                                                    "slidesToShow": 1,
-                                                                    "arrows": false,
-                                                                    "fade": true,
-                                                                    "draggable": false,
-                                                                    "swipe": false,
-                                                                    "asNavFor": ".sp-img_slider-nav"
-                                                                    }'>
+                                 "slidesToShow": 1, "arrows": false, "fade": true, "draggable": false,
+                                       "swipe": false, "asNavFor": ".sp-img_slider-nav"    }'>
                                 <div class="single-slide red zoom">
-                                    <img src=" "
-                                         alt="Torsion's Product Image">
+                                    <img src=" " alt="Torsion's Product Image">
                                 </div>
-
                             </div>
                             <div class="sp-img_slider-nav slick-slider-nav torsion-slick-slider slider-navigation_style-4"
-                                 data-slick-options='{
-                                                                    "slidesToShow": 3,
-                                                                    "asNavFor": ".sp-img_slider",
-                                                                    "focusOnSelect": true,
-                                                                    "arrows" : true,
-                                                                    "vertical" : true
-                                                                    }'>
+                                 data-slick-options='{  "slidesToShow": 3,  "asNavFor": ".sp-img_slider",
+                                    "focusOnSelect": true,         "arrows" : true, "vertical" : true       }'>
                                 <div class="single-slide red">
                                     <img src="assets/images/product/small-size/1.jpg"
                                          alt="torsion's Product Thumnail">
@@ -77,7 +61,6 @@
                                          alt="torsion's Product Thumnail">
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-lg-7">
@@ -85,25 +68,12 @@
                             <div class="sp-heading">
                                 <h5><a href="#">{{ product_detail.name }}</a></h5>
                             </div>
-                            <span class="reference">Reference: demo_1</span>
-                            <div class="rating-box">
-                                <ul>
-                                    <li><i class="ion-android-star"></i></li>
-                                    <li><i class="ion-android-star"></i></li>
-                                    <li><i class="ion-android-star"></i></li>
-                                    <li class="silver-color"><i class="ion-android-star"></i></li>
-                                    <li class="silver-color"><i class="ion-android-star"></i></li>
-                                </ul>
-                            </div>
                             <div class="sp-essential_stuff">
                                 <ul>
                                     <li>Brands: {{ product_detail.brand_id.name }}</li>
                                     <li>Product Code: {{ product_detail.article }}</li>
-                                    <li>Reward Points: <a href="javascript:void(0)">100</a></li>
-                                    <li>Availability: <a href="javascript:void(0)">{{ product_detail.article }}</a></li>
-                                    <li>EX Tax: <a href="javascript:void(0)"><span>{{ product_detail.pack_qty }}</span></a>
-                                    </li>
-                                    <li>Price in reward points: <a href="javascript:void(0)">400</a></li>
+                                    <li>Availability: </li>
+                                    <li>Price: {{ product_detail.sort_price }}</li>
                                 </ul>
                             </div>
 
@@ -191,18 +161,14 @@
                         </div>
 
                         <div class="tab-content torsion-tab_content">
-
                             <div id="description" class="tab-pane active show" role="tabpanel">
-
                                 <div class="product-description">
                                     <ul>
                                         {{ product_detail.advanced_description|safe }}
                                     </ul>
                                 </div>
                             </div>
-
                             <div id="cross_code" class="tab-pane" role="tabpanel">
-
                                 <div class="product-description">
                                     <ul>
                                         {{ product_detail.advanced_description|safe }}
@@ -211,7 +177,6 @@
                             </div>
 
                             <div id="specification" class="tab-pane" role="tabpanel">
-
                                 <table class="table table-bordered specification-inner_stuff">
                                     <tbody>
                                     <tr>
@@ -239,12 +204,9 @@
                             </div>
 
                             <div id="reviews" class="tab-pane" role="tabpanel">
-
                                 <div class="tab-pane active" id="tab-review">
                                     <form class="form-horizontal" id="form-review">
-
                                         <div id="review">
-
                                             <table class="table table-striped table-bordered">
                                                 <tbody>
                                                 <tr>
@@ -266,12 +228,9 @@
                                                     </td>
                                                 </tr>
                                                 </tbody>
-
                                             </table>
                                         </div>
-
                                         <h2>Write a review</h2>
-
                                         <div class="form-group required">
                                             <div class="col-sm-12 p-0">
                                                 <label>Your Email <span class="required">*</span></label>
@@ -279,7 +238,6 @@
                                                        required>
                                             </div>
                                         </div>
-
                                         <div class="form-group required second-child">
                                             <div class="col-sm-12 p-0">
                                                 <label class="control-label">Share your opinion</label>
@@ -287,7 +245,6 @@
                                                           id="con_message"></textarea>
                                             </div>
                                         </div>
-
                                         <div class="form-group last-child required">
                                             <div class="col-sm-12 p-0">
                                                 <div class="your-opinion">
@@ -307,13 +264,10 @@
                                                 <button class="torsion-btn-2">Continue</button>
                                             </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
