@@ -1039,8 +1039,8 @@ class LoadData:
             waybill_number character varying(300),
             comment character varying(300),
             source_type character varying(300),
-            has_precept integer,
-            has_waybill integer,
+            has_precept boolean,
+            has_waybill boolean,
             order_date character varying(300) );'''
         cur.execute(t_sql)
         self.conn.commit()
@@ -1062,12 +1062,16 @@ class LoadData:
                 has_waybill = b.has_waybill,
                 order_date = b.order_date                                       
             FROM shop_order_buffer b
-            WHERE p.order_source = b.order_source;'''
+            WHERE o.order_source = b.order_source;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
-
-
+        upd_sql = '''UPDATE shop_order o
+            SET agreement_id_id = c.id                               
+            FROM shop_customeragreement c
+            WHERE o.agreement = c.source_id;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
         self.conn.close()
 
     def load_order_items(self):
@@ -1100,15 +1104,34 @@ class LoadData:
                 product = b.product,
                 currency = b.currency,
                 qty = b.qty,
-                price = b.price
+                price = b.price,
                 reserved = b.reserved,
                 executed = b.executed                            
             FROM shop_orderitem_buffer b
-            WHERE p.order_source = b.order_source;'''
+            WHERE o.order_source = b.order_source;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
+        upd_sql = '''UPDATE shop_orderitem o
+            SET product_id_id = p.id                               
+            FROM shop_product p
+            WHERE o.product = p.source_id;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
 
+        upd_sql = '''UPDATE shop_orderitem o
+            SET currency_id_id = c.id                               
+            FROM shop_currency c
+            WHERE o.currency = c.source_id;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
+
+        upd_sql = '''UPDATE shop_orderitem o
+            SET order_id_id = c.id                               
+            FROM shop_order c
+            WHERE o.order_source = c.order_source;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
         self.conn.close()
 
     def load_declaration_numbers(self):
@@ -1165,6 +1188,6 @@ loadData = LoadData()
 # loadData.load_description()
 # loadData.load_applicability()
 # loadData.load_cross()
-loadData.load_orders()
-# loadData.load_order_items()
+# loadData.load_orders()
+loadData.load_order_items()
 # loadData.load_declaration_numbers()
