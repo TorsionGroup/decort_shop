@@ -279,7 +279,7 @@ class LoadData:
         copy_sql = '''UPDATE shop_catalogcategory p
             SET parent_id_id = c.id
             FROM shop_catalogcategory c
-            WHERE p.source_id = c.parent;'''
+            WHERE p.parent = c.source_id;'''
 
         cur.execute(copy_sql)
         self.conn.commit()
