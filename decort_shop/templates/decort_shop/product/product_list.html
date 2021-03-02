@@ -54,6 +54,7 @@
     <div class="shop-product-wrap grid gridview-3 img-hover-effect_area row">
 
         {% for product in product_list %}
+        {% if product.brand_id_id and product.category_id_id %}
 
         <div class="col-lg-4">
             <div class="product-slide_item">
@@ -195,7 +196,7 @@
                 </div>
             </div>
         </div>
-
+        {% endif %}
         {% endfor %}
     </div>
 

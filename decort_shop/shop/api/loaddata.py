@@ -398,9 +398,30 @@ class LoadData:
                 income_date = b.income_date                       
             FROM shop_product_buffer b
             WHERE p.source_id = b.source_id;'''
-
         cur.execute(copy_sql)
         self.conn.commit()
+
+        copy_sql = '''UPDATE shop_product p
+            SET brand_id_id = b.id
+            FROM shop_brand b
+            WHERE p.brand = b.source_id;'''
+        cur.execute(copy_sql)
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_product p
+            SET category_id_id = c.id
+            FROM shop_catalogcategory c
+            WHERE p.category = c.source_id;'''
+        cur.execute(copy_sql)
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_product p
+            SET offer_id_id = o.id
+            FROM shop_offer o
+            WHERE p.offer = o.source_id;'''
+        cur.execute(copy_sql)
+        self.conn.commit()
+
         self.conn.close()
 
     def load_customer_points(self):
@@ -1019,10 +1040,10 @@ loadData = LoadData()
 # loadData.load_currencies()
 # loadData.load_price_types()
 # loadData.load_price_categories()
-loadData.load_categories()
+# loadData.load_categories()
 # loadData.load_product_price_categories()
 # loadData.load_offers()
-# loadData.load_products()
+loadData.load_products()
 # loadData.load_customer_points()
 # loadData.load_customer_agreements()
 # loadData.load_customer_discounts()

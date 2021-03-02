@@ -38,8 +38,10 @@ class IndexView(BrandOffer, ListView):
     queryset = CatalogCategory.objects.all()
     template_name = 'decort_shop/index.html'
 
+
 # def show_catalogs(request):
 #     return render(request, 'decort_shop/product/product_sidebar.html', {'catalogs': CatalogCategory.objects.all()})
+
 
 class ProductView(BrandOffer, ListView):
     model = Product
