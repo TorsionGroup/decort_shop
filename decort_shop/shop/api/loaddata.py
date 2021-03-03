@@ -32,17 +32,19 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_manager_buffer (
             source_id character varying(300),
-            inner_name character varying(250) );'''
+            inner_name character varying(250),
+            is_active boolean );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/managers.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_manager_buffer', columns=('source_id', 'inner_name'), sep='|')
+            cur.copy_from(file, 'shop_manager_buffer', columns=('source_id', 'inner_name', 'is_active'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_manager m
             SET               
-               inner_name  = b.inner_name               
+               inner_name  = b.inner_name,
+               is_active = b.is_active               
             FROM shop_manager_buffer b
             WHERE m.source_id = b.source_id;'''
         cur.execute(copy_sql)
@@ -114,17 +116,22 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_brand_buffer (
             source_id character varying(300),
-            name character varying(250) );'''
+            name character varying(250),
+            supplier_id character varying(300),
+            is_recommended boolean );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/brands.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_brand_buffer', columns=('source_id', 'name'), sep='|')
+            cur.copy_from(file, 'shop_brand_buffer', columns=('source_id', 'name', 'supplier_id', 'is_recommended'),
+                          sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_brand s
             SET               
-                name  = b.name               
+                name  = b.name,
+                supplier_id  = b.supplier_id,
+                is_recommended  = b.is_recommended               
             FROM shop_brand_buffer b
             WHERE s.source_id = b.source_id;'''
         cur.execute(copy_sql)

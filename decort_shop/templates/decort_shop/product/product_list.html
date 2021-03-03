@@ -63,55 +63,39 @@
                         <div class="product-img">
                             <a href="{% url 'product_detail' product.id %}">
                                 <img class="primary-img"
-                                     src="assets/images/product/large-size/1.jpg"
+                                     src="{% static 'img/image_not_found.jpg' %}"
                                      alt="torsion's Product Image">
                                 <img class="secondary-img"
-                                     src="assets/images/product/large-size/2.jpg"
+                                     src="{% static 'img/image_not_found.jpg' %}"
                                      alt="torsion's Product Image">
                             </a>
 
                             <div class="add-actions">
                                 <ul>
                                     <li><a class="torsion-add_cart" href="cart.html"
-                                           data-toggle="tooltip" data-placement="top"
-                                           title="Add To Cart"><i
-                                            class="ion-bag"></i></a>
+                                           data-toggle="tooltip" data-placement="top" title="Add To Cart">
+                                        <i class="ion-bag"></i></a>
                                     </li>
                                     <li><a class="torsion-wishlist" href="wishlist.html"
-                                           data-toggle="tooltip" data-placement="top"
-                                           title="Add To Wishlist"><i
-                                            class="ion-android-favorite-outline"></i></a>
+                                           data-toggle="tooltip" data-placement="top" title="Add To Wishlist">
+                                        <i class="ion-android-favorite-outline"></i></a>
                                     </li>
                                     <li><a class="torsion-add_compare" href="compare.html"
-                                           data-toggle="tooltip" data-placement="top"
-                                           title="Compare This Product"><i
-                                            class="ion-android-options"></i></a>
+                                           data-toggle="tooltip" data-placement="top" title="Compare This Product">
+                                        <i class="ion-android-options"></i></a>
                                     </li>
-                                    <li class="quick-view-btn" data-toggle="modal"
-                                        data-target="#exampleModalCenter"><a
-                                            href="javascript:void(0)"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Quick View"><i
-                                            class="ion-android-open"></i></a></li>
+                                    <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
+                                            title="Quick View">
+                                            <i class="ion-android-open"></i></a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="product-content">
                             <div class="product-desc_info">
-                                <div class="rating-box">
-                                    <ul>
-                                        <li><i class="ion-android-star"></i></li>
-                                        <li><i class="ion-android-star"></i></li>
-                                        <li><i class="ion-android-star"></i></li>
-                                        <li class="silver-color"><i class="ion-android-star"></i>
-                                        </li>
-                                        <li class="silver-color"><i class="ion-android-star"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <h6><a class="product-name"
-                                       href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+                                <h6><b><a class="product-name"
+                                          href="{% url 'product_detail' product.id %}">{{ product.name }}</a></b>
                                 </h6>
                                 <div class="product-name">
                                     <span class="new-price">{{ product.brand_id }}</span>
@@ -131,25 +115,14 @@
                 <div class="single-product">
                     <div class="product-img">
                         <a href="product_detail.html">
-                            <img class="primary-img" src="assets/images/product/large-size/1.jpg"
+                            <img class="primary-img" src="{% static 'img/image_not_found.jpg' %}"
                                  alt="torsion's Product Image">
-                            <img class="secondary-img" src="assets/images/product/large-size/2.jpg"
+                            <img class="secondary-img" src="{% static 'img/image_not_found.jpg' %}"
                                  alt="torsion's Product Image">
                         </a>
                     </div>
                     <div class="product-content">
                         <div class="product-desc_info">
-                            <div class="rating-box">
-                                <ul>
-                                    <li><i class="ion-android-star"></i></li>
-                                    <li><i class="ion-android-star"></i></li>
-                                    <li><i class="ion-android-star"></i></li>
-                                    <li class="silver-color"><i class="ion-android-star"></i>
-                                    </li>
-                                    <li class="silver-color"><i class="ion-android-star"></i>
-                                    </li>
-                                </ul>
-                            </div>
                             <h6><a class="product-name"
                                    href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
                             </h6>
@@ -169,26 +142,21 @@
                         <div class="add-actions">
                             <ul>
                                 <li><a class="torsion-add_cart" href="cart.html"
-                                       data-toggle="tooltip"
-                                       data-placement="top" title="Add To Cart"><i
-                                        class="ion-bag"></i></a>
+                                       data-toggle="tooltip" data-placement="top" title="Add To Cart">
+                                    <i class="ion-bag"></i></a>
                                 </li>
                                 <li><a class="torsion-wishlist" href="wishlist.html"
-                                       data-toggle="tooltip" data-placement="top"
-                                       title="Add To Wishlist"><i
-                                        class="ion-android-favorite-outline"></i></a>
+                                       data-toggle="tooltip" data-placement="top" title="Add To Wishlist">
+                                    <i class="ion-android-favorite-outline"></i></a>
                                 </li>
                                 <li><a class="torsion-add_compare" href="compare.html"
-                                       data-toggle="tooltip" data-placement="top"
-                                       title="Compare This Product"><i
-                                        class="ion-android-options"></i></a>
+                                       data-toggle="tooltip" data-placement="top" title="Compare This Product">
+                                    <i class="ion-android-options"></i></a>
                                 </li>
-                                <li class="quick-view-btn" data-toggle="modal"
-                                    data-target="#exampleModalCenter"><a href="javascript:void(0)"
-                                                                         data-toggle="tooltip"
-                                                                         data-placement="top"
-                                                                         title="Quick View"><i
-                                        class="ion-android-open"></i></a>
+                                <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
+                                    <a href="javascript:void(0)" data-toggle="tooltip"
+                                        data-placement="top"  title="Quick View">
+                                        <i class="ion-android-open"></i></a>
                                 </li>
                             </ul>
                         </div>

@@ -10,7 +10,7 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 with open('cache/managers.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_manager', columns=('source_id', 'inner_name'), sep='|')
+    cur.copy_from(file, 'shop_manager', columns=('source_id', 'inner_name', 'is_active'), sep='|')
 conn.commit()
 print('Load Managers')
 
@@ -27,7 +27,7 @@ conn.commit()
 print('Load Customers')
 
 with open('cache/brands.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_brand', columns=('source_id', 'name'), sep='|')
+    cur.copy_from(file, 'shop_brand', columns=('source_id', 'name', 'supplier_id', 'is_recommended'), sep='|')
 conn.commit()
 print('Load Brands')
 
