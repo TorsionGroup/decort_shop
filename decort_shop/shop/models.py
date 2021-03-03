@@ -53,6 +53,7 @@ class Manager(models.Model):
     skype = models.CharField(max_length=250, blank=True, null=True)
     comment = models.CharField(max_length=500, blank=True, null=True)
     source_id = models.CharField(max_length=300, blank=True)
+    is_active = models.BooleanField(default=0, blank=True, null=True)
 
     def __str__(self):
         return self.inner_name
@@ -156,16 +157,17 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
 class Brand(models.Model):
     name = models.CharField(max_length=300)
-    enabled = models.BooleanField(default=1, null=True)
+    enabled = models.BooleanField(default=1, null=True, blank=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
-    wait_list = models.BooleanField(default=0, null=True)
-    is_recommended = models.BooleanField(default=0, null=True)
-    sort_index = models.IntegerField(default=999, null=True)
+    wait_list = models.BooleanField(default=0, null=True, blank=True)
+    is_recommended = models.BooleanField(default=0, null=True, blank=True)
+    sort_index = models.IntegerField(default=999, null=True, blank=True)
     source_type = models.CharField(max_length=250, default='1C', null=True)
-    gallery_attribute = models.CharField(max_length=250, default='article', null=True)
+    gallery_attribute = models.CharField(max_length=250, default='article', null=True, blank=True)
     gallery_name = models.CharField(max_length=250, null=True, blank=True)
-    kind = models.CharField(max_length=250, default='secondary', null=True)
+    kind = models.CharField(max_length=250, default='secondary', null=True, blank=True)
     brand_image = models.ImageField(upload_to="content/brand_image/", blank=True, null=True)
+    supplier_id = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
