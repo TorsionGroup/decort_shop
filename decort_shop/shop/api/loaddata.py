@@ -301,9 +301,9 @@ class LoadData:
         self.conn.commit()
 
         upd_sql = '''UPDATE shop_product p
-            SET p.price_category_id_id = c.id
-            FROM shop_price_category c JOIN shop_product_price_categories_buffer b 
-            ON b.price_categories_source = c.source_id
+            SET price_category_id_id = c.id
+            FROM shop_pricecategory c JOIN shop_product_price_categories_buffer b 
+            ON c.source_id = b.price_categories_source
             WHERE p.source_id = b.product_source;'''
         cur.execute(upd_sql)
         self.conn.commit()
@@ -1197,7 +1197,7 @@ loadData = LoadData()
 # loadData.load_price_types()
 # loadData.load_price_categories()
 # loadData.load_categories()
-loadData.load_product_price_categories()
+# loadData.load_product_price_categories()
 # loadData.load_offers()
 # loadData.load_products()
 # loadData.load_customer_points()
