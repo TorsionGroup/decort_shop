@@ -1,7 +1,7 @@
 {% extends 'decort_shop/news/main.html' %}
 {% load static %}
 {% block  title_page %}
-    <title>News - Torsion Group</title>
+<title>News - Torsion Group | {{ news_detail.title }}</title>
 {% endblock title_page %}
 
 {% block news_page %}
@@ -9,12 +9,13 @@
     <div class="col-lg-9 order-lg-2 order-1">
         <div class="blog-item">
 
-            <div class="breadcrumb-area">
+            <div class="breadcrumb-area mt-3">
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
-                            <li><a href="{% url 'home' %}">Home</a></li>
-                            <li class="active"><a href="{% url 'news' %}">News</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'news' %}">News</a></li>
+                            <li class="breadcrumb-item active">{{ news_detail.title }}</li>
                         </ul>
                     </div>
                 </div>

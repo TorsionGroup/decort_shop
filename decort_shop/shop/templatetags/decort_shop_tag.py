@@ -1,5 +1,5 @@
 from django import template
-from shop.models import CatalogCategory, Content, Brand, Offer
+from shop.models import *
 
 register = template.Library()
 

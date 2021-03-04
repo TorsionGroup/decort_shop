@@ -1,7 +1,7 @@
 {% extends 'decort_shop/product/main.html' %}
 {% load static %}
 {% block  title_page %}
-<title>Shop - Torsion Group</title>
+<title>Shop - Torsion Group | {{ product_detail.name }}</title>
 {% endblock title_page %}
 
 {% block product_page %}
@@ -10,10 +10,10 @@
     <div class="breadcrumb-area">
         <div class="container">
             <div class="breadcrumb-content">
-                <h2>Single Product Style</h2>
                 <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li class="active">Tab Style Right</li>
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{ product_detail.category_id_id.name }}</a></li>
+                    <li class="breadcrumb-item active">{{ product_detail.name }}</li>
                 </ul>
             </div>
         </div>
@@ -96,46 +96,14 @@
                                     </li>
                                 </ul>
                             </div>
+
                             <div class="torsion-tag-line">
                                 <h6>Tags:</h6>
                                 <a href="javascript:void(0)">vehicle</a>,
                                 <a href="javascript:void(0)">car</a>,
                                 <a href="javascript:void(0)">bike</a>
                             </div>
-                            <div class="torsion-social_link">
-                                <ul>
-                                    <li class="facebook">
-                                        <a href="https://www.facebook.com/" data-toggle="tooltip" target="_blank"
-                                           title="Facebook">
-                                            <i class="fab fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li class="twitter">
-                                        <a href="https://twitter.com/" data-toggle="tooltip" target="_blank"
-                                           title="Twitter">
-                                            <i class="fab fa-twitter-square"></i>
-                                        </a>
-                                    </li>
-                                    <li class="youtube">
-                                        <a href="https://www.youtube.com/" data-toggle="tooltip" target="_blank"
-                                           title="Youtube">
-                                            <i class="fab fa-youtube"></i>
-                                        </a>
-                                    </li>
-                                    <li class="google-plus">
-                                        <a href="https://www.plus.google.com/discover" data-toggle="tooltip"
-                                           target="_blank" title="Google Plus">
-                                            <i class="fab fa-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    <li class="instagram">
-                                        <a href="https://rss.com/" data-toggle="tooltip" target="_blank"
-                                           title="Instagram">
-                                            <i class="fab fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+
                         </div>
                     </div>
                 </div>

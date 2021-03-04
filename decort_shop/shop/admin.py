@@ -32,7 +32,7 @@ class CategoryAdmin(TranslationAdmin):
 
 @admin.register(Content)
 class ContentAdmin(TranslationAdmin):
-    list_display = ('id', 'title', 'alias', 'main_image', 'published')
+    list_display = ('id', 'title', 'alias', 'category_id', 'main_image', 'published')
     list_filter = ('category_id',)
     list_display_links = ('title',)
     readonly_fields = ('get_main_image',)
@@ -84,9 +84,6 @@ class ReviewProductAdmin(admin.ModelAdmin):
     search_fields = ('name', 'product',)
 
 
-admin.site.register(RatingStar)
-
-
 @admin.register(Account)
 class AccountAdmin(BaseUserAdmin):
     form = UserChangeForm
@@ -132,7 +129,7 @@ class OfferAdmin(admin.ModelAdmin):
 
 @admin.register(Manager)
 class ManagerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'inner_name')
+    list_display = ('id', 'inner_name', 'is_active')
     list_display_links = ('inner_name',)
     search_fields = ('inner_name',)
 
@@ -171,3 +168,17 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_display_links = ('order_id', 'product_id', 'qty', 'price',)
     search_fields = ('order_id',)
 
+
+admin.site.register(RatingStar)
+admin.site.register(Currency)
+admin.site.register(OrderPayment)
+admin.site.register(ProductImage)
+admin.site.register(CustomerDiscount)
+admin.site.register(CustomerPoint)
+admin.site.register(Balance)
+admin.site.register(Stock)
+admin.site.register(Cross)
+admin.site.register(ProductApplicability)
+admin.site.register(ProductDescription)
+admin.site.register(DropshippingWallet)
+admin.site.register(DropshippingWalletTransfer)
