@@ -41,7 +41,6 @@ class LatestProductsManager:
 
 
 class LatestProducts:
-
     objects = LatestProductsManager()
 
 
@@ -200,7 +199,10 @@ class CatalogCategory(MPTTModel):
     parent = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
+
+    def get_absolute_url(self):
+        return reverse('catalog_category_detail', kwargs={'int': self.id})
 
     class Meta:
         verbose_name = "CatalogCategory"

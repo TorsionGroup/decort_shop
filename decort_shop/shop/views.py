@@ -39,6 +39,19 @@ class IndexView(BrandOffer, ListView):
     template_name = 'decort_shop/index.html'
 
 
+class CatalogCategoryView(BrandOffer, ListView):
+    model = CatalogCategory
+    context_object_name = 'catalog_category_list'
+    queryset = CatalogCategory.objects.all()
+    template_name = 'decort_shop/product/catalog_category_list.html'
+
+
+class CatalogCategoryDetailView(BrandOffer, DetailView):
+    model = CatalogCategory
+    context_object_name = 'catalog_category_detail'
+    template_name = 'decort_shop/product/catalog_category_detail.html'
+
+
 # def show_catalogs(request):
 #     return render(request, 'decort_shop/product/product_sidebar.html', {'catalogs': CatalogCategory.objects.all()})
 

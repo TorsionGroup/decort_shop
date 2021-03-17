@@ -18,11 +18,11 @@
                     {% if not catalogcategory.parent_id %}
                     <li>
                         <a class="active"
-                           href="{{ catalogcategory.get_absolute_url }}">{{ catalogcategory.name }}</a>
+                           href="{% url 'catalog_category_detail' catalogcategory.id %}">{{ catalogcategory.name }}</a>
                         <ul class="module-sub-list_item">
                             <li>
                                 {% if catalogcategory.parent_id %}
-                                <a href="{{ catalogcategory.get_absolute_url }}">{{ catalogcategory.name }}</a>
+                                <a href="{% url 'catalog_category_detail' catalogcategory.id %}">{{ catalogcategory.name }}</a>
                                 {% endif %}
                             </li>
                         </ul>
