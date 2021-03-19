@@ -9,7 +9,6 @@ from mptt.admin import MPTTModelAdmin
 from .models import *
 from .forms import UserCreationForm, UserChangeForm
 
-
 admin.site.site_title = 'Torsion Group B2B'
 admin.site.site_header = 'Torsion Group B2B'
 
@@ -55,7 +54,8 @@ class BrandAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
-    list_display = ('id', 'name', 'article', 'specification', 'is_active')
+    list_display = ('id', 'name', 'article', 'brand_id', 'specification', 'category_id', 'price_category_id',
+                    'is_active')
     list_display_links = ('name', 'article',)
     search_fields = ('name', 'article',)
 
@@ -89,7 +89,7 @@ class AccountAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('email', 'username', 'customer_id', 'phone', 'date_of_birth', 'is_staff',  'is_superuser',
+    list_display = ('email', 'username', 'customer_id', 'phone', 'date_of_birth', 'is_staff', 'is_superuser',
                     'is_active')
     list_filter = ('is_superuser',)
     save_on_top = True

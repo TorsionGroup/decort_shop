@@ -1,6 +1,5 @@
 {% load static %}
 {% load decort_shop_tag %}
-{% load mptt_tags %}
 
 <header class="header-main_area bg--sapphire">
     <div class="header-top_area d-lg-block d-none">
@@ -126,16 +125,24 @@
                     <div class="category-menu category-menu-hidden">
                         <div class="category-heading">
                             <h2 class="categories-toggle">
-                                <span>Shop By</span>
-                                <span>Department</span>
+                                <span>CATALOG</span>
                             </h2>
                         </div>
                         <div id="cate-toggle" class="category-menu-list">
                             <ul>
                                 {% get_catalogcategories as catalogcategories %}
                                 {% for catalogcategory in catalogcategories %}
-                                {% if catalogcategory.enabled and not catalogcategory.parent_id %}
-                                <li><a href="{% url 'catalog_category_detail' catalogcategory.id %}">{{ catalogcategory.name }}</a></li>
+                                {% if catalogcategory.enabled %}
+                                {% if not catalogcategory.parent_id %}
+                                <li class="right-menu"><a href="{% url 'catalog_category_detail' catalogcategory.id %}">
+                                    {{ catalogcategory.name }}</a>
+                                {% endif %}
+                                    <ul class="cat-dropdown cat-dropdown-2">
+                                        <li>
+
+                                        </li>
+                                    </ul>
+                                </li>
                                 {% endif %}
                                 {% endfor %}
                             </ul>
@@ -149,7 +156,7 @@
                             <select class="nice-select select-search-category">
                                 <option value="0">All Categories</option>
                                 {% for catalogcategory in catalogcategories %}
-                                {% if catalogcategory.enabled %}
+                                {% if catalogcategory.enabled and not catalogcategory.parent_id %}
                                 <option value="1">{{ catalogcategory.name }}</option>
                                 {% endif %}
                                 {% endfor %}

@@ -15,81 +15,75 @@
                 {% for catalogcategory in catalogcategories %}
                 {% if catalogcategory.enabled %}
                 <ul class="module-list_item">
-                    {% if not catalogcategory.parent_id %}
+
                     <li>
+                        {% if not catalogcategory.parent_id %}
                         <a class="active"
                            href="{% url 'catalog_category_detail' catalogcategory.id %}">{{ catalogcategory.name }}</a>
+                        {% endif %}
                         <ul class="module-sub-list_item">
                             <li>
                                 {% if catalogcategory.parent_id %}
-                                <a href="{% url 'catalog_category_detail' catalogcategory.id %}">{{ catalogcategory.name }}</a>
+                                <a href="{% url 'catalog_category_detail' catalogcategory.id %}">
+                                    {{ catalogcategory.name}}</a>
                                 {% endif %}
                             </li>
                         </ul>
                     </li>
-                    {% endif %}
+
                 </ul>
                 {% endif %}
                 {% endfor %}
             </div>
-
-        </div>
-
-        <form action="{% url 'filter' %} " method="get">
-            <div class="torsion-sidebar_categories">
-                <div class="torsion-categories_title">
-                    <h5>Brands</h5>
-                </div>
-                <ul class="sidebar-checkbox_list">
-                    <li>
-                        <a href="#">brand.name</a>
-                    </li>
-                    {% for brand in views.get_brands %}
-                    <li>
-                        <a href="#">{{ brand.name }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </form>
-
-        <div class="torsion-sidebar_categories">
-            <div class="torsion-categories_title">
-                <h5>Price</h5>
-            </div>
-            <div class="price-filter">
-                <div id="slider-range"></div>
-                <div class="price-slider-amount">
-                    <div class="label-input">
-                        <label>price : </label>
-                        <input type="text" id="amount" name="price" placeholder="Add Your Price"/>
-                    </div>
-                    <!-- <button type="button">Filter</button> -->
-                </div>
-            </div>
-        </div>
-
-        <div class="torsion-sidebar_categories">
-            <div class="torsion-categories_title">
-                <h5>Offer</h5>
-            </div>
-            <ul class="sidebar-checkbox_list">
-                {% for offer in views.get_offers %}
-                <li>
-                    <a href=" ">Offer <span>1</span></a>
-                </li>
-                {% endfor %}
-            </ul>
         </div>
 
     </div>
 
-    <div class="sidebar-banner_area">
-        <div class="banner-item img-hover_effect">
-            <a href="javascript:void(0)">
-                <img src="assets/images/shop/1.jpg" alt="torsion's Shop Banner Image">
-            </a>
+    <form action="{% url 'filter' %} " method="get">
+        <div class="torsion-sidebar_categories">
+            <div class="torsion-categories_title">
+                <h5>Brands</h5>
+            </div>
+            <ul class="sidebar-checkbox_list">
+                <li>
+                    <a href="#">brand.name</a>
+                </li>
+                {% for brand in views.get_brands %}
+                <li>
+                    <a href="#">{{ brand.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
+    </form>
+
+    <div class="torsion-sidebar_categories">
+        <div class="torsion-categories_title">
+            <h5>Price</h5>
+        </div>
+        <div class="price-filter">
+            <div id="slider-range"></div>
+            <div class="price-slider-amount">
+                <div class="label-input">
+                    <label>price : </label>
+                    <input type="text" id="amount" name="price" placeholder="Add Your Price"/>
+                </div>
+                <!-- <button type="button">Filter</button> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="torsion-sidebar_categories">
+        <div class="torsion-categories_title">
+            <h5>Offer</h5>
+        </div>
+        <ul class="sidebar-checkbox_list">
+            {% for offer in views.get_offers %}
+            <li>
+                <a href=" ">Offer <span>1</span></a>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 
 </div>

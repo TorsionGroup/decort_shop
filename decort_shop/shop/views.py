@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import View
 from django.db import models, transaction
 from django.conf import settings
@@ -50,10 +50,6 @@ class CatalogCategoryDetailView(BrandOffer, DetailView):
     model = CatalogCategory
     context_object_name = 'catalog_category_detail'
     template_name = 'decort_shop/product/catalog_category_detail.html'
-
-
-# def show_catalogs(request):
-#     return render(request, 'decort_shop/product/product_sidebar.html', {'catalogs': CatalogCategory.objects.all()})
 
 
 class ProductView(BrandOffer, ListView):
@@ -364,4 +360,3 @@ class MakeOrderView(CartMixin, View):
             messages.add_message(request, messages.INFO, 'Спасибо за заказ! Менеджер с Вами свяжется')
             return HttpResponseRedirect('/')
         return HttpResponseRedirect('/checkout/')
-
