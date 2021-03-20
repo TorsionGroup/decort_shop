@@ -135,7 +135,7 @@
                                 {% if catalogcategory.enabled %}
                                 {% if not catalogcategory.parent_id %}
                                 <li class="right-menu">
-                                    <a href="/">
+                                    <a href="{% url 'catalog_category_detail' catalogcategory.url %}">
                                     {{ catalogcategory.name }}</a>
                                 {% endif %}
                                     <ul class="cat-dropdown cat-dropdown-2">

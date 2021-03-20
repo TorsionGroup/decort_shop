@@ -2,11 +2,9 @@
 {% load decort_shop_tag %}
 
 <div class="col-lg-3 col-md-5 order-2 order-lg-1 order-md-1">
-
     <div class="torsion-sidebar-catagories_area">
 
         <div class="category-module torsion-sidebar_categories">
-
             <div class="category-module_heading">
                 <h5>Categories</h5>
             </div>
@@ -19,14 +17,13 @@
                     <li>
                         {% if not catalogcategory.parent_id %}
                         <a class="active"
-                           href="{% url 'catalog_category' %}">{{ catalogcategory.name }}</a>
+                           href="{% url 'catalog_category_detail' catalogcategory.url %}">{{ catalogcategory.name }}</a>
                         {% endif %}
                         <ul class="module-sub-list_item">
                             <li>
-                                {% for subcategory in catalogcategory.catalogcategory_set.all %}
-                                <a href="#">
-                                    {{ subcategory }}</a>
-                                {% endfor %}
+
+                                <a href="#"> </a>
+
                             </li>
                         </ul>
                     </li>
@@ -36,53 +33,53 @@
             </div>
         </div>
 
-    </div>
 
-    <form action="{% url 'brand' %} " method="get">
+        <form action="{% url 'brand' %} " method="get">
+            <div class="torsion-sidebar_categories">
+                <div class="torsion-categories_title">
+                    <h5>Brands</h5>
+                </div>
+                <ul class="sidebar-checkbox_list">
+                    <li>
+                        <a href="#">brand.name</a>
+                    </li>
+                    {% for brand in views.get_brands %}
+                    <li>
+                        <a href="#">{{ brand.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </form>
+
         <div class="torsion-sidebar_categories">
             <div class="torsion-categories_title">
-                <h5>Brands</h5>
+                <h5>Offer</h5>
             </div>
             <ul class="sidebar-checkbox_list">
+                {% for offer in views.get_offers %}
                 <li>
-                    <a href="#">brand.name</a>
-                </li>
-                {% for brand in views.get_brands %}
-                <li>
-                    <a href="#">{{ brand.name }}</a>
+                    <a href=" ">Offer <span>1</span></a>
                 </li>
                 {% endfor %}
             </ul>
         </div>
-    </form>
 
-    <div class="torsion-sidebar_categories">
-        <div class="torsion-categories_title">
-            <h5>Price</h5>
-        </div>
-        <div class="price-filter">
-            <div id="slider-range"></div>
-            <div class="price-slider-amount">
-                <div class="label-input">
-                    <label>price : </label>
-                    <input type="text" id="amount" name="price" placeholder="Add Your Price"/>
+        <div class="torsion-sidebar_categories">
+            <div class="torsion-categories_title">
+                <h5>Price</h5>
+            </div>
+            <div class="price-filter">
+                <div id="slider-range"></div>
+                <div class="price-slider-amount">
+                    <div class="label-input">
+                        <label>price : </label>
+                        <input type="text" id="amount" name="price" placeholder="Add Your Price"/>
+                    </div>
+                    <!-- <button type="button">Filter</button> -->
                 </div>
-                <!-- <button type="button">Filter</button> -->
             </div>
         </div>
-    </div>
 
-    <div class="torsion-sidebar_categories">
-        <div class="torsion-categories_title">
-            <h5>Offer</h5>
-        </div>
-        <ul class="sidebar-checkbox_list">
-            {% for offer in views.get_offers %}
-            <li>
-                <a href=" ">Offer <span>1</span></a>
-            </li>
-            {% endfor %}
-        </ul>
     </div>
-
 </div>
