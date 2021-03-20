@@ -130,15 +130,18 @@
                         </div>
                         <div id="cate-toggle" class="category-menu-list">
                             <ul>
-                                {% get_catalogcategories as catalogcategories %}
-                                {% for catalogcategory in catalogcategories %}
+                                {% get_catalogcategories as catalog_category_list %}
+                                {% for catalogcategory in catalog_category_list %}
                                 {% if catalogcategory.enabled %}
                                 {% if not catalogcategory.parent_id %}
-                                <li class="right-menu"><a href="{% url 'catalog_category_detail' catalogcategory.id %}">
+                                <li class="right-menu">
+                                    <a href="/">
                                     {{ catalogcategory.name }}</a>
                                 {% endif %}
                                     <ul class="cat-dropdown cat-dropdown-2">
                                         <li>
+
+
 
                                         </li>
                                     </ul>
@@ -155,7 +158,7 @@
                         <form action="#" class="hm-searchbox">
                             <select class="nice-select select-search-category">
                                 <option value="0">All Categories</option>
-                                {% for catalogcategory in catalogcategories %}
+                                {% for catalogcategory in catalog_category_list %}
                                 {% if catalogcategory.enabled and not catalogcategory.parent_id %}
                                 <option value="1">{{ catalogcategory.name }}</option>
                                 {% endif %}

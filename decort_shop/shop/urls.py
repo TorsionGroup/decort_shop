@@ -4,13 +4,13 @@ from . import views
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='home'),
-    path('filter/', views.FilterProductView.as_view(), name='filter'),
+    path('brand/', views.BrandProductView.as_view(), name='brand'),
     path('news/', views.NewsView.as_view(), name='news'),
     path('news/<slug:slug>/', views.NewsDetailView.as_view(), name='news_detail'),
     path('about-us/', views.AboutUsView.as_view(), name='about-us'),
     path('contacts/', views.ContactsView.as_view(), name='contacts'),
     path('catalog-category/', views.CatalogCategoryView.as_view(), name='catalog_category'),
-    path('catalog-category/<int:pk>/', views.CatalogCategoryDetailView.as_view(), name='catalog_category_detail'),
+    path('catalog-category/<slug:slug>/', views.CatalogCategoryDetailView.as_view(), name='catalog_category_detail'),
     path('product/', views.ProductView.as_view(), name='product'),
     path('product/<int:pk>/', views.ProductDetailView.as_view(), name='product_detail'),
     path('login/', views.login, name='login'),

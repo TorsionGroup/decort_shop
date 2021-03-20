@@ -116,7 +116,7 @@ class AccountAdmin(BaseUserAdmin):
 
 @admin.register(CatalogCategory)
 class CatalogCategoryAdmin(TranslationAdmin):
-    list_display = ('id', 'parent_id', 'name', 'slug', 'enabled', 'comment', 'sort_index', 'content_id')
+    list_display = ('id', 'parent_id', 'name', 'url', 'enabled', 'comment', 'sort_index', 'content_id')
     list_display_links = ('name',)
     search_fields = ('name',)
 

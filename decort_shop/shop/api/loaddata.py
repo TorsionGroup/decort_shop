@@ -246,7 +246,7 @@ class LoadData:
             name_ru character varying(250),
             name_uk character varying(250),
             name_en character varying(250),
-            slug character varying(150),
+            url character varying(150),
             enabled boolean,
             level integer,
             lft integer,
@@ -257,7 +257,7 @@ class LoadData:
 
         with open('cache/categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_catalogcategory_buffer',
-                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'slug', 'enabled', 'level',
+                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'url', 'enabled', 'level',
                                    'lft', 'rght', 'tree_id'), sep='|')
         self.conn.commit()
 
@@ -267,7 +267,7 @@ class LoadData:
                 name_ru = b.name_ru,
                 name_uk = b.name_uk,
                 name_en = b.name_en,
-                slug = b.slug,
+                url = b.url,
                 enabled = b.enabled,
                 level = b.level,
                 lft = b.lft,

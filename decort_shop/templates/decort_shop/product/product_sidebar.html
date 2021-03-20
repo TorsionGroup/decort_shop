@@ -11,26 +11,25 @@
                 <h5>Categories</h5>
             </div>
             <div class="module-body">
-                {% get_catalogcategories as catalogcategories %}
-                {% for catalogcategory in catalogcategories %}
+                {% get_catalogcategories as catalog_category_list %}
+                {% for catalogcategory in catalog_category_list %}
+
                 {% if catalogcategory.enabled %}
                 <ul class="module-list_item">
-
                     <li>
                         {% if not catalogcategory.parent_id %}
                         <a class="active"
-                           href="{% url 'catalog_category_detail' catalogcategory.id %}">{{ catalogcategory.name }}</a>
+                           href="{% url 'catalog_category' %}">{{ catalogcategory.name }}</a>
                         {% endif %}
                         <ul class="module-sub-list_item">
                             <li>
-                                {% if catalogcategory.parent_id %}
-                                <a href="{% url 'catalog_category_detail' catalogcategory.id %}">
-                                    {{ catalogcategory.name}}</a>
-                                {% endif %}
+                                {% for subcategory in catalogcategory.catalogcategory_set.all %}
+                                <a href="#">
+                                    {{ subcategory }}</a>
+                                {% endfor %}
                             </li>
                         </ul>
                     </li>
-
                 </ul>
                 {% endif %}
                 {% endfor %}
@@ -39,7 +38,7 @@
 
     </div>
 
-    <form action="{% url 'filter' %} " method="get">
+    <form action="{% url 'brand' %} " method="get">
         <div class="torsion-sidebar_categories">
             <div class="torsion-categories_title">
                 <h5>Brands</h5>

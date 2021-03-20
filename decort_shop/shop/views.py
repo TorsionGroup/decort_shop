@@ -33,21 +33,21 @@ class BrandOffer:
 
 
 class IndexView(BrandOffer, ListView):
-    model = CatalogCategory
-    context_object_name = 'catalogs'
-    queryset = CatalogCategory.objects.all()
+    model = Manager
+    queryset = Manager.objects.all()
     template_name = 'decort_shop/index.html'
 
 
 class CatalogCategoryView(BrandOffer, ListView):
     model = CatalogCategory
-    context_object_name = 'catalog_category_list'
     queryset = CatalogCategory.objects.all()
+    context_object_name = 'catalog_category_list'
     template_name = 'decort_shop/product/catalog_category_list.html'
 
 
 class CatalogCategoryDetailView(BrandOffer, DetailView):
     model = CatalogCategory
+    slug_field = 'url'
     context_object_name = 'catalog_category_detail'
     template_name = 'decort_shop/product/catalog_category_detail.html'
 
@@ -56,6 +56,7 @@ class ProductView(BrandOffer, ListView):
     model = Product
     queryset = Product.objects.all()
     paginate_by = 30
+    context_object_name = 'product_list'
     template_name = 'decort_shop/product/product_list.html'
 
 
@@ -248,7 +249,7 @@ class ExampleView(APIView):
         return Response(content)
 
 
-class FilterProductView(ListView):
+class BrandProductView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
