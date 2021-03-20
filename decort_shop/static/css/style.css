@@ -2592,7 +2592,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .price-filter 
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   visibility: hidden;
-  width: 205px;
+  width: 255px;
   padding: 0 30px;
   overflow: hidden;
 }
