@@ -197,6 +197,7 @@ class CatalogCategory(MPTTModel):
     name = models.CharField(max_length=500, null=True, default='Catalog')
     comment = models.CharField(max_length=500, null=True, blank=True)
     parent = models.CharField(max_length=500, null=True, blank=True)
+    slug = models.SlugField(max_length=150, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)

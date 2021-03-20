@@ -115,8 +115,8 @@ class AccountAdmin(BaseUserAdmin):
 
 
 @admin.register(CatalogCategory)
-class CatalogCategoryAdmin(TranslationAdmin, MPTTModelAdmin):
-    list_display = ('id', 'parent_id', 'name', 'comment', 'enabled', 'sort_index', 'content_id')
+class CatalogCategoryAdmin(TranslationAdmin):
+    list_display = ('id', 'parent_id', 'name', 'slug', 'enabled', 'comment', 'sort_index', 'content_id')
     list_display_links = ('name',)
     search_fields = ('name',)
 

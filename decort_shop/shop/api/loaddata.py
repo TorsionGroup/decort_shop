@@ -246,6 +246,7 @@ class LoadData:
             name_ru character varying(250),
             name_uk character varying(250),
             name_en character varying(250),
+            slug character varying(150),
             enabled boolean,
             level integer,
             lft integer,
@@ -256,8 +257,8 @@ class LoadData:
 
         with open('cache/categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_catalogcategory_buffer',
-                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'enabled', 'level', 'lft',
-                                   'rght', 'tree_id'), sep='|')
+                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'slug', 'enabled', 'level',
+                                   'lft', 'rght', 'tree_id'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_catalogcategory p
@@ -266,6 +267,7 @@ class LoadData:
                 name_ru = b.name_ru,
                 name_uk = b.name_uk,
                 name_en = b.name_en,
+                slug = b.slug,
                 enabled = b.enabled,
                 level = b.level,
                 lft = b.lft,
