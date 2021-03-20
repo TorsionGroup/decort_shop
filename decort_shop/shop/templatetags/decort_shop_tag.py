@@ -4,13 +4,14 @@ from shop.models import *
 register = template.Library()
 
 
-def list_categories(request):
-    return {'menu_categories': CatalogCategory.objects.all()}
+@register.simple_tag()
+def get_catalogcategories():
+    return CatalogCategory.objects.filter(enabled=True)
 
 
 @register.simple_tag()
-def get_catalogcategories():
-    return CatalogCategory.objects.filter(parent_id=None)
+def get_currency():
+    return Currency.objects.filter(id=1)
 
 
 @register.inclusion_tag('decort_shop/news/last_news.html')

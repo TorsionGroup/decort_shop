@@ -242,7 +242,7 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_catalogcategory_buffer (
             source_id character varying(300),
-            parent character varying(300),
+            parent_source character varying(300),
             name_ru character varying(250),
             name_uk character varying(250),
             name_en character varying(250),
@@ -257,13 +257,13 @@ class LoadData:
 
         with open('cache/categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_catalogcategory_buffer',
-                          columns=('source_id', 'parent', 'name_ru', 'name_uk', 'name_en', 'url', 'enabled', 'level',
+                          columns=('source_id', 'parent_source', 'name_ru', 'name_uk', 'name_en', 'url', 'enabled', 'level',
                                    'lft', 'rght', 'tree_id'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_catalogcategory p
             SET               
-                parent = b.parent,
+                parent_source = b.parent_source,
                 name_ru = b.name_ru,
                 name_uk = b.name_uk,
                 name_en = b.name_en,
@@ -279,9 +279,9 @@ class LoadData:
         self.conn.commit()
 
         upd_sql = '''UPDATE shop_catalogcategory p
-            SET parent_id_id = c.id
+            SET parent_id = c.id
             FROM shop_catalogcategory c
-            WHERE p.parent = c.source_id;'''
+            WHERE p.parent_source = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
         self.conn.close()

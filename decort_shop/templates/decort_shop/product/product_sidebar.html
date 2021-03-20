@@ -1,3 +1,4 @@
+{% load mptt_tags %}
 {% load static %}
 {% load decort_shop_tag %}
 
@@ -10,29 +11,22 @@
             </div>
             <div class="module-body">
                 {% get_catalogcategories as catalog_category_list %}
-                {% for catalogcategory in catalog_category_list %}
-
-                {% if catalogcategory.enabled %}
+                {% recursetree catalog_category_list %}
                 <ul class="module-list_item">
                     <li>
-                        {% if not catalogcategory.parent_id %}
-                        <a class="active"
-                           href="{% url 'catalog_category_detail' catalogcategory.url %}">{{ catalogcategory.name }}</a>
-                        {% endif %}
+                        <a class="active" href="#">{{ node.name }}</a>
+                        {% if not node.is_leaf_node %}
                         <ul class="module-sub-list_item">
                             <li>
-
-                                <a href="#"> </a>
-
+                                <a href="#">{{ children }}</a>
                             </li>
                         </ul>
+                        {% endif %}
                     </li>
                 </ul>
-                {% endif %}
-                {% endfor %}
+                {% endrecursetree %}
             </div>
         </div>
-
 
         <form action="{% url 'brand' %} " method="get">
             <div class="torsion-sidebar_categories">

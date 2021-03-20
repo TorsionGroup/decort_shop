@@ -1,3 +1,4 @@
+{% load mptt_tags %}
 {% load static %}
 {% load decort_shop_tag %}
 
@@ -22,13 +23,14 @@
                     <div class="ht-right_area">
                         <div class="ht-menu">
                             <ul>
-                                <li><a href="javascript:void(0)">Currency<i class="fa fa-chevron-down"></i></a>
+                                {% get_currency as currency_list %}
+                                {% for currencies in currency_list %}
+                                <li><a href="javascript:void(0)">Currency <i class="fa fa-chevron-down"></i></a>
                                     <ul class="ht-dropdown ht-currency">
-                                        <li><a href="javascript:void(0)">€ EUR</a></li>
-                                        <li class="active"><a href="javascript:void(0)">£ Pound Sterling</a></li>
-                                        <li><a href="javascript:void(0)">$ Us Dollar</a></li>
+                                        <li class="active"><a href="javascript:void(0)">$ {{ currencies.rate }}</a></li>
                                     </ul>
                                 </li>
+                                {% endfor %}
                                 <li><a href="javascript:void(0)">Language <i class="fa fa-chevron-down"></i></a>
                                     <ul class="ht-dropdown">
                                         <li class="active"><a href="javascript:void(0)"><img
@@ -131,23 +133,16 @@
                         <div id="cate-toggle" class="category-menu-list">
                             <ul>
                                 {% get_catalogcategories as catalog_category_list %}
-                                {% for catalogcategory in catalog_category_list %}
-                                {% if catalogcategory.enabled %}
-                                {% if not catalogcategory.parent_id %}
+                                {% recursetree catalog_category_list %}
                                 <li class="right-menu">
-                                    <a href="{% url 'catalog_category_detail' catalogcategory.url %}">
-                                    {{ catalogcategory.name }}</a>
-                                {% endif %}
-                                    <ul class="cat-dropdown cat-dropdown-2">
-                                        <li>
-
-
-
-                                        </li>
+                                    <a href="#">{{ node.name }}</a>
+                                    {% if not node.is_leaf_node %}
+                                    <ul class="cat-dropdown">
+                                        <li>{{ children }}</li>
                                     </ul>
+                                    {% endif %}
                                 </li>
-                                {% endif %}
-                                {% endfor %}
+                                {% endrecursetree %}
                             </ul>
                         </div>
                     </div>
@@ -158,11 +153,7 @@
                         <form action="#" class="hm-searchbox">
                             <select class="nice-select select-search-category">
                                 <option value="0">All Categories</option>
-                                {% for catalogcategory in catalog_category_list %}
-                                {% if catalogcategory.enabled and not catalogcategory.parent_id %}
-                                <option value="1">{{ catalogcategory.name }}</option>
-                                {% endif %}
-                                {% endfor %}
+
                             </select>
                             <input type="text" placeholder="Enter your search key ...">
                             <button class="header-search_btn" type="submit"><i
