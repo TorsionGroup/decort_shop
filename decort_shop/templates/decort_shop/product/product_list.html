@@ -1,4 +1,5 @@
 {% extends 'decort_shop/product/main.html' %}
+{% load mptt_tags %}
 {% load static %}
 {% load decort_shop_tag %}
 {% block  title_page %}
@@ -52,6 +53,7 @@
     </div>
 
     <div class="shop-product-wrap grid gridview-3 img-hover-effect_area row">
+
 
         {% for product in product_list %}
         {% if product.brand_id_id and product.category_id_id %}

@@ -40,18 +40,36 @@ class IndexView(BrandOffer, ListView):
     template_name = 'decort_shop/index.html'
 
 
-class CatalogCategoryView(BrandOffer, ListView):
+class CatalogProductView(BrandOffer, ListView):
     model = CatalogCategory
     queryset = CatalogCategory.objects.all()
-    context_object_name = 'catalog_category_list'
-    template_name = 'decort_shop/product/catalog_category_list.html'
+    context_object_name = 'catalog_product_list'
+
+    def get(self, request):
+        return render(request, 'decort_shop/product/product_list.html')
+
+    def post(self, request):
+        slug = request.POST.get("slug")
+        node = CatalogCategory.objects.get(slug=slug)
+        if Product.objects.filter(category__slug=slug).exists():
+            products = Product.objects.filter(category__slug=slug)
+        else:
+            products = Product.objects.filter(category__slug__in=[x.slug for x in node.get_family()])
 
 
-class CatalogCategoryDetailView(BrandOffer, DetailView):
+class CatalogProductDetailView(BrandOffer, DetailView):
     model = CatalogCategory
     slug_field = 'url'
-    context_object_name = 'catalog_category_detail'
-    template_name = 'decort_shop/product/catalog_category_detail.html'
+    context_object_name = 'catalog_product_detail'
+
+    def get_queryset(self):
+        slug = self.kwargs.get('slug')
+        node = CatalogCategory.objects.get(slug=slug)
+        if Product.objects.filter(category__slug=slug).exists():
+            products = Product.objects.filter(category__slug=slug)
+        else:
+            products = Product.objects.filter(category__slug__in=[x.slug for x in node.get_family()])
+        return products
 
 
 class ProductView(BrandOffer, ListView):
@@ -183,6 +201,10 @@ def faq(request):
     return render(request, 'decort_shop/faq.html')
 
 
+def compare(request):
+    return render(request, 'decort_shop/compare.html')
+
+
 class CartView(CartMixin, View):
 
     def get(self, request, *args, **kwargs):
@@ -205,10 +227,6 @@ class CheckoutView(CartMixin, View):
             'form': form
         }
         return render(request, 'decort_shop/checkout.html', context)
-
-
-def compare(request):
-    return render(request, 'decort_shop/compare.html')
 
 
 class RegistrationView(CreateView):
