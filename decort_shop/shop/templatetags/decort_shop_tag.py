@@ -18,3 +18,4 @@ def get_currency():
 def get_last_news(count=5):
     news = Content.objects.filter(category_id=2).order_by("id")[:count]
     return {'last_news': news}
+

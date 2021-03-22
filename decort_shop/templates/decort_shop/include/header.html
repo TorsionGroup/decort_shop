@@ -135,7 +135,7 @@
                                 {% get_catalogcategories as catalog_category_list %}
                                 {% recursetree catalog_category_list %}
                                 <li class="right-menu">
-                                    <a href="#">{{ node.name }}</a>
+                                    <a href="{% url 'catalog_product_detail' node.url %}">{{ node.name }}</a>
                                     {% if not node.is_leaf_node %}
                                     <ul class="cat-dropdown">
                                         <li>{{ children }}</li>

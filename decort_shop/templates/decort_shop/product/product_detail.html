@@ -1,7 +1,7 @@
 {% extends 'decort_shop/product/main.html' %}
 {% load static %}
 {% block  title_page %}
-<title>Shop - Torsion Group | {{ product_detail.name }}</title>
+<title>Shop - Torsion Group | {{ product.name }}</title>
 {% endblock title_page %}
 
 {% block product_page %}
@@ -12,8 +12,8 @@
             <div class="breadcrumb-content">
                 <ul>
                     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">{{ product_detail.category_id_id.name }}</a></li>
-                    <li class="breadcrumb-item active">{{ product_detail.name }}</li>
+                    <li class="breadcrumb-item"><a href="#">{{ product.category_id.name }}</a></li>
+                    <li class="breadcrumb-item active">{{ product.name }}</li>
                 </ul>
             </div>
         </div>
@@ -66,14 +66,14 @@
                     <div class="col-lg-7">
                         <div class="sp-content">
                             <div class="sp-heading">
-                                <h5><a href="#">{{ product_detail.name }}</a></h5>
+                                <h5><a href="#">{{ product.name }}</a></h5>
                             </div>
                             <div class="sp-essential_stuff">
                                 <ul>
-                                    <li>Brands: {{ product_detail.brand_id.name }}</li>
-                                    <li>Product Code: {{ product_detail.article }}</li>
+                                    <li>Brands: {{ product.brand_id.name }}</li>
+                                    <li>Product Code: {{ product.article }}</li>
                                     <li>Availability: </li>
-                                    <li>Price: {{ product_detail.sort_price }}</li>
+                                    <li>Price: {{ product.sort_price }}</li>
                                 </ul>
                             </div>
 
@@ -97,13 +97,6 @@
                                 </ul>
                             </div>
 
-                            <div class="torsion-tag-line">
-                                <h6>Tags:</h6>
-                                <a href="javascript:void(0)">vehicle</a>,
-                                <a href="javascript:void(0)">car</a>,
-                                <a href="javascript:void(0)">bike</a>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -125,6 +118,7 @@
                                 <li><a data-toggle="tab" href="#cross_code"><span>Cross Code</span></a></li>
                                 <li><a data-toggle="tab" href="#specification"><span>Specification</span></a></li>
                                 <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li>
+                                <li><a data-toggle="tab" href="#tags"><span>Tags</span></a></li>
                             </ul>
                         </div>
 
@@ -132,14 +126,14 @@
                             <div id="description" class="tab-pane active show" role="tabpanel">
                                 <div class="product-description">
                                     <ul>
-                                        {{ product_detail.advanced_description|safe }}
+                                        {{ product.advanced_description|safe }}
                                     </ul>
                                 </div>
                             </div>
                             <div id="cross_code" class="tab-pane" role="tabpanel">
                                 <div class="product-description">
                                     <ul>
-                                        {{ product_detail.advanced_description|safe }}
+                                        {{ product.advanced_description|safe }}
                                     </ul>
                                 </div>
                             </div>
@@ -235,6 +229,16 @@
                                     </form>
                                 </div>
                             </div>
+
+                            <div id="tags" class="tab-pane" role="tabpanel">
+                                <div class="product-description">
+                                    <ul>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

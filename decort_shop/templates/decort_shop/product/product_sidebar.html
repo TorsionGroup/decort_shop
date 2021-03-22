@@ -7,18 +7,18 @@
 
         <div class="category-module torsion-sidebar_categories">
             <div class="category-module_heading">
-                <h5>Categories</h5>
+                <h5><a href="{% url 'catalog_category_list' %}">Categories</a></h5>
             </div>
             <div class="module-body">
                 {% get_catalogcategories as catalog_category_list %}
                 {% recursetree catalog_category_list %}
                 <ul class="module-list_item">
                     <li>
-                        <a class="active" href="#">{{ node.name }}</a>
+                        <a class="active" href="{% url 'catalog_product_detail' node.url %}">{{ node.name }}</a>
                         {% if not node.is_leaf_node %}
                         <ul class="module-sub-list_item">
                             <li>
-                                <a href="#">{{ children }}</a>
+                                <a href="{% url 'catalog_product_detail' node.url %}">{{ children }}</a>
                             </li>
                         </ul>
                         {% endif %}

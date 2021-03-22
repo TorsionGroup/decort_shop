@@ -1,12 +1,85 @@
 {% extends 'decort_shop/product/main.html' %}
+{% load mptt_tags %}
 {% load static %}
 {% load decort_shop_tag %}
 {% block  title_page %}
-<title>Shop - Torsion Group| {{ catalog_category.name }}</title>
+<title>Shop - Torsion Group</title>
 {% endblock title_page %}
 
 {% block product_page %}
 
+<div class="col-lg-9 col-md-7 order-1 order-lg-2 order-md-2">
+    <div class="shop-toolbar">
+        <div class="product-view-mode">
+            <a class="grid-1" data-target="gridview-1" data-toggle="tooltip" data-placement="top"
+               title="1">1</a>
+            <a class="grid-2" data-target="gridview-2" data-toggle="tooltip" data-placement="top"
+               title="2">2</a>
+            <a class="active grid-3" data-target="gridview-3" data-toggle="tooltip" data-placement="top"
+               title="3">3</a>
+            <a class="grid-4" data-target="gridview-4" data-toggle="tooltip" data-placement="top"
+               title="4">4</a>
+            <a class="grid-5" data-target="gridview-5" data-toggle="tooltip" data-placement="top"
+               title="5">5</a>
+            <a class="list" data-target="listview" data-toggle="tooltip" data-placement="top"
+               title="List"><i class="fa fa-th-list"></i></a>
+        </div>
+    </div>
+
+    <div class="shop-product-wrap grid gridview-3 img-hover-effect_area row">
+
+        {% get_catalogcategories as catalog_category_list %}
+        {% recursetree catalog_category_list %}
+
+        <div class="col-lg-4">
+            <div class="product-slide_item">
+                <div class="inner-slide">
+                    <div class="single-product">
+                        <div class="product-img">
+                            <a href="{% url 'catalog_product_detail' node.url %}">
+                                <img class="primary-img"
+                                     src="{% static 'img/image_not_found.jpg' %}"
+                                     alt="torsion's Product Image">
+                                <img class="secondary-img"
+                                     src="{% static 'img/image_not_found.jpg' %}"
+                                     alt="torsion's Product Image">
+                            </a>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-desc_info">
+                                <h6><b><a class="product-name"
+                                          href="{% url 'catalog_product_detail' node.url %}">{{ node.name }}</a></b>
+                                </h6>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-slide_item">
+                <div class="single-product">
+                    <div class="product-img">
+                        <a href="product_detail.html">
+                            <img class="primary-img" src="{% static 'img/image_not_found.jpg' %}"
+                                 alt="torsion's Product Image">
+                            <img class="secondary-img" src="{% static 'img/image_not_found.jpg' %}"
+                                 alt="torsion's Product Image">
+                        </a>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-desc_info">
+                            <h6><a class="product-name"
+                                   href="{% url 'catalog_product_detail' node.url %}">{{ node.name }}</a>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {% endrecursetree %}
+    </div>
 
 
-{% endblock product_page %}
+    {% endblock product_page %}

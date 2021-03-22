@@ -198,6 +198,7 @@ class CatalogCategory(MPTTModel):
     comment = models.CharField(max_length=500, null=True, blank=True)
     parent_source = models.CharField(max_length=500, null=True, blank=True)
     url = models.SlugField(max_length=150, unique=True)
+    image = models.ImageField(upload_to="product/category_image/", null=True, blank=True)
 
     def __str__(self):
         return str(self.url)
@@ -264,9 +265,6 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'int': self.id})
-
-    def get_review(self):
-        return self.reviews_set.filter(parent__isnull=True)
 
     class Meta:
         verbose_name = "Product"

@@ -40,50 +40,27 @@ class IndexView(BrandOffer, ListView):
     template_name = 'decort_shop/index.html'
 
 
-class CatalogProductView(BrandOffer, ListView):
+def catalog_product_list(request, category_slug=None):
+    category = None
+    categories = CatalogCategory.objects.all()
+    products = Product.objects.all()
+    if category_slug:
+        category = get_object_or_404(CatalogCategory, url=category_slug)
+        products = products.filter(category_id=category)
+    return render(request, 'decort_shop/product/product_list.html',
+                  {'category': category, 'categories': categories, 'products': products})
+
+
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+    return render(request, 'decort_shop/product/product_detail.html', {'product': product})
+
+
+class CatalogCategoryView(BrandOffer, ListView):
     model = CatalogCategory
     queryset = CatalogCategory.objects.all()
-    context_object_name = 'catalog_product_list'
-
-    def get(self, request):
-        return render(request, 'decort_shop/product/product_list.html')
-
-    def post(self, request):
-        slug = request.POST.get("slug")
-        node = CatalogCategory.objects.get(slug=slug)
-        if Product.objects.filter(category__slug=slug).exists():
-            products = Product.objects.filter(category__slug=slug)
-        else:
-            products = Product.objects.filter(category__slug__in=[x.slug for x in node.get_family()])
-
-
-class CatalogProductDetailView(BrandOffer, DetailView):
-    model = CatalogCategory
-    slug_field = 'url'
-    context_object_name = 'catalog_product_detail'
-
-    def get_queryset(self):
-        slug = self.kwargs.get('slug')
-        node = CatalogCategory.objects.get(slug=slug)
-        if Product.objects.filter(category__slug=slug).exists():
-            products = Product.objects.filter(category__slug=slug)
-        else:
-            products = Product.objects.filter(category__slug__in=[x.slug for x in node.get_family()])
-        return products
-
-
-class ProductView(BrandOffer, ListView):
-    model = Product
-    queryset = Product.objects.all()
-    paginate_by = 30
-    context_object_name = 'product_list'
-    template_name = 'decort_shop/product/product_list.html'
-
-
-class ProductDetailView(BrandOffer, DetailView):
-    model = Product
-    context_object_name = 'product_detail'
-    template_name = 'decort_shop/product/product_detail.html'
+    context_object_name = 'catalog_category_list'
+    template_name = 'decort_shop/product/catalog_category_list.html'
 
 
 class NewsView(ListView):
