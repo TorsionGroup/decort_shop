@@ -155,7 +155,9 @@
                                     <a href="{% url 'catalog_product_detail' node.url %}">{{ node.name }}</a>
                                     {% if not node.is_leaf_node %}
                                     <ul class="cat-dropdown">
-                                        <li>{{ children }}</li>
+                                        <li>
+                                            {{ children }}
+                                        </li>
                                     </ul>
                                     {% endif %}
                                 </li>
