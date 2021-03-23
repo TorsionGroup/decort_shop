@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.flatpages',
+    'django.contrib.postgres',
     'shop',
     'cart',
     'orders',
@@ -53,7 +55,6 @@ INSTALLED_APPS = [
     'snowpenguin.django.recaptcha3',
     'ckeditor',
     'ckeditor_uploader',
-
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'decort_shop.urls'
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+EMAIL_HOST = '192.168.99.102'
+EMAIL_HOST_USER = 'prog@torsion.kiev.ua'
+EMAIL_HOST_PASSWORD = 'sdr%7ujK'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 TEMPLATES = [
     {
@@ -153,8 +161,6 @@ ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_REDIRECT_URL = "/"
 
 CART_SESSION_ID = 'cart'
-
-EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale/'),

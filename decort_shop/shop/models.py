@@ -7,41 +7,6 @@ from django.utils import timezone
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
-
-
-def get_models_for_count(*model_names):
-    return [models.Count(model_name) for model_name in model_names]
-
-
-def get_product_url(obj, viewname):
-    ct_model = obj.__class__._meta.model_name
-    return reverse(viewname, kwargs={'ct_model': ct_model, 'slug': obj.slug})
-
-
-class LatestProductsManager:
-
-    @staticmethod
-    def get_products_for_main_page(*args, **kwargs):
-        with_respect_to = kwargs.get('with_respect_to')
-        products = []
-        ct_models = ContentType.objects.filter(model__in=args)
-        for ct_model in ct_models:
-            model_products = ct_model.model_class()._base_manager.all().order_by('-id')[:5]
-            products.extend(model_products)
-        if with_respect_to:
-            ct_model = ContentType.objects.filter(model=with_respect_to)
-            if ct_model.exists():
-                if with_respect_to in args:
-                    return sorted(
-                        products, key=lambda x: x.__class__._meta.model_name.startswith(with_respect_to), reverse=True
-                    )
-        return products
-
-
-class LatestProducts:
-    objects = LatestProductsManager()
 
 
 class Manager(models.Model):
@@ -283,45 +248,6 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = "ProductImage"
         verbose_name_plural = "ProductImages"
-
-
-class CartProduct(models.Model):
-    account = models.ForeignKey('Account', on_delete=models.CASCADE, verbose_name='cartproduct_account')
-    cart = models.ForeignKey('Cart', on_delete=models.CASCADE, verbose_name='cartproduct_cart',
-                             related_name='related_cartproduct_cart')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id')
-    qty = models.PositiveIntegerField(default=1)
-    final_price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name='cartproduct_finalprice')
-
-    def __str__(self):
-        return "Product: {} (for cart)".format(self.content_object.title)
-
-    def save(self, *args, **kwargs):
-        self.final_price = self.qty * self.content_object.price
-        super().save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = "CartProduct"
-        verbose_name_plural = "CartProducts"
-
-
-class Cart(models.Model):
-    account = models.ForeignKey('Account', on_delete=models.CASCADE, verbose_name='cart_account')
-    product = models.ManyToManyField(CartProduct, blank=True, verbose_name='cart_cartproduct',
-                                     related_name='related_cart_product')
-    total_products = models.PositiveIntegerField(default=0)
-    final_price = models.DecimalField(max_digits=15, decimal_places=2, default=0, verbose_name='cart_finalprice')
-    in_order = models.BooleanField(default=False)
-    for_anonymous_user = models.BooleanField(default=False)
-
-    def __str__(self):
-        return str(self.id)
-
-    class Meta:
-        verbose_name = "Cart"
-        verbose_name_plural = "Carts"
 
 
 class Currency(models.Model):
