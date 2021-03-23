@@ -71,7 +71,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'decort_shop.urls'
 
-EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 EMAIL_HOST = '192.168.99.102'
 EMAIL_HOST_USER = 'prog@torsion.kiev.ua'
 EMAIL_HOST_PASSWORD = 'sdr%7ujK'

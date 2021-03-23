@@ -154,6 +154,16 @@ def dashboard(request):
     return render(request, 'decort_shop/account/dashboard.html', {'section': 'dashboard'})
 
 
+@login_required
+def addresses(request):
+    return render(request, 'decort_shop/account/addresses.html', {'section': 'addresses'})
+
+
+@login_required
+def orders(request):
+    return render(request, 'decort_shop/account/order.html', {'section': 'orders'})
+
+
 def wishlist(request):
     return render(request, 'decort_shop/wishlist.html')
 
