@@ -1,42 +1,34 @@
-{% extends 'decort_shop/main.html' %}
+{% extends 'decort_shop/account/main.html' %}
 {% load static %}
 {% block  title_page %}
 <title>Login - Torsion Group</title>
 {% endblock title_page %}
 
-{% block content_page %}
-<div class="torsion-login-register_area">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6">
+{% block dashboard_page %}
 
-                <form action="{% url 'login' %}" method="post">
-                    <div class="login-form">
-                        <h4 class="login-title">Login</h4>
-                        <div class="row">
-                            <div class="col-md-12 col-12">
-                                {{ form.as_p }}
-                                {% csrf_token %}
-                                <input type="hidden" name="next" value="{% url 'dashboard' %}"/>
-                                <input type="submit" class="torsion-login_btn" value="LOGIN">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="check-box">
-                                    <input type="checkbox" id="remember_me">
-                                    <label for="remember_me">Remember me</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="forgotton-password_info">
-                                    <a href="#"> Forgotten password ?</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+<form action="{% url 'login' %}" method="post">
+    <div class="login-form">
+        <h4 class="login-title">Login</h4>
+        <div class="row">
+            <div class="col-md-12 col-12">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{% url 'dashboard' %}"/>
+                <input type="submit" class="torsion-login_btn" value="LOGIN">
+            </div>
+            <div class="col-md-8">
+                <div class="check-box">
+                    <input type="checkbox" id="remember_me">
+                    <label for="remember_me">Remember me</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="forgotton-password_info">
+                    <a href="#"> Forgotten password ?</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
-{% endblock content_page %}
+{% endblock dashboard_page %}

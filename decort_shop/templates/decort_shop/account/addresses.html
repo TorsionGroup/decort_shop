@@ -1,0 +1,30 @@
+{% extends 'decort_shop/account/main.html' %}
+{% load static %}
+{% block  title_page %}
+<title>Addresses - Torsion Group</title>
+{% endblock title_page %}
+
+{% block dashboard_page %}
+
+<div class="tab-pane fade" id="account-address" role="tabpanel"
+     aria-labelledby="account-address-tab">
+    <div class="myaccount-address">
+        <p>The following addresses will be used on the checkout page by default.</p>
+        <div class="row">
+            <div class="col">
+                <h4 class="small-title">BILLING ADDRESS</h4>
+                <address>
+                    1234 Heaven Stress, Beverly Hill OldYork UnitedState of Lorem
+                </address>
+            </div>
+            <div class="col">
+                <h4 class="small-title">SHIPPING ADDRESS</h4>
+                <address>
+                    1234 Heaven Stress, Beverly Hill OldYork UnitedState of Lorem
+                </address>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock dashboard_page %}

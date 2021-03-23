@@ -25,4 +25,7 @@ urlpatterns = [
     path('add-rating-content/', views.AddStarRatingContent.as_view(), name='add_rating_content'),
     path('review-product/<int:pk>/', views.AddReviewProduct.as_view(), name='add_review_product'),
     path('review-content/<int:pk>/', views.AddReviewContent.as_view(), name='add_review_content'),
+    path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
+    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+
 ]

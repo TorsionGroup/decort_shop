@@ -1,0 +1,26 @@
+{% extends 'decort_shop/main.html' %}
+{% load static %}
+{% load decort_shop_tag %}
+{% block content_page %}
+
+<main class="page-content">
+    <div class="account-page-area">
+        <div class="container-fluid">
+            <div class="row">
+
+                {% if request.user.is_authenticated %}
+                {% include 'decort_shop/account/dashboard_sidebar.html' %}
+                {% endif %}
+                <div class="col-lg-9">
+                    <div class="tab-content myaccount-tab-content" id="account-page-tab-content">
+                        {% block dashboard_page %}
+                        {% endblock dashboard_page %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock content_page %}
