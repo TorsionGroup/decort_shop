@@ -203,7 +203,7 @@ class Product(models.Model):
         CatalogCategory, on_delete=models.SET_NULL, blank=True, null=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
     search_key = models.CharField(max_length=250, null=True, blank=True)
-    sort_price = models.DecimalField(max_digits=15, decimal_places=2, default=0, null=True)
+    price = models.DecimalField(max_digits=15, decimal_places=2, default=0, null=True)
     is_active = models.BooleanField(default=1, null=True)
     weight = models.DecimalField(max_digits=15, decimal_places=3, default=0)
     pack_qty = models.IntegerField(default=0, blank=True, null=True)

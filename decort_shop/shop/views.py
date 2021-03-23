@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm
+from .cart.forms import CartAddProductForm
 
 
 class BrandOffer:
@@ -40,7 +41,9 @@ def catalog_product_list(request, category_slug=None):
 
 def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
-    return render(request, 'decort_shop/product/product_detail.html', {'product': product})
+    cart_product_form = CartAddProductForm()
+    return render(request, 'decort_shop/product/product_detail.html',
+                  {'product': product, 'cart_product_form': cart_product_form})
 
 
 class CatalogCategoryView(BrandOffer, ListView):

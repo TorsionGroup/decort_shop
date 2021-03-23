@@ -89,6 +89,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'shop.cart.context_processors.cart',
             ],
         },
     },
@@ -254,4 +255,3 @@ CKEDITOR_CONFIGS = {
 }
 
 MPTT_ADMIN_LEVEL_INDENT = 30
-

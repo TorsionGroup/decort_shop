@@ -72,8 +72,8 @@
                                 <ul>
                                     <li>Brands: {{ product.brand_id.name }}</li>
                                     <li>Product Code: {{ product.article }}</li>
-                                    <li>Availability: </li>
-                                    <li>Price: {{ product.sort_price }}</li>
+                                    <li>Availability:</li>
+                                    <li>Price: {{ product.price }}</li>
                                 </ul>
                             </div>
 
@@ -87,7 +87,16 @@
                             </div>
                             <div class="qty-btn_area">
                                 <ul>
-                                    <li><a class="qty-cart_btn" href="cart.html">Add To Cart</a></li>
+
+                                    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                        {{ cart_product_form }}
+                                        {% csrf_token %}
+                                        <li><a class="qty-cart_btn">
+                                            <input type="submit" value="Add To Cart">
+                                        </a></li>
+                                    </form>
+
+
                                     <li><a class="qty-wishlist_btn" href="wishlist.html" data-toggle="tooltip"
                                            title="Add To Wishlist"><i class="ion-android-favorite-outline"></i></a>
                                     </li>

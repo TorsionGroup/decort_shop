@@ -104,7 +104,7 @@
                                     <span class="new-price">{{ product.specification }}</span>
                                 </div>
                                 <div class="price-box">
-                                    <span class="new-price">{{ product.sort_price }}</span>
+                                    <span class="new-price">{{ product.price }}</span>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                                 <span class="new-price">{{ product.specification }}</span>
                             </div>
                             <div class="price-box">
-                                <span class="new-price">{{ product.sort_price }}</span>
+                                <span class="new-price">{{ product.price }}</span>
                             </div>
                             <div class="product-short_desc">
                                 <p>{{ product.advanced_description|safe }}</p>
@@ -171,3 +171,4 @@
     {% include 'decort_shop/include/pagination.html' %}
 
 {% endblock product_page %}
+
