@@ -4,9 +4,10 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 from .models import *
-from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm, LoginForm
+from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm
 
 
 class BrandOffer:
@@ -148,27 +149,9 @@ class ContactsView(ListView):
     template_name = 'decort_shop/contacts.html'
 
 
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(request, username=cd['username'], password=cd['password'])
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponse('Authenticated successfully')
-            else:
-                return HttpResponse('Disabled account')
-        else:
-            return HttpResponse('Invalid login')
-    else:
-        form = LoginForm()
-    return render(request, 'decort_shop/account/login.html', {'form': form})
-
-
-def account(request):
-    return render(request, 'decort_shop/account/account.html')
+@login_required
+def dashboard(request):
+    return render(request, 'decort_shop/account/dashboard.html', {'section': 'dashboard'})
 
 
 def wishlist(request):

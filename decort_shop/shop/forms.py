@@ -100,9 +100,3 @@ class RatingProductForm(forms.ModelForm):
         model = RatingProduct
         fields = ("star",)
 
-
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-
-
