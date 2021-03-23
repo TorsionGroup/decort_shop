@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'shop',
+    'cart',
 
     'rest_framework',
 
@@ -149,6 +150,8 @@ LANGUAGES = (
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_REDIRECT_URL = "/"
+
+CART_SESSION_ID = 'cart'
 
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
