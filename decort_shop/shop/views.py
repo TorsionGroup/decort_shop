@@ -1,28 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic.base import View
-from django.db import models, transaction
-from django.conf import settings
-from django.core.paginator import Paginator
 from django.db.models import Q, OuterRef, Subquery, Case, When, Sum
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
-import json
-import datetime
 from django.views.generic import ListView, DetailView, View
-from django.contrib.auth import authenticate, login as auth_login, logout
-from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse
-from django.contrib.contenttypes.models import ContentType
-from importlib import import_module
+from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import *
-from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm
+from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm, LoginForm
 
 
 class BrandOffer:
@@ -164,8 +148,23 @@ class ContactsView(ListView):
     template_name = 'decort_shop/contacts.html'
 
 
-def login(request):
-    return render(request, 'decort_shop/account/login.html')
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, username=cd['username'], password=cd['password'])
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponse('Authenticated successfully')
+            else:
+                return HttpResponse('Disabled account')
+        else:
+            return HttpResponse('Invalid login')
+    else:
+        form = LoginForm()
+    return render(request, 'decort_shop/account/login.html', {'form': form})
 
 
 def account(request):
