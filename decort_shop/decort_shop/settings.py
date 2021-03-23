@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'shop',
     'cart',
+    'orders',
 
     'rest_framework',
 

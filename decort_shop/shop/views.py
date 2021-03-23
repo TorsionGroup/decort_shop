@@ -19,6 +19,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 from importlib import import_module
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .utils import cookieCart, cartData, guestOrder, recalc_cart
 from .models import *
@@ -44,11 +45,14 @@ def catalog_product_list(request, category_slug=None):
     category = None
     categories = CatalogCategory.objects.all()
     products = Product.objects.all()
+    paginator = Paginator(products, 30)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     if category_slug:
         category = get_object_or_404(CatalogCategory, url=category_slug)
         products = products.filter(category_id=category)
     return render(request, 'decort_shop/product/product_list.html',
-                  {'category': category, 'categories': categories, 'products': products})
+                  {'page_obj': page_obj, 'category': category, 'categories': categories, 'products': products})
 
 
 def product_detail(request, id):

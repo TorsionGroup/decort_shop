@@ -5,14 +5,14 @@
                 <div class="col-lg-12">
                     <ul class="torsion-pagination-box carlet-color">
 
-                        {% if page.has_next %}
-                        <li><a class="Previous" href="?page={{ page.previous_page_number }}">Previous<</a></li>
+                        {% if page_obj.has_previous %}
+                        <li><a class="Previous" href="?page={{ page_obj.previous_page_number }}">Previous<</a></li>
                         {% endif %}
-                        <li class="active"><a href="#">{{ page.number }}</a></li>
+                        <li class="active"><a href="#">{{ page_obj.number }}</a></li>
                         <li><a href="javascript:void(0)">2</a></li>
-                        <li>Page {{ page.number }} of {{ page.paginator.num_pages }}</li>
-                        {% if page.has_next %}
-                        <li><a class="Next" href="?page={{ page.next_page_number }}">Next</a></li>
+                        <li>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</li>
+                        {% if page_obj.has_next %}
+                        <li><a class="Next" href="?page={{ page_obj.next_page_number }}">Next</a></li>
                         {% endif %}
 
                     </ul>
