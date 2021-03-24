@@ -167,14 +167,12 @@ def orders(request):
     return render(request, 'decort_shop/account/order.html', {'section': 'orders'})
 
 
+@login_required
 def wishlist(request):
-    return render(request, 'decort_shop/wishlist.html')
+    return render(request, 'decort_shop/account/wishlist.html')
 
 
-def faq(request):
-    return render(request, 'decort_shop/faq.html')
-
-
+@login_required
 def compare(request):
     return render(request, 'decort_shop/compare.html')
 
@@ -185,4 +183,8 @@ def cart(request):
 
 def checkout(request):
     return render(request, 'decort_shop/cart/checkout.html')
+
+
+def faq(request):
+    return render(request, 'decort_shop/faq.html')
 

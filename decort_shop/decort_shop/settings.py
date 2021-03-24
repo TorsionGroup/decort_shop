@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'shop',
     'shop.cart',
+    'shop.orders',
+    'shop.api',
 
     'rest_framework',
 

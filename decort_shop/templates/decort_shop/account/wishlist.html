@@ -1,0 +1,69 @@
+{% extends 'decort_shop/account/main.html' %}
+{% load static %}
+{% block  title_page %}
+<title>Wishlist - Torsion Group</title>
+{% endblock title_page %}
+
+{% block dashboard_page %}
+
+<div class="col-lg-12">
+    <form action="javascript:void(0)">
+        <h4 class="small-title">MY WISHLIST</h4>
+        <div class="table-content table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="torsion-product_remove">remove</th>
+                    <th class="torsion-product-thumbnail">images</th>
+                    <th class="cart-product-name">Product</th>
+                    <th class="torsion-product-price">Unit Price</th>
+                    <th class="torsion-product-stock-status">Stock Status</th>
+                    <th class="torsion-cart_btn">add to cart</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="torsion-product_remove"><a href="javascript:void(0)"><i class="fa fa-trash"
+                                                                                       title="Remove"></i></a>
+                    </td>
+                    <td class="torsion-product-thumbnail"><a href="javascript:void(0)"><img
+                            src="assets/images/product/small-size/1.jpg" alt="torsion's Wishlist Thumbnail"></a>
+                    </td>
+                    <td class="torsion-product-name"><a href="javascript:void(0)">Juma rema pola</a></td>
+                    <td class="torsion-product-price"><span class="amount">£23.39</span></td>
+                    <td class="torsion-product-stock-status"><span class="in-stock">in stock</span></td>
+                    <td class="torsion-cart_btn"><a href="javascript:void(0)">add to cart</a></td>
+                </tr>
+                <tr>
+                    <td class="torsion-product_remove"><a href="javascript:void(0)"><i class="fa fa-trash"
+                                                                                       title="Remove"></i></a>
+                    </td>
+                    <td class="torsion-product-thumbnail"><a href="javascript:void(0)"><img
+                            src="assets/images/product/small-size/2.jpg" alt="torsion's Wishlist Thumbnail"></a>
+                    </td>
+                    <td class="torsion-product-name"><a href="javascript:void(0)">Suretin mipen ruma</a>
+                    </td>
+                    <td class="torsion-product-price"><span class="amount">£30.50</span></td>
+                    <td class="torsion-product-stock-status"><span class="in-stock">in stock</span></td>
+                    <td class="torsion-cart_btn"><a href="javascript:void(0)">add to cart</a></td>
+                </tr>
+                <tr>
+                    <td class="torsion-product_remove"><a href="javascript:void(0)"><i class="fa fa-trash"
+                                                                                       title="Remove"></i></a>
+                    </td>
+                    <td class="torsion-product-thumbnail"><a href="javascript:void(0)"><img
+                            src="assets/images/product/small-size/3.jpg" alt="torsion's Wishlist Thumbnail"></a>
+                    </td>
+                    <td class="torsion-product-name"><a href="javascript:void(0)">Bag Goodscol model</a>
+                    </td>
+                    <td class="torsion-product-price"><span class="amount">£40.19</span></td>
+                    <td class="torsion-product-stock-status"><span class="out-stock">out stock</span></td>
+                    <td class="torsion-cart_btn"><a href="javascript:void(0)">add to cart</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+{% endblock dashboard_page %}
