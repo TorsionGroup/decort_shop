@@ -35,9 +35,10 @@
                                     <i class="fa fa-trash" title="Remove"></i></a>
                                 </td>
                                 <td class="torsion-product-thumbnail"><a href="#">
-                                    <img src="{% static 'img/image_not_found.jpg' %}"></a>
+                                    <img src=""></a>
                                 </td>
-                                <td class="torsion-product-name"><a href="#">{{ product.name }}</a></td>
+                                <td class="torsion-product-name">
+                                    <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a></td>
                                 <td class="torsion-product-price"><span class="amount">{{ item.price }}</span></td>
                                 <td class="quantity">
                                     <label>Quantity</label>
@@ -65,7 +66,7 @@
                                 <ul>
                                     <li>Total:<span>{{ cart.get_total_price }}</span></li>
                                 </ul>
-                                <a href="{% url 'orders:order_create' %}">Proceed to checkout</a>
+                                <a class="header-search_btn" href="{% url 'orders:order_create' %}"><b>Proceed to checkout</b></a>
                                 <a href="{% url 'catalog_category_list' %}" class="button light">Continue shopping</a>
                             </div>
                         </div>
