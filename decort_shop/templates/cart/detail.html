@@ -65,7 +65,7 @@
                                 <ul>
                                     <li>Total:<span>{{ cart.get_total_price }}</span></li>
                                 </ul>
-                                <a href="javascript:void(0)">Proceed to checkout</a>
+                                <a href="{% url 'orders:order_create' %}">Proceed to checkout</a>
                                 <a href="{% url 'catalog_category_list' %}" class="button light">Continue shopping</a>
                             </div>
                         </div>

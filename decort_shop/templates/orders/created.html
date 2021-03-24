@@ -1,0 +1,25 @@
+{% extends 'decort_shop/main.html' %}
+{% load mptt_tags %}
+{% load static %}
+{% load decort_shop_tag %}
+{% block  title_page %}
+<title>Checkout - Torsion Group</title>
+{% endblock title_page %}
+
+{% block content_page %}
+
+<div class="checkout-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <h1>Thank you</h1>
+                <p>Your order has been successfully completed. Your order number is
+                    <strong>{{ order.id }}</strong>.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content_page %}

@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
+    path('orders/', include('shop.orders.urls', namespace='orders')),
     path('', views.IndexView.as_view(), name='home'),
     path('news/', views.NewsView.as_view(), name='news'),
     path('news/<slug:slug>/', views.NewsDetailView.as_view(), name='news_detail'),

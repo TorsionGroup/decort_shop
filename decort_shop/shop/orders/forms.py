@@ -4,6 +4,6 @@ from .models import *
 
 class OrderCreateForm(forms.ModelForm):
     class Meta:
-    model = Order
-    fields = ['delivery_method', 'point_id', 'comment']
+        model = Order
+        fields = ['delivery_method', 'point_id', 'comment']
 
