@@ -156,23 +156,8 @@ class CustomerAgreementAdmin(admin.ModelAdmin):
     search_fields = ('name', 'customer_id',)
 
 
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user_id', 'agreement_id', 'delivery_method', 'point_id', 'order_number')
-    list_display_links = ('id', 'user_id', 'agreement_id', 'delivery_method', 'order_number',)
-    search_fields = ('user_id', 'delivery_method', 'order_number',)
-
-
-@admin.register(OrderItem)
-class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'order_id', 'product_id', 'qty', 'price')
-    list_display_links = ('order_id', 'product_id', 'qty', 'price',)
-    search_fields = ('order_id',)
-
-
 admin.site.register(RatingStar)
 admin.site.register(Currency)
-admin.site.register(OrderPayment)
 admin.site.register(ProductImage)
 admin.site.register(CustomerDiscount)
 admin.site.register(CustomerPoint)
@@ -181,5 +166,4 @@ admin.site.register(Stock)
 admin.site.register(Cross)
 admin.site.register(ProductApplicability)
 admin.site.register(ProductDescription)
-admin.site.register(DropshippingWallet)
-admin.site.register(DropshippingWalletTransfer)
+

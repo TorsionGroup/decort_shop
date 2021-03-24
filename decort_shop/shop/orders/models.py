@@ -7,7 +7,7 @@ class Order(models.Model):
         Customer, on_delete=models.SET_NULL, null=True, blank=True)
     agreement_id = models.ForeignKey(
         CustomerAgreement, on_delete=models.SET_NULL, related_name="order_agreement", null=True, blank=True)
-    complete = models.BooleanField(default=0, null=True)
+    complete = models.BooleanField(default=0, null=True, blank=True)
     delivery_method = models.ForeignKey(
         DeliveryMethod, on_delete=models.SET_NULL, related_name="order_delivery", null=True, blank=True)
     order_date = models.CharField(max_length=300, null=True, blank=True)
@@ -41,6 +41,7 @@ class Order(models.Model):
     agreement = models.CharField(max_length=300, null=True, blank=True)
     has_precept = models.BooleanField(default=0, null=True, blank=True)
     has_waybill = models.BooleanField(default=0, null=True, blank=True)
+    paid = models.BooleanField(default=False, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated = models.DateTimeField(auto_now=True, null=True, blank=True)
 
