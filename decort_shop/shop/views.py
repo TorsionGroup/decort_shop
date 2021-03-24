@@ -163,8 +163,8 @@ def addresses(request):
 
 
 @login_required
-def orders(request):
-    return render(request, 'decort_shop/account/order.html', {'section': 'orders'})
+def account_orders(request):
+    return render(request, 'decort_shop/account/order.html', {'section': 'account_orders'})
 
 
 @login_required

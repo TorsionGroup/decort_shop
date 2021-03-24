@@ -9,6 +9,5 @@ class BrandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Brand
-        fields = [
-            'name', 'source_id'
-        ]
+        fields = ['name', 'source_id']
+
