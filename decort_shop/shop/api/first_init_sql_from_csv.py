@@ -151,7 +151,8 @@ print('Load Order')
 
 with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'shop_orderitem',
-                  columns=('order_source', 'product', 'currency', 'qty', 'price', 'reserved', 'executed'), sep='|')
+                  columns=('order_source', 'product_source', 'currency_source', 'qty', 'price', 'reserved',
+                           'executed'), sep='|')
 conn.commit()
 print('Load Order Item')
 

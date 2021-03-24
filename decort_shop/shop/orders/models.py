@@ -37,48 +37,33 @@ class Order(models.Model):
     delivery_contact_surname = models.CharField(max_length=250, null=True, blank=True)
     declaration_number = models.CharField(max_length=250, null=True, blank=True)
     delivery_contact_middlename = models.CharField(max_length=250, null=True, blank=True)
-    delivery_is_invoice_off = models.BooleanField(default=1, null=True)
+    delivery_is_invoice_off = models.BooleanField(default=1, null=True, blank=True)
     agreement = models.CharField(max_length=300, null=True, blank=True)
-    has_precept = models.BooleanField(default=0, null=True)
-    has_waybill = models.BooleanField(default=0, null=True)
+    has_precept = models.BooleanField(default=0, null=True, blank=True)
+    has_waybill = models.BooleanField(default=0, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return 'Order {}'.format(self.id)
 
-    @property
-    def shipping(self):
-        shipping = False
-        orderitems = self.orderitem_set.all()
-        for i in orderitems:
-            if i.product.digital == False:
-                shipping = True
-        return shipping
-
-    @property
-    def get_cart_total(self):
-        orderitems = self.orderitem_set.all()
-        total = sum([item.get_total for item in orderitems])
-        return total
-
-    @property
-    def get_cart_items(self):
-        orderitems = self.orderitem_set.all()
-        total = sum([item.quantity for item in orderitems])
-        return total
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.items.all())
 
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
+        ordering = ('-created',)
 
 
 class OrderItem(models.Model):
-    order_id = models.ForeignKey(
+    order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="order_item_order", null=True, blank=True)
-    product_id = models.ForeignKey(
+    product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="order_item_product", null=True, blank=True)
-    currency_id = models.ForeignKey(
+    currency = models.ForeignKey(
         Currency, on_delete=models.CASCADE, related_name="order_item_currency", null=True, blank=True)
-    qty = models.IntegerField(default=0, null=True, blank=True)
+    quantity = models.PositiveIntegerField(default=1, null=True, blank=True)
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0, null=True)
     order_source = models.CharField(max_length=300, null=True, blank=True)
     reserved = models.IntegerField(default=0, null=True)
@@ -92,16 +77,14 @@ class OrderItem(models.Model):
     purchase_order_id = models.IntegerField(null=True, blank=True)
     purchase_item_id = models.IntegerField(null=True, blank=True)
     partner_branch = models.CharField(max_length=250, null=True, blank=True)
-    product = models.CharField(max_length=300, null=True, blank=True)
-    currency = models.CharField(max_length=300, null=True, blank=True)
+    product_source = models.CharField(max_length=300, null=True, blank=True)
+    currency_source = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return '{}'.format(self.id)
 
-    @property
-    def get_total(self):
-        total = self.product_id.sort_price * self.qty
-        return total
+    def get_cost(self):
+        return self.price * self.quantity
 
     class Meta:
         verbose_name = "OrderItem"

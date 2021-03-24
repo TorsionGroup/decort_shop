@@ -1125,8 +1125,8 @@ class LoadData:
 
         t_sql = '''CREATE TEMP TABLE shop_orderitem_buffer (
             order_source character varying(300),
-            product character varying(300),                
-            currency character varying(300),
+            product_source character varying(300),                
+            currency_source character varying(300),
             qty integer,
             price numeric(15, 2),
             reserved integer,
@@ -1136,13 +1136,14 @@ class LoadData:
 
         with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_orderitem_buffer',
-                      columns=('order_source', 'product', 'currency', 'qty', 'price', 'reserved', 'executed'), sep='|')
+                      columns=('order_source', 'product_source', 'currency_source', 'qty', 'price', 'reserved',
+                               'executed'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_orderitem o
             SET
-                product = b.product,
-                currency = b.currency,
+                product_source = b.product_source,
+                currency_source = b.currency_source,
                 qty = b.qty,
                 price = b.price,
                 reserved = b.reserved,
@@ -1153,21 +1154,21 @@ class LoadData:
         self.conn.commit()
 
         upd_sql = '''UPDATE shop_orderitem o
-            SET product_id_id = p.id                               
+            SET product_id = p.id                               
             FROM shop_product p
             WHERE o.product = p.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
 
         upd_sql = '''UPDATE shop_orderitem o
-            SET currency_id_id = c.id                               
+            SET currency_id = c.id                               
             FROM shop_currency c
             WHERE o.currency = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
 
         upd_sql = '''UPDATE shop_orderitem o
-            SET order_id_id = c.id                               
+            SET order_id = c.id                               
             FROM shop_order c
             WHERE o.order_source = c.order_source;'''
         cur.execute(upd_sql)
