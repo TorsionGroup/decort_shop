@@ -3,6 +3,7 @@
 {% load decort_shop_tag %}
 
 <header class="header-main_area bg--sapphire">
+
     <div class="header-top_area d-lg-block d-none">
         <div class="container-fluid">
             <div class="row">
@@ -36,10 +37,6 @@
                                         <li class="active"><a href="javascript:void(0)"><img
                                                 src="{% static 'img/torsion/menu/icon/1.jpg' %}"
                                                 alt="JB's Language Icon">English</a></li>
-                                        <li><a href="javascript:void(0)"><img
-                                                src="{% static 'img/torsion/menu/icon/2.jpg' %}"
-                                                alt="JB's Language Icon">Français</a>
-                                        </li>
                                     </ul>
                                 </li>
                                 <li><a href="{% url 'dashboard' %}">{{ request.user }}<i class="fa fa-chevron-down"></i></a>
@@ -53,10 +50,6 @@
                                         <li class="active"><a href="javascript:void(0)"><img
                                                 src="{% static 'img/torsion/menu/icon/1.jpg' %}"
                                                 alt="JB's Language Icon">English</a></li>
-                                        <li><a href="javascript:void(0)"><img
-                                                src="{% static 'img/torsion/menu/icon/2.jpg' %}"
-                                                alt="JB's Language Icon">Français</a>
-                                        </li>
                                     </ul>
                                 </li>
                                 <li><a href="{% url 'dashboard' %}">My Account<i class="fa fa-chevron-down"></i></a>
@@ -109,12 +102,12 @@
                             <li class="minicart-wrap">
                                 <a href="#miniCart" class="minicart-btn toolbar-btn">
                                     <div class="minicart-count_area">
-                                        <span class="item-count">3</span>
+                                        <span class="item-count"> </span>
                                         <i class="ion-bag"></i>
                                     </div>
                                     <div class="minicart-front_text">
                                         <span>Cart:</span>
-                                        <span class="total-price">462.4</span>
+                                        <span class="total-price">{{ cart.get_total_price }}</span>
                                     </div>
                                 </a>
                             </li>
@@ -191,12 +184,16 @@
                             <li class="minicart-wrap">
                                 <a href="#miniCart" class="minicart-btn toolbar-btn">
                                     <div class="minicart-count_area">
-                                        <span class="item-count">3</span>
+                                        {% for item in cart %}
+                                        {% with product=item.product %}
+                                        <span class="item-count"> </span>
                                         <i class="ion-bag"></i>
+                                        {% endwith %}
+                                        {% endfor %}
                                     </div>
                                     <div class="minicart-front_text">
                                         <span>Cart:</span>
-                                        <span class="total-price">462.4</span>
+                                        <span class="total-price">{{ cart.get_total_price }}</span>
                                     </div>
                                 </a>
                             </li>
@@ -209,6 +206,7 @@
             </div>
         </div>
     </div>
+
     <div class="offcanvas-minicart_wrapper" id="miniCart">
         <div class="offcanvas-menu-inner">
             <a href="#" class="btn-close"><i class="ion-android-close"></i></a>
@@ -216,57 +214,38 @@
                 <div class="minicart-heading">
                     <h4>Shopping Cart</h4>
                 </div>
+                {% for item in cart %}
+                {% with product=item.product %}
                 <ul class="minicart-list">
                     <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i
-                                class="ion-android-close"></i></a>
+                        <a class="product-item_remove" href="{% url 'cart:cart_remove' product.id%}">
+                            <i class="ion-android-close"></i></a>
                         <div class="product-item_img">
-                            <img src="{% static 'img/torsion/product/small-size/1.jpg' %}"
-                                 alt="torsion's Product Image">
+                            <img src="">
                         </div>
                         <div class="product-item_content">
-                            <a class="product-item_title" href="shop-left-sidebar.html">Autem ipsa ad</a>
-                            <span class="product-item_quantity">1 x $145.80</span>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i
-                                class="ion-android-close"></i></a>
-                        <div class="product-item_img">
-                            <img src="{% static 'img/torsion/product/small-size/2.jpg' %}"
-                                 alt="torsion's Product Image">
-                        </div>
-                        <div class="product-item_content">
-                            <a class="product-item_title" href="shop-left-sidebar.html">Tenetur illum amet</a>
-                            <span class="product-item_quantity">1 x $150.80</span>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i
-                                class="ion-android-close"></i></a>
-                        <div class="product-item_img">
-                            <img src="{% static 'img/torsion/product/small-size/3.jpg' %}"
-                                 alt="torsion's Product Image">
-                        </div>
-                        <div class="product-item_content">
-                            <a class="product-item_title" href="shop-left-sidebar.html">Non doloremque placeat</a>
-                            <span class="product-item_quantity">1 x $165.80</span>
+                            <a class="product-item_title" href="{% url 'product_detail' product.id %}">
+                                {{ item.product.name }}</a>
+                            <span class="product-item_quantity">{{ item.quantity }} x {{ item.price }} = {{ item.total_price }}</span>
                         </div>
                     </li>
                 </ul>
+                {% endwith %}
+                {% endfor %}
             </div>
             <div class="minicart-item_total">
-                <span>Subtotal</span>
-                <span class="ammount">$462.4‬0</span>
+                <span>Total</span>
+                <span class="ammount">{{ cart.get_total_price }}</span>
             </div>
             <div class="minicart-btn_area">
-                <a href="cart.html" class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">Minicart</a>
+                <a href="{% url 'cart:cart_detail' %}" class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">Cart</a>
             </div>
             <div class="minicart-btn_area">
-                <a href="checkout.html" class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">Checkout</a>
+                <a href="{% url 'orders:order_create' %}" class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">Checkout</a>
             </div>
         </div>
     </div>
+
     <div class="mobile-menu_wrapper" id="mobileMenu">
         <div class="offcanvas-menu-inner">
             <div class="container">
@@ -290,7 +269,7 @@
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="shop-left-sidebar.html">
+                            <a href="{% url 'catalog_category_list' %}">
                                 <span class="mm-text">Shop</span>
                             </a>
                             <ul class="sub-menu">
@@ -306,7 +285,6 @@
                                         </li>
                                     </ul>
                                 </li>
-
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
@@ -381,9 +359,9 @@
                 </nav>
                 <nav class="offcanvas-navigation user-setting_area">
                     <ul class="mobile-menu">
-                        <li class="menu-item-has-children active"><a href="javascript:void(0)"><span
-                                class="mm-text">User
-                                        Setting</span></a>
+                        <li class="menu-item-has-children active">
+                            <a href="javascript:void(0)">
+                                <span class="mm-text">User Setting</span></a>
                             <ul class="sub-menu">
                                 <li>
                                     <a href="my-account.html">
@@ -400,11 +378,6 @@
                         <li class="menu-item-has-children"><a href="javascript:void(0)"><span
                                 class="mm-text">Currency</span></a>
                             <ul class="sub-menu">
-                                <li>
-                                    <a href="javascript:void(0)">
-                                        <span class="mm-text">EUR €</span>
-                                    </a>
-                                </li>
                                 <li>
                                     <a href="javascript:void(0)">
                                         <span class="mm-text">USD $</span>
@@ -427,4 +400,5 @@
             </div>
         </div>
     </div>
+
 </header>

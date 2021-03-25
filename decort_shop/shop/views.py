@@ -174,15 +174,7 @@ def wishlist(request):
 
 @login_required
 def compare(request):
-    return render(request, 'decort_shop/compare.html')
-
-
-def cart(request):
-    return render(request, 'decort_shop/cart/cart_detail.html')
-
-
-def checkout(request):
-    return render(request, 'decort_shop/cart/checkout.html')
+    return render(request, 'decort_shop/products/compare.html')
 
 
 def faq(request):

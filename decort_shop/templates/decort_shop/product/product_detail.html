@@ -44,59 +44,42 @@
                                     <img src="assets/images/product/small-size/2.jpg"
                                          alt="torsion's Product Thumnail">
                                 </div>
-                                <div class="single-slide brown">
-                                    <img src="assets/images/product/small-size/3.jpg"
-                                         alt="torsion's Product Thumnail">
-                                </div>
-                                <div class="single-slide umber">
-                                    <img src="assets/images/product/small-size/4.jpg"
-                                         alt="torsion's Product Thumnail">
-                                </div>
-                                <div class="single-slide red">
-                                    <img src="assets/images/product/small-size/5.jpg"
-                                         alt="torsion's Product Thumnail">
-                                </div>
-                                <div class="single-slide orange">
-                                    <img src="assets/images/product/small-size/6.jpg"
-                                         alt="torsion's Product Thumnail">
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-7">
                         <div class="sp-content">
                             <div class="sp-heading">
-                                <h5><a href="#">{{ product.name }}</a></h5>
+                                <h5><a href="#"><h4>{{ product.name }}</h4></a></h5>
                             </div>
+                            <hr>
                             <div class="sp-essential_stuff">
                                 <ul>
                                     <li>Brands: {{ product.brand_id.name }}</li>
                                     <li>Product Code: {{ product.article }}</li>
                                     <li>Availability:</li>
-                                    <li>Price: {{ product.price }}</li>
+                                    <li>Weight: {{ product.weight }} kg</li>
+                                    <li>Pieces per package: {{ product.pack_qty }}</li>
                                 </ul>
                             </div>
-
-                            <div class="quantity">
-                                <label>Quantity</label>
-                                <div class="cart-plus-minus">
-                                    <input class="cart-plus-minus-box" value="1" type="text">
-                                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                </div>
+                            <hr>
+                            <div class="sp-essential_stuff">
+                                <ul>
+                                    <li><h5>Price: {{ product.price }}</h5></li>
+                                </ul>
                             </div>
+                            <hr>
                             <div class="qty-btn_area">
                                 <ul>
-
-                                    <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                                        {{ cart_product_form }}
-                                        {% csrf_token %}
-                                        <li><a class="qty-cart_btn">
-                                            <input type="submit" value="Add To Cart">
-                                        </a></li>
+                                    <li>
+                                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                            {{ cart_product_form }}
+                                            {% csrf_token %}
+                                    <li><a class="qty-cart_btn">
+                                        <input type="submit" value="Add To Cart">
+                                    </a></li>
                                     </form>
-
-
+                                    </li>
                                     <li><a class="qty-wishlist_btn" href="wishlist.html" data-toggle="tooltip"
                                            title="Add To Wishlist"><i class="ion-android-favorite-outline"></i></a>
                                     </li>
@@ -242,7 +225,7 @@
                             <div id="tags" class="tab-pane" role="tabpanel">
                                 <div class="product-description">
                                     <ul>
-
+                                        {{ product.keywords|safe }}
                                     </ul>
                                 </div>
                             </div>
