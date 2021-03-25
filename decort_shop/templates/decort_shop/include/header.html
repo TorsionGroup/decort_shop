@@ -34,12 +34,13 @@
                                 {% endfor %}
                                 <li><a href="javascript:void(0)">Language <i class="fa fa-chevron-down"></i></a>
                                     <ul class="ht-dropdown">
-                                        <li class="active"><a href="javascript:void(0)"><img
-                                                src="{% static 'img/torsion/menu/icon/1.jpg' %}"
-                                                alt="JB's Language Icon">English</a></li>
+                                        <li class="active"><a href="javascript:void(0)">
+                                            <img src="{% static 'img/torsion/menu/icon/1.jpg' %}">English</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{% url 'dashboard' %}">{{ request.user }}<i class="fa fa-chevron-down"></i></a>
+                                <li>
+                                    <a href="{% url 'dashboard' %}">{{ request.user }}
+                                        <i class="fa fa-chevron-down"></i></a>
                                     <ul class="ht-dropdown ht-my_account">
                                         <li class="active"><a href="{% url 'logout' %}">Log out</a></li>
                                     </ul>
@@ -47,12 +48,11 @@
                                 {% else %}
                                 <li><a href="javascript:void(0)">Language <i class="fa fa-chevron-down"></i></a>
                                     <ul class="ht-dropdown">
-                                        <li class="active"><a href="javascript:void(0)"><img
-                                                src="{% static 'img/torsion/menu/icon/1.jpg' %}"
-                                                alt="JB's Language Icon">English</a></li>
+                                        <li class="active"><a href="javascript:void(0)">
+                                            <img src="{% static 'img/torsion/menu/icon/1.jpg' %}">English</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{% url 'dashboard' %}">My Account<i class="fa fa-chevron-down"></i></a>
+                                <li><a href="{% url 'dashboard' %}">Login to B2B<i class="fa fa-chevron-down"></i></a>
                                     <ul class="ht-dropdown ht-my_account">
                                         <li class="active"><a href="{% url 'login' %}">Login to B2B</a></li>
                                     </ul>
@@ -168,8 +168,8 @@
 
                             </select>
                             <input type="text" placeholder="Enter your search key ...">
-                            <button class="header-search_btn" type="submit"><i
-                                    class="ion-ios-search-strong"><span>Search</span></i></button>
+                            <button class="header-search_btn" type="submit">
+                                <i class="ion-ios-search-strong"><span>Search</span></i></button>
                         </form>
                     </div>
                 </div>
@@ -226,7 +226,8 @@
                         <div class="product-item_content">
                             <a class="product-item_title" href="{% url 'product_detail' product.id %}">
                                 {{ item.product.name }}</a>
-                            <span class="product-item_quantity">{{ item.quantity }} x {{ item.price }} = {{ item.total_price }}</span>
+                            <span class="product-item_quantity">
+                                {{ item.quantity }} x {{ item.price }} = {{ item.total_price }}</span>
                         </div>
                     </li>
                 </ul>
@@ -258,98 +259,52 @@
                 </div>
                 <nav class="offcanvas-navigation">
                     <ul class="mobile-menu">
-                        <li class="menu-item-has-children active"><a href="{% url 'home' %}"><span
-                                class="mm-text">Home</span></a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="{% url 'home' %}">
-                                        <span class="mm-text">Home One</span>
-                                    </a>
-                                </li>
-                            </ul>
+                        <li class="menu-item-has-children active"><a href="{% url 'home' %}">
+                            <span class="mm-text">Home</span></a>
                         </li>
                         <li class="menu-item-has-children">
                             <a href="{% url 'catalog_category_list' %}">
                                 <span class="mm-text">Shop</span>
                             </a>
-                            <ul class="sub-menu">
-                                <li class="menu-item-has-children">
-                                    <a href="shop-left-sidebar.html">
-                                        <span class="mm-text">Grid View</span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="shop-grid-fullwidth.html">
-                                                <span class="mm-text">Column Three</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="blog-left-sidebar.html">
-                                <span class="mm-text">Blog</span>
+                            <a href="{% url 'about-us' %}">
+                                <span class="mm-text">About Us</span>
                             </a>
-                            <ul class="sub-menu">
-                                <li class="menu-item-has-children has-children">
-                                    <a href="blog-left-sidebar.html">
-                                        <span class="mm-text">Grid View</span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="blog-2-column.html">
-                                                <span class="mm-text">Column Two</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children has-children">
-                                    <a href="blog-gallery-format.html">
-                                        <span class="mm-text">Blog Format</span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="blog-gallery-format.html">
-                                                <span class="mm-text">Gallery Format</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-audio-format.html">
-                                                <span class="mm-text">Audio Format</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-video-format.html">
-                                                <span class="mm-text">Video Format</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="{% url 'home' %}">
-                                <span class="mm-text">Pages</span>
+                            <a href="{% url 'contacts' %}">
+                                <span class="mm-text">Contacts</span>
+                            </a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a href="{% url 'news' %}">
+                                <span class="mm-text">News</span>
+                            </a>
+                        </li>
+
+                        <li class="menu-item-has-children">
+                            <a href="#">
+                                <span class="mm-text">Login to B2B</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="my-account.html">
+                                    <a href="#">
                                         <span class="mm-text">My Account</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="login-register.html">
+                                    <a href="#">
                                         <span class="mm-text">Login | Register</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="wishlist.html">
+                                    <a href="#">
                                         <span class="mm-text">Wishlist</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="cart.html">
+                                    <a href="#">
                                         <span class="mm-text">Cart</span>
                                     </a>
                                 </li>
@@ -364,12 +319,12 @@
                                 <span class="mm-text">User Setting</span></a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="my-account.html">
+                                    <a href="#">
                                         <span class="mm-text">My Account</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="login-register.html">
+                                    <a href="#">
                                         <span class="mm-text">Login | Register</span>
                                     </a>
                                 </li>
