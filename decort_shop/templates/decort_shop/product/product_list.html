@@ -46,7 +46,7 @@
                 <select class="myniceselect short-select nice-select">
                     <option value="30">30</option>
                     <option value="50">50</option>
-
+                    <option value="100">100</option>
                 </select>
             </div>
         </div>
@@ -72,21 +72,21 @@
 
                             <div class="add-actions">
                                 <ul>
-                                    <li><a class="torsion-add_cart" href="cart.html"
+                                    <li><a class="torsion-add_cart" href="#"
                                            data-toggle="tooltip" data-placement="top" title="Add To Cart">
                                         <i class="ion-bag"></i></a>
                                     </li>
-                                    <li><a class="torsion-wishlist" href="wishlist.html"
+                                    <li><a class="torsion-wishlist" href="#"
                                            data-toggle="tooltip" data-placement="top" title="Add To Wishlist">
                                         <i class="ion-android-favorite-outline"></i></a>
                                     </li>
-                                    <li><a class="torsion-add_compare" href="compare.html"
+                                    <li><a class="torsion-add_compare" href="#"
                                            data-toggle="tooltip" data-placement="top" title="Compare This Product">
                                         <i class="ion-android-options"></i></a>
                                     </li>
                                     <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
-                                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
-                                            title="Quick View">
+                                        <a href="{% url 'product_detail' product.id %}"
+                                           data-toggle="tooltip" data-placement="top" title="View">
                                             <i class="ion-android-open"></i></a>
                                     </li>
                                 </ul>
@@ -115,10 +115,8 @@
                 <div class="single-product">
                     <div class="product-img">
                         <a href="product_detail.html">
-                            <img class="primary-img" src="{% static 'img/image_not_found.jpg' %}"
-                                 alt="torsion's Product Image">
-                            <img class="secondary-img" src="{% static 'img/image_not_found.jpg' %}"
-                                 alt="torsion's Product Image">
+                            <img class="primary-img" src="{% static 'img/image_not_found.jpg' %}">
+                            <img class="secondary-img" src="{% static 'img/image_not_found.jpg' %}">
                         </a>
                     </div>
                     <div class="product-content">
@@ -141,21 +139,21 @@
                         </div>
                         <div class="add-actions">
                             <ul>
-                                <li><a class="torsion-add_cart" href="cart.html"
+                                <li><a class="torsion-add_cart" href="#"
                                        data-toggle="tooltip" data-placement="top" title="Add To Cart">
                                     <i class="ion-bag"></i></a>
                                 </li>
-                                <li><a class="torsion-wishlist" href="wishlist.html"
+                                <li><a class="torsion-wishlist" href="#"
                                        data-toggle="tooltip" data-placement="top" title="Add To Wishlist">
                                     <i class="ion-android-favorite-outline"></i></a>
                                 </li>
-                                <li><a class="torsion-add_compare" href="compare.html"
+                                <li><a class="torsion-add_compare" href="#"
                                        data-toggle="tooltip" data-placement="top" title="Compare This Product">
                                     <i class="ion-android-options"></i></a>
                                 </li>
                                 <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
-                                    <a href="javascript:void(0)" data-toggle="tooltip"
-                                        data-placement="top"  title="Quick View">
+                                    <a href="{% url 'product_detail' product.id %}" data-toggle="tooltip"
+                                        data-placement="top"  title="View">
                                         <i class="ion-android-open"></i></a>
                                 </li>
                             </ul>

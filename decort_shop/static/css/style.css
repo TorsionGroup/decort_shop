@@ -4481,7 +4481,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .price-filter 
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  min-height: 30px;
+  min-height: 65px;
   position: relative;
   margin-bottom: 20px;
 }
@@ -4499,7 +4499,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .price-filter 
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  text-align: center;
+  text-align: left;
 }
 
 @media (max-width: 575px) {
@@ -6450,13 +6450,13 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .price-filter 
 /*  29 - Pages - Shop
 /*----------------------------------------*/
 .shop-content_wrapper {
-  padding-top: 55px;
+  padding-top: 25px;
 }
 
 .torsion-sidebar-catagories_area .torsion-sidebar_categories {
   background-color: #f4f4f4;
   padding: 25px;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }
 
 .torsion-sidebar-catagories_area .torsion-sidebar_categories .torsion-categories_title {
@@ -7770,12 +7770,12 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .price-filter 
 /*  31 - Pages - Blog
 /*----------------------------------------*/
 .torsion-blog_area {
-  padding: 80px 0;
+  padding: 25px 0;
 }
 
 @media (max-width: 991px) {
   .torsion-blog_area {
-    padding: 80px 0 75px;
+    padding: 25px 0 75px;
   }
 }
 

@@ -20,6 +20,7 @@ urlpatterns = [
     path('account-orders/', views.account_orders, name='account_orders'),
     path('addresses/', views.addresses, name='addresses'),
     path('wishlist/', views.wishlist, name='wishlist'),
+    path('compare/', views.compare, name='compare'),
     path('faq/', views.faq, name='faq'),
     path('product/compare/', views.compare, name='compare'),
     path('add-rating-product/', views.AddStarRatingProduct.as_view(), name='add_rating_product'),

@@ -174,7 +174,7 @@ def wishlist(request):
 
 @login_required
 def compare(request):
-    return render(request, 'decort_shop/products/compare.html')
+    return render(request, 'decort_shop/product/compare.html')
 
 
 def faq(request):
