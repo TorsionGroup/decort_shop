@@ -677,54 +677,6 @@ class LoadData:
         self.conn.commit()
         self.conn.close()
 
-    def load_dropshipping_wallet(self):
-        dropshipping_wallet = self.client.service.GetData('dropshipping_wallet')
-        data = base64.b64decode(dropshipping_wallet)
-        file = open('cache/dropshipping_wallet.csv', 'w', newline='', encoding='utf-8')
-        file.write(str(data.decode('utf-8')))
-        file.close()
-
-        cur = self.conn.cursor()
-
-        t_sql = '''CREATE TEMP TABLE shop_dropshippingwallet_buffer (
-                agreement character varying(300),
-                order_order character varying(300), 
-                credit numeric(15,2), 
-                debit numeric(15,2), 
-                balance numeric(15,2) );'''
-        cur.execute(t_sql)
-        self.conn.commit()
-
-        with open('cache/dropshipping_wallet.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_dropshippingwallet_buffer',
-                          columns=('agreement', 'order_order', 'credit', 'debit', 'balance'), sep='|')
-        self.conn.commit()
-
-        copy_sql = '''UPDATE shop_dropshippingwallet d
-                SET
-                    agreement = b.agreement,
-                    credit = b.credit, 
-                    debit = b.debit,
-                    balance = b.balance            
-                FROM shop_dropshippingwallet_buffer b
-                WHERE d.order_order = b.order_order;'''
-        cur.execute(copy_sql)
-        self.conn.commit()
-
-        upd_sql = '''UPDATE shop_dropshippingwallet b
-            SET agreement_id_id = c.id                               
-            FROM shop_customeragreement c
-            WHERE b.agreement = c.source_id;'''
-        cur.execute(upd_sql)
-        self.conn.commit()
-
-        upd_sql = '''UPDATE shop_dropshippingwallet d
-            SET order_id_id = o.id                               
-            FROM shop_order o
-            WHERE d.order_order = o.order_source;'''
-        cur.execute(upd_sql)
-        self.conn.commit()
-        self.conn.close()
 
     def load_prices(self):
         prices = self.client.service.GetData('prices')
@@ -1067,6 +1019,57 @@ class LoadData:
         self.conn.commit()
         self.conn.close()
 
+
+    def load_dropshipping_wallet(self):
+        dropshipping_wallet = self.client.service.GetData('dropshipping_wallet')
+        data = base64.b64decode(dropshipping_wallet)
+        file = open('cache/dropshipping_wallet.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE orders_dropshippingwallet_buffer (
+                agreement character varying(300),
+                order_order character varying(300), 
+                credit numeric(15,2), 
+                debit numeric(15,2), 
+                balance numeric(15,2) );'''
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/dropshipping_wallet.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'orders_dropshippingwallet_buffer',
+                          columns=('agreement', 'order_order', 'credit', 'debit', 'balance'), sep='|')
+        self.conn.commit()
+
+        copy_sql = '''UPDATE orders_dropshippingwallet d
+                SET
+                    agreement = b.agreement,
+                    credit = b.credit, 
+                    debit = b.debit,
+                    balance = b.balance            
+                FROM orders_dropshippingwallet_buffer b
+                WHERE d.order_order = b.order_order;'''
+        cur.execute(copy_sql)
+        self.conn.commit()
+
+        upd_sql = '''UPDATE orders_dropshippingwallet b
+            SET agreement_id_id = c.id                               
+            FROM shop_customeragreement c
+            WHERE b.agreement = c.source_id;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
+
+        upd_sql = '''UPDATE orders_dropshippingwallet d
+            SET order_id_id = o.id                               
+            FROM orders_order o
+            WHERE d.order_order = o.order_source;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
+        self.conn.close()
+
+
     def load_orders(self):
         orders = self.client.service.GetData('orders')
         data = base64.b64decode(orders)
@@ -1076,7 +1079,7 @@ class LoadData:
 
         cur = self.conn.cursor()
 
-        t_sql = '''CREATE TEMP TABLE shop_order_buffer (
+        t_sql = '''CREATE TEMP TABLE orders_order_buffer (
             order_source character varying(300),
             agreement character varying(300),                
             order_number character varying(300),
@@ -1090,12 +1093,12 @@ class LoadData:
         self.conn.commit()
 
         with open('cache/orders.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_order_buffer',
+            cur.copy_from(file, 'orders_order_buffer',
                       columns=('order_source', 'agreement', 'order_number', 'waybill_number',
                                'comment', 'source_type', 'has_precept', 'has_waybill', 'order_date'), sep='|')
         self.conn.commit()
 
-        copy_sql = '''UPDATE shop_order o
+        copy_sql = '''UPDATE orders_order o
             SET
                 agreement = b.agreement,
                 order_number = b.order_number,
@@ -1105,12 +1108,12 @@ class LoadData:
                 has_precept = b.has_precept,
                 has_waybill = b.has_waybill,
                 order_date = b.order_date                                       
-            FROM shop_order_buffer b
+            FROM orders_order_buffer b
             WHERE o.order_source = b.order_source;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
-        upd_sql = '''UPDATE shop_order o
+        upd_sql = '''UPDATE orders_order o
             SET agreement_id_id = c.id                               
             FROM shop_customeragreement c
             WHERE o.agreement = c.source_id;'''
@@ -1127,11 +1130,11 @@ class LoadData:
 
         cur = self.conn.cursor()
 
-        t_sql = '''CREATE TEMP TABLE shop_orderitem_buffer (
+        t_sql = '''CREATE TEMP TABLE orders_orderitem_buffer (
             order_source character varying(300),
             product_source character varying(300),                
             currency_source character varying(300),
-            qty integer,
+            quantity integer,
             price numeric(15, 2),
             reserved integer,
             executed integer );'''
@@ -1139,41 +1142,41 @@ class LoadData:
         self.conn.commit()
 
         with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_orderitem_buffer',
-                      columns=('order_source', 'product_source', 'currency_source', 'qty', 'price', 'reserved',
+            cur.copy_from(file, 'orders_orderitem_buffer',
+                      columns=('order_source', 'product_source', 'currency_source', 'quantity', 'price', 'reserved',
                                'executed'), sep='|')
         self.conn.commit()
 
-        copy_sql = '''UPDATE shop_orderitem o
+        copy_sql = '''UPDATE orders_orderitem o
             SET
                 product_source = b.product_source,
                 currency_source = b.currency_source,
-                qty = b.qty,
+                quantity = b.quantity,
                 price = b.price,
                 reserved = b.reserved,
                 executed = b.executed                            
-            FROM shop_orderitem_buffer b
+            FROM orders_orderitem_buffer b
             WHERE o.order_source = b.order_source;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
-        upd_sql = '''UPDATE shop_orderitem o
+        upd_sql = '''UPDATE orders_orderitem o
             SET product_id = p.id                               
             FROM shop_product p
-            WHERE o.product = p.source_id;'''
+            WHERE o.product_source = p.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
 
-        upd_sql = '''UPDATE shop_orderitem o
+        upd_sql = '''UPDATE orders_orderitem o
             SET currency_id = c.id                               
             FROM shop_currency c
-            WHERE o.currency = c.source_id;'''
+            WHERE o.currency_source = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
 
-        upd_sql = '''UPDATE shop_orderitem o
+        upd_sql = '''UPDATE orders_orderitem o
             SET order_id = c.id                               
-            FROM shop_order c
+            FROM orders_order c
             WHERE o.order_source = c.order_source;'''
         cur.execute(upd_sql)
         self.conn.commit()
@@ -1199,7 +1202,7 @@ class LoadData:
                           columns=('order_source', 'declaration_number'), sep='|')
         self.conn.commit()
 
-        copy_sql = '''UPDATE shop_order o
+        copy_sql = '''UPDATE orders_order o
             SET
                 declaration_number = b.declaration_number                       
             FROM shop_declarationnumber_buffer b
@@ -1224,7 +1227,6 @@ loadData = LoadData()
 # loadData.load_customer_agreements()
 # loadData.load_balances()
 # loadData.load_customer_discounts()
-# loadData.load_dropshipping_wallet()
 # loadData.load_prices()
 # loadData.load_sales()
 # loadData.load_sale_tasks()
@@ -1233,6 +1235,7 @@ loadData = LoadData()
 # loadData.load_description()
 # loadData.load_applicability()
 # loadData.load_cross()
+# loadData.load_dropshipping_wallet()
 # loadData.load_orders()
 # loadData.load_order_items()
 # loadData.load_declaration_numbers()

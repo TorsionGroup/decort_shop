@@ -89,7 +89,7 @@ conn.commit()
 print('Load Customer Discount')
 
 with open('cache/dropshipping_wallet.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_dropshippingwallet',
+    cur.copy_from(file, 'orders_dropshippingwallet',
                   columns=('agreement', 'order_order', 'credit', 'debit', 'balance'), sep='|')
 conn.commit()
 print('Load Dropshipping Wallet')
@@ -143,15 +143,15 @@ conn.commit()
 print('Load Cross')
 
 with open('cache/orders.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_order',
+    cur.copy_from(file, 'orders_order',
                   columns=('order_source', 'agreement', 'order_number', 'waybill_number',
                            'comment', 'source_type', 'has_precept', 'has_waybill', 'order_date'), sep='|')
 conn.commit()
 print('Load Order')
 
 with open('cache/order_items.csv', 'r', encoding='utf-8') as file:
-    cur.copy_from(file, 'shop_orderitem',
-                  columns=('order_source', 'product_source', 'currency_source', 'qty', 'price', 'reserved',
+    cur.copy_from(file, 'orders_orderitem',
+                  columns=('order_source', 'product_source', 'currency_source', 'quantity', 'price', 'reserved',
                            'executed'), sep='|')
 conn.commit()
 print('Load Order Item')
