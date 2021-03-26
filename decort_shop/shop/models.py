@@ -222,6 +222,8 @@ class Product(models.Model):
     offer = models.CharField(max_length=300, null=True, blank=True)
     category = models.CharField(max_length=300, null=True, blank=True)
     price_category = models.CharField(max_length=300, null=True, blank=True)
+    manufacturer_name = models.CharField(max_length=300, null=True, blank=True)
+    model_name = models.CharField(max_length=300, null=True, blank=True)
     create_date = models.CharField(max_length=300, null=True, blank=True)
     income_date = models.CharField(max_length=300, null=True, blank=True)
 

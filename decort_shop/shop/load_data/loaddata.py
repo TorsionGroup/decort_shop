@@ -380,6 +380,8 @@ class LoadData:
             keywords_ru character varying(500),
             keywords_uk character varying(500),
             keywords_en character varying(500),
+            manufacturer_name character varying(300),
+            model_name character varying(300),            
             weight numeric(15,3),
             pack_qty integer,
             product_type integer,
@@ -393,8 +395,8 @@ class LoadData:
                           columns=(
                           'source_id', 'category', 'brand', 'offer', 'code', 'name_ru', 'name_uk', 'name_en',
                           'comment_ru', 'comment_uk', 'comment_en', 'article', 'specification', 'abc', 'price_category',
-                          'advanced_description', 'keywords_ru', 'keywords_uk', 'keywords_en', 'weight', 'pack_qty',
-                          'product_type', 'create_date', 'income_date'), sep='|')
+                          'advanced_description', 'keywords_ru', 'keywords_uk', 'keywords_en', 'manufacturer_name',
+                          'model_name', 'weight', 'pack_qty', 'product_type', 'create_date', 'income_date'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_product p
@@ -417,6 +419,8 @@ class LoadData:
                 keywords_ru = b.keywords_ru,
                 keywords_uk = b.keywords_uk,
                 keywords_en = b.keywords_en,
+                manufacturer_name = b.manufacturer_name,
+                model_name = b.model_name,
                 weight = b.weight,
                 pack_qty = b.pack_qty,
                 product_type = b.product_type,
