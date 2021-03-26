@@ -9,13 +9,14 @@
 <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel"
      aria-labelledby="account-dashboard-tab">
     <div class="myaccount-dashboard">
-        <p>Hello <b>{{ request.user }}</b></p>
-        <p>E-mail <b>{{ request.user.email }}</b></p>
-        <p>Phone <b>{{ request.user.phone }}</b></p>
-        <p>Date of birth <b>{{ request.user.date_of_birth }}</b></p>
+        <p>Hello, <b>{{ request.user }}</b></p>
+        <p>E-mail: <b>{{ request.user.email }}</b></p>
+        <p>Рartner: <b>{{ request.user.customer_id }}</b></p>
+        <p>Phone: <b>{{ request.user.phone }}</b></p>
+        <p>Date of birth: <b>{{ request.user.date_of_birth }}</b></p>
         <p>From your account dashboard you can view your recent orders, manage your shipping and
-            billing addresses and <a href="javascript:void(0)">edit your password and account
-                details</a>.</p>
+            billing addresses and <a href="{% url 'password_change' %}">edit your password</a> and account
+                details.</p>
     </div>
 </div>
 

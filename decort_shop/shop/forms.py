@@ -101,3 +101,7 @@ class RatingProductForm(forms.ModelForm):
         model = RatingProduct
         fields = ("star",)
 
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
+

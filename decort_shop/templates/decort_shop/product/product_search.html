@@ -1,0 +1,32 @@
+{% extends 'decort_shop/product/main.html' %}
+{% load mptt_tags %}
+{% load static %}
+{% load decort_shop_tag %}
+{% block  title_page %}
+<title>Shop Search - Torsion Group</title>
+{% endblock title_page %}
+
+{% block product_page %}
+
+{% if query %}
+<h1>Product containing "{{ query }}"</h1>
+<h3>
+    {% with results.count as total_results %}
+    Found {{ total_results }} result {{ total_results|pluralize }}
+    {% endwith %}
+</h3>
+{% for product in results %}
+<h4><a href="{% url 'product_detail' product.id %}">{{ product.name }}</a></h4>
+{% empty %}
+<p>There are no results for your query.</p>
+{% endfor %}
+<p><a href="{% url 'product_search' %}">Search again</a></p>
+{% else %}
+<h1>Search for posts</h1>
+<form action="." method="get">
+    {{ form.as_p }}
+    <input type="submit" value="Search">
+</form>
+{% endif %}
+
+{% endblock product_page %}

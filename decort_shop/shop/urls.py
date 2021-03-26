@@ -14,6 +14,7 @@ urlpatterns = [
     path('catalog/<slug:category_slug>/', views.catalog_product_list, name='catalog_product_detail'),
     path('product/', views.catalog_product_list, name='product_list'),
     path('product/<int:id>/', views.product_detail, name='product_detail'),
+    path('product/search/', views.product_search, name='product_search'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('account/', views.dashboard, name='dashboard'),

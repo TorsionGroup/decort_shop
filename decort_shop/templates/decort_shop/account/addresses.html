@@ -8,18 +8,12 @@
 
 <div>
     <div class="myaccount-address">
-        <p>The following addresses will be used on the checkout page by default.</p>
         <div class="row">
             <div class="col">
-                <h4 class="small-title">BILLING ADDRESS</h4>
+                <p><h4 class="small-title">SHIPPING ADDRESS</h4></p>
+                <p>For Рartner: <b>{{ request.user.customer_id }}</b></p>
                 <address>
-                    1234 Heaven Stress, Beverly Hill OldYork UnitedState of Lorem
-                </address>
-            </div>
-            <div class="col">
-                <h4 class="small-title">SHIPPING ADDRESS</h4>
-                <address>
-                    1234 Heaven Stress, Beverly Hill OldYork UnitedState of Lorem
+
                 </address>
             </div>
         </div>

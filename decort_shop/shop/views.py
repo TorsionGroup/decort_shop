@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q, OuterRef, Subquery, Case, When, Sum
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth import authenticate, login, logout
@@ -7,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 
 from .models import *
-from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm
+from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm, SearchForm
 from .cart.forms import CartAddProductForm
 
 
@@ -179,4 +180,20 @@ def compare(request):
 
 def faq(request):
     return render(request, 'decort_shop/faq.html')
+
+
+def product_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        search_vector = SearchVector('article', 'specification', 'name', 'keywords', 'manufacturer_name', 'model_name')
+        search_query = SearchQuery(query)
+        results = Product.objects.annotate(search=search_vector, rank=SearchRank(search_vector, search_query)
+                                           ).filter(search=search_query).order_by('-rank')
+    return render(request, 'decort_shop/product/product_search.html', {'form': form, 'query': query,
+                                                                       'results': results})
 
