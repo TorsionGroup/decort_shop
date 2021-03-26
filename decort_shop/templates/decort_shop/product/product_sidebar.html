@@ -16,7 +16,7 @@
                     <li>
                         <a class="nav-link nav-link-collapse active" href="{% url 'catalog_product_detail' node.url %}"
                            id="hasSubItems" data-toggle="collapse" data-target="#collapseSubItems{{ node.id }}"
-                           aria-controls="collapseSubItems{{ node.id }}" aria-expanded="false" >{{ node.name }}</a>
+                           aria-controls="collapseSubItems{{ node.id }}" aria-expanded="false">{{ node.name }}</a>
                         {% if not node.is_leaf_node %}
                         <ul class="module-sub-list_item nav-second-level collapse" id="collapseSubItems{{ node.id }}">
                             <li>
@@ -37,30 +37,35 @@
                 </div>
                 <ul class="sidebar-checkbox_list">
                     <li>
-                        <a href="#">brand.name</a>
+                        <a href="#">Brands <span>1</span></a>
                     </li>
-                    {% for brand in views.get_brands %}
-                    <li>
-                        <a href="#">{{ brand.name }}</a>
-                    </li>
-                    {% endfor %}
                 </ul>
             </div>
         </form>
 
         <div class="torsion-sidebar_categories">
             <div class="torsion-categories_title">
-                <h5>Offer</h5>
+                <h5>Сar Manufacturer</h5>
             </div>
             <ul class="sidebar-checkbox_list">
-                {% for offer in views.get_offers %}
                 <li>
-                    <a href=" ">Offer <span>1</span></a>
+                    <a href="#">Сar Manufacturer <span>1</span></a>
                 </li>
-                {% endfor %}
             </ul>
         </div>
 
+        <div class="torsion-sidebar_categories">
+            <div class="torsion-categories_title">
+                <h5>Offer</h5>
+            </div>
+            <ul class="sidebar-checkbox_list">
+                <li>
+                    <a href="#">Offer <span>1</span></a>
+                </li>
+            </ul>
+        </div>
+
+        {% if request.user.is_authenticated %}
         <div class="torsion-sidebar_categories">
             <div class="torsion-categories_title">
                 <h5>Price</h5>
@@ -76,6 +81,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
 
     </div>
 </div>

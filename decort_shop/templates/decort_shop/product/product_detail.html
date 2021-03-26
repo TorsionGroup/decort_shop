@@ -69,7 +69,9 @@
                                     <li>Pieces per package: {{ product.pack_qty }}</li>
                                 </ul>
                             </div>
+
                             <hr>
+                            {% if request.user.is_authenticated %}
                             <div class="sp-essential_stuff">
                                 <ul>
                                     <li><h5>Price: {{ product.price }}</h5></li>
@@ -95,6 +97,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            {% endif %}
 
                         </div>
                     </div>

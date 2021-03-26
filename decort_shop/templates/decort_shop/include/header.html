@@ -99,6 +99,7 @@
                                     <i class="ion-navicon"></i>
                                 </a>
                             </li>
+                            {% if request.user.is_authenticated %}
                             <li class="minicart-wrap">
                                 <a href="#miniCart" class="minicart-btn toolbar-btn">
                                     <div class="minicart-count_area">
@@ -111,6 +112,7 @@
                                     </div>
                                 </a>
                             </li>
+                            {% endif %}
                             <li class="contact-us_wrap">
                                 <a href="tel://+380672244702"><i class="ion-android-call"></i>+38 067 22 44 702</a>
                             </li>
@@ -173,6 +175,7 @@
                         </form>
                     </div>
                 </div>
+
                 <div class="custom-cart_col col-12">
                     <div class="header-right_area">
                         <ul>
@@ -181,6 +184,7 @@
                                     <i class="ion-navicon"></i>
                                 </a>
                             </li>
+                            {% if request.user.is_authenticated %}
                             <li class="minicart-wrap">
                                 <a href="#miniCart" class="minicart-btn toolbar-btn">
                                     <div class="minicart-count_area">
@@ -197,6 +201,7 @@
                                     </div>
                                 </a>
                             </li>
+                            {% endif %}
                             <li class="contact-us_wrap">
                                 <a href="tel://+380672244702"><i class="ion-android-call"></i>+38 067 22 44 702</a>
                             </li>
@@ -207,6 +212,7 @@
         </div>
     </div>
 
+    {% if request.user.is_authenticated %}
     <div class="offcanvas-minicart_wrapper" id="miniCart">
         <div class="offcanvas-menu-inner">
             <a href="#" class="btn-close"><i class="ion-android-close"></i></a>
@@ -239,13 +245,15 @@
                 <span class="ammount">{{ cart.get_total_price }}</span>
             </div>
             <div class="minicart-btn_area">
-                <a href="{% url 'cart:cart_detail' %}" class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">Cart</a>
+                <a href="{% url 'cart:cart_detail' %}"
+                   class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">Cart</a>
             </div>
             <div class="minicart-btn_area">
                 <a href="{% url 'orders:order_create' %}" class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">Checkout</a>
             </div>
         </div>
     </div>
+    {% endif %}
 
     <div class="mobile-menu_wrapper" id="mobileMenu">
         <div class="offcanvas-menu-inner">

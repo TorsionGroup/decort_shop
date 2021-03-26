@@ -70,6 +70,7 @@
                                      alt="torsion's Product Image">
                             </a>
 
+                            {% if request.user.is_authenticated %}
                             <div class="add-actions">
                                 <ul>
                                     <li><a class="torsion-add_cart" href="#"
@@ -91,6 +92,8 @@
                                     </li>
                                 </ul>
                             </div>
+                            {% endif %}
+
                         </div>
                         <div class="product-content">
                             <div class="product-desc_info">
@@ -103,9 +106,11 @@
                                 <div class="product-name">
                                     <span class="new-price">{{ product.specification }}</span>
                                 </div>
+                                {% if request.user.is_authenticated %}
                                 <div class="price-box">
                                     <span class="new-price">{{ product.price }}</span>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -130,13 +135,17 @@
                             <div class="product-name">
                                 <span class="new-price">{{ product.specification }}</span>
                             </div>
+                            {% if request.user.is_authenticated %}
                             <div class="price-box">
                                 <span class="new-price">{{ product.price }}</span>
                             </div>
+                            {% endif %}
                             <div class="product-short_desc">
                                 <p>{{ product.advanced_description|safe }}</p>
                             </div>
                         </div>
+
+                        {% if request.user.is_authenticated %}
                         <div class="add-actions">
                             <ul>
                                 <li><a class="torsion-add_cart" href="#"
@@ -153,11 +162,13 @@
                                 </li>
                                 <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
                                     <a href="{% url 'product_detail' product.id %}" data-toggle="tooltip"
-                                        data-placement="top"  title="View">
+                                       data-placement="top" title="View">
                                         <i class="ion-android-open"></i></a>
                                 </li>
                             </ul>
                         </div>
+                        {% endif %}
+
                     </div>
                 </div>
             </div>
@@ -168,5 +179,5 @@
 
     {% include 'decort_shop/include/pagination.html' %}
 
-{% endblock product_page %}
+    {% endblock product_page %}
 
