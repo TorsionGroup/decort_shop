@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q, OuterRef, Subquery, Case, When, Sum
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth import authenticate, login, logout
@@ -190,10 +190,9 @@ def product_search(request):
         form = SearchForm(request.GET)
     if form.is_valid():
         query = form.cleaned_data['query']
-        search_vector = SearchVector('article', 'specification', 'name', 'keywords', 'manufacturer_name', 'model_name')
-        search_query = SearchQuery(query)
-        results = Product.objects.annotate(search=search_vector, rank=SearchRank(search_vector, search_query)
-                                           ).filter(search=search_query).order_by('-rank')
+        results = Product.objects.annotate(similarity=TrigramSimilarity(
+            'article', query),
+        ).filter(similarity__gt=0.4).order_by('-similarity')
     return render(request, 'decort_shop/product/product_search.html', {'form': form, 'query': query,
                                                                        'results': results})
 
