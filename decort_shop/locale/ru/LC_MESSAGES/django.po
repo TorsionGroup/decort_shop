@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-29 12:12+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\templates\decort_shop\include\header.html:14
+#: .\templates\decort_shop\include\header.html:104
+msgid "Home"
+msgstr "Главная"
+
+#: .\templates\decort_shop\include\header.html:15
+#: .\templates\decort_shop\include\header.html:105
+msgid "Shop"
+msgstr ""
+
+#: .\templates\decort_shop\include\header.html:16
+#: .\templates\decort_shop\include\header.html:106
+msgid "About Us"
+msgstr "О Нас"
+
+#: .\templates\decort_shop\include\header.html:17
+#: .\templates\decort_shop\include\header.html:107
+msgid "Contacts"
+msgstr "Контакты"
+
+#: .\templates\decort_shop\include\header.html:18
+#: .\templates\decort_shop\include\header.html:108
+msgid "News"
+msgstr "Новости"
+
+#: .\templates\decort_shop\include\header.html:29
+msgid "Currency"
+msgstr "Курс"
+
+#: .\templates\decort_shop\include\header.html:35
+#: .\templates\decort_shop\include\header.html:63
+msgid "Language"
+msgstr ""
+
+#: .\templates\decort_shop\include\header.html:59
+msgid "Log out"
+msgstr ""
+
+#: .\templates\decort_shop\include\header.html:83
+#: .\templates\decort_shop\include\header.html:85
+msgid "Login to B2B"
+msgstr ""
+
+#: .\templates\decort_shop\include\header.html:138
+#: .\templates\decort_shop\include\header.html:227
+#: .\templates\decort_shop\include\header.html:277
+msgid "Cart"
+msgstr "Корзина"
+
+#: .\templates\decort_shop\include\header.html:170
+msgid "CATALOG"
+msgstr "КАТАЛОГ"
+
+#: .\templates\decort_shop\include\header.html:202
+msgid "Search"
+msgstr "Поиск"
+
+#: .\templates\decort_shop\include\header.html:249
+msgid "Shopping Cart"
+msgstr ""
+
+#: .\templates\decort_shop\include\header.html:272
+msgid "Total"
+msgstr "Всего"
+
+#: .\templates\decort_shop\include\header.html:280
+msgid "Checkout"
+msgstr ""

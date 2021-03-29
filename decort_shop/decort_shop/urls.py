@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin-view/', admin.site.urls),
     path('api/', include('shop.api.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += i18n_patterns(
