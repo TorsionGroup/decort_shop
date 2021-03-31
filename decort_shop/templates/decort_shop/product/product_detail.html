@@ -1,6 +1,6 @@
 {% extends 'decort_shop/product/main.html' %}
 {% load mptt_tags %}
-{% load static %}
+{% load static i18n %}
 {% load decort_shop_tag %}
 {% block  title_page %}
 <title>Shop - Torsion Group | {{ product.name }}</title>
@@ -13,9 +13,9 @@
         <div class="container">
             <div class="breadcrumb-content">
                 <ul>
-                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
                     <li class="breadcrumb-item">
-                        <a href="{% url 'catalog_category_list' %}">Catalog</a>
+                        <a href="{% url 'catalog_category_list' %}">{% trans 'Catalog' %}</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="#">{{ product.category_id.name }}</a>
@@ -59,14 +59,14 @@
                             <hr>
                             <div class="sp-essential_stuff">
                                 <ul>
-                                    <li>Brands: {{ product.brand_id.name }}</li>
-                                    <li>Vendor Code: {{ product.article }}</li>
-                                    <li>Product Specification: {{ product.specification }}</li>
-                                    <li>Availability:</li>
-                                    <li>Сar Manufacturer: {{ product.manufacturer_name }}</li>
-                                    <li>Car Model: {{ product.model_name }}</li>
-                                    <li>Weight: {{ product.weight }} kg</li>
-                                    <li>Pieces per package: {{ product.pack_qty }}</li>
+                                    <li>{% trans 'Brands' %}: {{ product.brand_id.name }}</li>
+                                    <li>{% trans 'Vendor Code' %}: {{ product.article }}</li>
+                                    <li>{% trans 'Product Specification' %}: {{ product.specification }}</li>
+                                    <li>{% trans 'Availability' %}:</li>
+                                    <li>{% trans 'Сar Manufacturer' %}: {{ product.manufacturer_name }}</li>
+                                    <li>{% trans 'Car Model' %}: {{ product.model_name }}</li>
+                                    <li>{% trans 'Weight' %}: {{ product.weight }} kg</li>
+                                    <li>{% trans 'Pieces per package' %}: {{ product.pack_qty }}</li>
                                 </ul>
                             </div>
 
@@ -74,7 +74,7 @@
                             {% if request.user.is_authenticated %}
                             <div class="sp-essential_stuff">
                                 <ul>
-                                    <li><h5>Price: {{ product.price }}</h5></li>
+                                    <li><h5>{% trans 'Price' %}: {{ product.price }}</h5></li>
                                 </ul>
                             </div>
                             <hr>
@@ -85,7 +85,7 @@
                                             {{ cart_product_form }}
                                             {% csrf_token %}
                                     <li><a class="qty-cart_btn">
-                                        <input type="submit" value="Add To Cart">
+                                        <input type="submit" value="{% trans 'Add To Cart' %}">
                                     </a></li>
                                     </form>
                                     </li>
@@ -113,12 +113,12 @@
                     <div class="sp-product-tab_nav">
                         <div class="product-tab">
                             <ul class="nav product-menu">
-                                <li><a class="active" data-toggle="tab" href="#description"><span>Description</span></a>
+                                <li><a class="active" data-toggle="tab" href="#description"><span>{% trans 'Description' %}</span></a>
                                 </li>
-                                <li><a data-toggle="tab" href="#cross_code"><span>Cross Code</span></a></li>
-                                <li><a data-toggle="tab" href="#specification"><span>Specification</span></a></li>
-                                <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li>
-                                <li><a data-toggle="tab" href="#tags"><span>Tags</span></a></li>
+                                <li><a data-toggle="tab" href="#cross_code"><span>{% trans 'Cross Code' %}</span></a></li>
+                                <li><a data-toggle="tab" href="#applicability"><span>{% trans 'Applicability' %}</span></a></li>
+                                <li><a data-toggle="tab" href="#reviews"><span>{% trans 'Reviews' %}</span></a></li>
+                                <li><a data-toggle="tab" href="#tags"><span>{% trans 'Tags' %}</span></a></li>
                             </ul>
                         </div>
 
@@ -138,7 +138,7 @@
                                 </div>
                             </div>
 
-                            <div id="specification" class="tab-pane" role="tabpanel">
+                            <div id="applicability" class="tab-pane" role="tabpanel">
                                 <table class="table table-bordered specification-inner_stuff">
                                     <tbody>
                                     <tr>

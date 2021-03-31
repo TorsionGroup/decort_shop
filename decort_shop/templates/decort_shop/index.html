@@ -1,5 +1,5 @@
 {% extends 'decort_shop/main.html' %}
-{% load static %}
+{% load static i18n %}
 {% block  title_page %}
     <title>Torsion Group - Main</title>
 {% endblock title_page %}
@@ -93,7 +93,7 @@
                                 <i class="ion-ios-paperplane-outline"></i>
                             </div>
                             <div class="shipping-content">
-                                <h6>Regular order delivery system from the easternmost to the westernmost point</h6>
+                                <h6>{% trans 'Regular order delivery system from the easternmost to the westernmost point' %}</h6>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                                 <i class="ion-ios-help-outline"></i>
                             </div>
                             <div class="shipping-content">
-                                <h6>An assortment of more than 2000 positions of various brand</h6>
+                                <h6>{% trans 'An assortment of more than 2000 positions of various brand' %}</h6>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                                 <i class="ion-ios-refresh-empty"></i>
                             </div>
                             <div class="shipping-content">
-                                <h6>100% Money Back. You have 30 days to Return</h6>
+                                <h6>{% trans '100% Money Back. You have 30 days to Return' %}</h6>
                             </div>
                         </div>
                     </div>
@@ -123,8 +123,8 @@
                                 <i class="ion-ios-undo-outline"></i>
                             </div>
                             <div class="shipping-content">
-                                <h6>For all products, depending on the manufacturer, the warranty is up to 12
-                                    months</h6>
+                                <h6>{% trans 'For all products, depending on the manufacturer, the warranty is up to 12
+                                    months' %}</h6>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                                 <i class="ion-ios-locked-outline"></i>
                             </div>
                             <div class="shipping-content last-child">
-                                <h6>We ensure secure payment</h6>
+                                <h6>{% trans 'We ensure secure payment' %}</h6>
                             </div>
                         </div>
                     </div>
@@ -150,8 +150,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title_area">
-                        <span>Top Quality Partner</span>
-                        <h3>Shop By Brands</h3>
+                        <span>{% trans 'Top Quality Partner' %}</span>
+                        <h3>{% trans 'Shop By Brands' %}</h3>
                     </div>
                     <div class="brand-slider torsion-slick-slider img-hover-effect_area" data-slick-options='{
                         "slidesToShow": 6
@@ -187,8 +187,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title_area">
-                        <span>Our Recent Posts</span>
-                        <h3>From Our Blogs</h3>
+                        <span>{% trans 'Our Recent Posts' %}</span>
+                        <h3>{% trans 'From Our Blogs' %}</h3>
                     </div>
                     <div class="blog-slider torsion-slick-slider slider-navigation_style-1" data-slick-options='{
                         "slidesToShow": 4,

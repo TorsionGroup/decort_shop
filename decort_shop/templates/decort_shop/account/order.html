@@ -1,5 +1,5 @@
 {% extends 'decort_shop/account/main.html' %}
-{% load static %}
+{% load static i18n %}
 {% block  title_page %}
 <title>Orders - Torsion Group</title>
 {% endblock title_page %}
@@ -8,7 +8,7 @@
 
 <div>
     <div class="myaccount-orders">
-        <h4 class="small-title">MY ORDERS</h4>
+        <h4 class="small-title">{% trans 'MY ORDERS' %}</h4>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <tbody>

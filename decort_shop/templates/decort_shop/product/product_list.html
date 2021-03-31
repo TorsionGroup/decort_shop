@@ -1,6 +1,6 @@
 {% extends 'decort_shop/product/main.html' %}
 {% load mptt_tags %}
-{% load static %}
+{% load static i18n %}
 {% load decort_shop_tag %}
 {% block  title_page %}
 <title>Shop - Torsion Group</title>
@@ -28,7 +28,7 @@
 
         <div class="product-item-selection_area">
             <div class="product-short">
-                <label class="select-label">Short By:</label>
+                <label class="select-label">{% trans 'Sort By' %}:</label>
                 <select class="myniceselect nice-select">
                     <option value="1">Default</option>
                     <option value="2">Name, A to Z</option>
@@ -42,7 +42,7 @@
                 </select>
             </div>
             <div class="product-showing">
-                <label class="select-label">Show:</label>
+                <label class="select-label">{% trans 'Show' %}:</label>
                 <select class="myniceselect short-select nice-select">
                     <option value="30">30</option>
                     <option value="50">50</option>

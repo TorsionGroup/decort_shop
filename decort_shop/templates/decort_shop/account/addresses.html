@@ -1,5 +1,5 @@
 {% extends 'decort_shop/account/main.html' %}
-{% load static %}
+{% load static i18n %}
 {% block  title_page %}
 <title>Addresses - Torsion Group</title>
 {% endblock title_page %}
@@ -10,8 +10,8 @@
     <div class="myaccount-address">
         <div class="row">
             <div class="col">
-                <p><h4 class="small-title">SHIPPING ADDRESS</h4></p>
-                <p>For Рartner: <b>{{ request.user.customer_id }}</b></p>
+                <p><h4 class="small-title">{% trans 'SHIPPING ADDRESS' %}</h4></p>
+                <p>{% trans 'For Рartner' %}: <b>{{ request.user.customer_id }}</b></p>
                 <address>
 
                 </address>

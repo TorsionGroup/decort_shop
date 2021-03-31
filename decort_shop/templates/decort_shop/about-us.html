@@ -1,5 +1,5 @@
 {% extends 'decort_shop/main.html' %}
-{% load static %}
+{% load static i18n %}
 {% block  title_page %}
     <title>About Us - Torsion Group</title>
 {% endblock title_page %}
@@ -21,14 +21,14 @@
                             </div>
                             <div class="col-lg-6 col-md-7 d-flex align-items-center">
                                 <div class="overview-content">
-                                    <h2>Welcome To <span>Torsion Group</span> Store!</h2>
+                                    <h2>{% trans 'Welcome To' %} <span>{% trans 'Torsion Group' %}</span> {% trans 'Store' %}!</h2>
                                     <p class="short_desc">
 
                                         {{ aboutus.full_text|safe }}
 
                                     </p>
                                     <div class="torsion-about-us_btn-area">
-                                        <a class="about-us_btn" href="{% url 'catalog_category_list' %}">Shop Now</a>
+                                        <a class="about-us_btn" href="{% url 'catalog_category_list' %}">{% trans 'Shop Now' %}</a>
                                     </div>
                                 </div>
                             </div>

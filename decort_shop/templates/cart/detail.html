@@ -1,6 +1,6 @@
 {% extends 'decort_shop/main.html' %}
 {% load mptt_tags %}
-{% load static %}
+{% load static i18n %}
 {% load decort_shop_tag %}
 {% block  title_page %}
 <title>Cart - Torsion Group</title>
@@ -19,12 +19,12 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="torsion-product-remove">Remove</th>
-                                <th class="torsion-product-thumbnail">Images</th>
-                                <th class="cart-product-name">Product</th>
-                                <th class="torsion-product-price">Unit Price</th>
-                                <th class="torsion-product-quantity">Quantity</th>
-                                <th class="torsion-product-subtotal">Total</th>
+                                <th class="torsion-product-remove">{% trans 'Remove' %}</th>
+                                <th class="torsion-product-thumbnail">{% trans 'Images' %}</th>
+                                <th class="cart-product-name">{% trans 'Product' %}</th>
+                                <th class="torsion-product-price">{% trans 'Unit Price' %}</th>
+                                <th class="torsion-product-quantity">{% trans 'Quantity' %}</th>
+                                <th class="torsion-product-subtotal">{% trans 'Total' %}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -62,12 +62,12 @@
                     <div class="row">
                         <div class="col-md-5 ml-auto">
                             <div class="cart-page-total">
-                                <h2>Cart totals</h2>
+                                <h2>{% trans 'Cart Totals' %}</h2>
                                 <ul>
-                                    <li>Total:<span>{{ cart.get_total_price }}</span></li>
+                                    <li>{% trans 'Total' %}:<span>{{ cart.get_total_price }}</span></li>
                                 </ul>
-                                <a class="header-search_btn" href="{% url 'orders:order_create' %}"><b>Proceed to checkout</b></a>
-                                <a href="{% url 'catalog_category_list' %}" class="button light">Continue shopping</a>
+                                <a class="header-search_btn" href="{% url 'orders:order_create' %}"><b>{% trans 'Proceed to checkout' %}</b></a>
+                                <a href="{% url 'catalog_category_list' %}" class="button light">{% trans 'Continue shopping' %}</a>
                             </div>
                         </div>
                     </div>
