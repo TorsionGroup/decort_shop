@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'shop',
     'shop.cart',
     'shop.orders',
+    'shop.wishlist',
     'shop.api',
+    'shop.tecdoc',
 
     'rest_framework',
 

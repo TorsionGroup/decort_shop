@@ -75,12 +75,11 @@ rating.addEventListener("change", function (e) {
 });
 
 
+/*----------------------------------------*/
+/*  Torsion's Switch language
+/*----------------------------------------*/
 
-	/*----------------------------------------*/
-	/*  Torsion's Switch language
- /*----------------------------------------*/
-
-$('#language-list a').on('click', function(event) {
+$('#language-list a').on('click', function (event) {
     event.preventDefault();
     var target = $(event.target);
     var url = target.attr('href');
@@ -90,7 +89,7 @@ $('#language-list a').on('click', function(event) {
         url: url,
         data: {language: language_code},
         headers: {"X-CSRFToken": getCookie('csrftoken')}
-    }).done(function(data, textStatus, jqXHR) {
+    }).done(function (data, textStatus, jqXHR) {
         reload_page();
     });
 });

@@ -10,23 +10,36 @@
                 <h5><a href="{% url 'catalog_category_list' %}">{% trans 'Categories' %}</a></h5>
             </div>
             <div class="module-body" id="navbarCollapse">
+
                 {% get_catalogcategories as catalog_category_list %}
                 {% recursetree catalog_category_list %}
                 <ul class="module-list_item">
                     <li>
-                        <a class="nav-link nav-link-collapse active" href="{% url 'catalog_product_detail' node.url %}"
-                           id="hasSubItems" data-toggle="collapse" data-target="#collapseSubItems{{ node.id }}"
+                        <a class="nav-link nav-link-collapse active"
+                           href="{% url 'catalog_product_detail' node.url %}"
+                           data-toggle="collapse" data-target="#collapseSubItems{{ node.id }}"
                            aria-controls="collapseSubItems{{ node.id }}" aria-expanded="false">{{ node.name }}</a>
                         {% if not node.is_leaf_node %}
-                        <ul class="module-sub-list_item nav-second-level collapse" id="collapseSubItems{{ node.id }}">
+                        <ul class="module-sub-list_item nav-second-level collapse"
+                            id="collapseSubItems{{ node.id }}">
                             <li>
-                                <a href="{% url 'catalog_product_detail' node.url %}">{{ children }}</a>
+                                <button
+                                        onclick="window.location.href='{% url 'catalog_product_detail' node.url %}'"
+                                        class="collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseSubItems{{ node.id }}"
+                                        aria-expanded="false" aria-controls="collapse{{ node.id }}">
+                                    {{ children }}
+                                </button>
+
+                                <!-- <a href="{% url 'catalog_product_detail' node.url %}">{{ children }}</a>-->
+
                             </li>
                         </ul>
                         {% endif %}
                     </li>
                 </ul>
                 {% endrecursetree %}
+
             </div>
         </div>
 
