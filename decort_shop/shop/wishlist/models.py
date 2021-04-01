@@ -7,10 +7,10 @@ from ..models import Product, Account
 
 class Wishlist(models.Model):
     product_id = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="wait_list_product", null=True, blank=True)
+        Product, on_delete=models.SET_NULL, related_name="wait_list_product", null=True, blank=True)
     user_id = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True, blank=True)
-    date_add = models.DateTimeField(default=datetime.today, null=True)
+    date_add = models.DateTimeField(default=datetime.today, null=True, blank=True)
     send_message = models.BooleanField(default=0)
     is_active = models.BooleanField(default=0)
 
