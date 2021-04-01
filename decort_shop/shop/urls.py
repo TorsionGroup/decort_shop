@@ -3,6 +3,7 @@ from django.urls import include, path
 from django.contrib.auth import views as auth_views
 from . import views
 
+
 urlpatterns = [
     path('orders/', include('shop.orders.urls', namespace='orders')),
     path('wishlist/', include('shop.wishlist.urls', namespace='wishlist')),
@@ -21,7 +22,6 @@ urlpatterns = [
     path('account/', views.dashboard, name='dashboard'),
     path('account-orders/', views.account_orders, name='account_orders'),
     path('addresses/', views.addresses, name='addresses'),
-    path('wishlist/', views.wishlist, name='wishlist'),
     path('compare/', views.compare, name='compare'),
     path('faq/', views.faq, name='faq'),
     path('product/compare/', views.compare, name='compare'),

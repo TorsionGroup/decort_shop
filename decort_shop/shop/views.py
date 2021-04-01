@@ -169,11 +169,6 @@ def account_orders(request):
 
 
 @login_required
-def wishlist(request):
-    return render(request, 'decort_shop/account/wishlist.html')
-
-
-@login_required
 def compare(request):
     return render(request, 'decort_shop/product/compare.html')
 

@@ -22,21 +22,21 @@ def wishlist_detail(request):
             wishlist = Wishlist.objects.filter(user_id_id=request.user.pk)
         else:
             print("Please login")
-            return HttpResponse("login")
+            return HttpResponse("shop:login")
 
-    return render(request, template_name='main/wishlist.html', context={"wishlist": wishlist})
+    return render(request, template_name='decort_shop/account/wishlist.html', context={"wishlist": wishlist})
 
 
 @login_required
 def add_to_wishlist(request):
     if request.is_ajax() and request.POST and 'attr_id' in request.POST:
         if request.user.is_authenticated:
-            data = Wishlist.objects.filter(user_id_id=request.user.pk, music_id_id=int(request.POST['attr_id']))
+            data = Wishlist.objects.filter(user_id_id=request.user.pk, product_id_id=int(request.POST['attr_id']))
             if data.exists():
                 data.delete()
             else:
-                Wishlist.objects.create(user_id_id=request.user.pk, music_id_id=int(request.POST['attr_id']))
+                Wishlist.objects.create(user_id_id=request.user.pk, product_id_id=int(request.POST['attr_id']))
     else:
         print("No Product is Found")
 
-    return redirect("main:home")
+    return redirect("shop:dashboard")
