@@ -1081,23 +1081,6 @@ class UserRequestType(models.Model):
         verbose_name_plural = "UserRequestTypes"
 
 
-class WaitList(models.Model):
-    product_id = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="wait_list_product", null=True, blank=True)
-    user_id = models.ForeignKey(
-        Account, on_delete=models.SET_NULL, null=True, blank=True)
-    date_add = models.DateTimeField(default=datetime.today, null=True)
-    send_message = models.BooleanField(default=0)
-    is_active = models.BooleanField(default=0)
-
-    def __str__(self):
-        return self.product_id
-
-    class Meta:
-        verbose_name = "WaitList"
-        verbose_name_plural = "WaitLists"
-
-
 class Action(models.Model):
     content_id = models.ForeignKey(
         Content, on_delete=models.CASCADE, related_name="action_content", null=True, blank=True)
