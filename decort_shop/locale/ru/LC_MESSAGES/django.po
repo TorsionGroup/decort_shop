@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-31 16:43+0300\n"
+"POT-Creation-Date: 2021-04-02 14:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,22 +21,22 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: .\templates\cart\detail.html:22
-#: .\templates\decort_shop\account\wishlist.html:16
+#: .\templates\decort_shop\account\wishlist.html:18
 msgid "Remove"
 msgstr "Удалить"
 
 #: .\templates\cart\detail.html:23
-#: .\templates\decort_shop\account\wishlist.html:17
+#: .\templates\decort_shop\account\wishlist.html:19
 msgid "Images"
 msgstr "Изображения"
 
 #: .\templates\cart\detail.html:24
-#: .\templates\decort_shop\account\wishlist.html:18
+#: .\templates\decort_shop\account\wishlist.html:20
 msgid "Product"
 msgstr "Товар"
 
 #: .\templates\cart\detail.html:25
-#: .\templates\decort_shop\account\wishlist.html:19
+#: .\templates\decort_shop\account\wishlist.html:21
 msgid "Unit Price"
 msgstr "Цена за единиц"
 
@@ -55,11 +55,11 @@ msgstr "Всего"
 msgid "Cart Totals"
 msgstr "Всего"
 
-#: .\templates\cart\detail.html:69
+#: .\templates\cart\detail.html:70
 msgid "Proceed to checkout"
 msgstr "Перейти к оформлению заказа"
 
-#: .\templates\cart\detail.html:70
+#: .\templates\cart\detail.html:72
 msgid "Continue shopping"
 msgstr "Продолжить покупки"
 
@@ -127,6 +127,13 @@ msgstr "Дропшиппинг"
 msgid "Wishlist"
 msgstr "Список желаний"
 
+#: .\templates\decort_shop\account\dashboard_sidebar.html:22
+#: .\templates\decort_shop\include\header.html:138
+#: .\templates\decort_shop\include\header.html:227
+#: .\templates\decort_shop\include\header.html:277
+msgid "Cart"
+msgstr "Корзина"
+
 #: .\templates\decort_shop\account\dashboard_sidebar.html:25
 msgid "Addresses"
 msgstr "Адреса"
@@ -151,13 +158,110 @@ msgstr "МОИ ЗАКАЗЫ"
 msgid "MY WISHLIST"
 msgstr "СПИСОК МОИХ ЖЕЛАНИЙ"
 
-#: .\templates\decort_shop\account\wishlist.html:20
+#: .\templates\decort_shop\account\wishlist.html:22
 msgid "Stock Status"
 msgstr "Состояние на складе"
 
-#: .\templates\decort_shop\account\wishlist.html:21
+#: .\templates\decort_shop\account\wishlist.html:23
 msgid "Add to Cart"
 msgstr "Добавить в корзину"
+
+#: .\templates\decort_shop\include\footer.html:17
+msgid ""
+"Torsion Group LLC is a national company specializing in the wholesale of "
+"automotive parts for a wide range of vehicles."
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:23
+#, fuzzy
+#| msgid "Addresses"
+msgid "Address"
+msgstr "Адреса"
+
+#: .\templates\decort_shop\include\footer.html:23
+msgid "03061 Ukraine, Kyiv, Otradny Avenue, 103"
+msgstr "03061 Украина, г. Киев, проспект Отрадный, 103"
+
+#: .\templates\decort_shop\include\footer.html:26
+msgid "Call Us"
+msgstr "Позвоните Нам"
+
+#: .\templates\decort_shop\include\footer.html:28
+#, fuzzy
+#| msgid "E-mail"
+msgid "Email"
+msgstr "Электронная почта"
+
+#: .\templates\decort_shop\include\footer.html:49
+#, fuzzy
+#| msgid "API Integration"
+msgid "Information"
+msgstr "Интеграция API"
+
+#: .\templates\decort_shop\include\footer.html:53
+#: .\templates\decort_shop\include\header.html:16
+#: .\templates\decort_shop\include\header.html:106
+msgid "About Us"
+msgstr "О Нас"
+
+#: .\templates\decort_shop\include\footer.html:54
+#: .\templates\decort_shop\include\header.html:18
+#: .\templates\decort_shop\include\header.html:108
+msgid "News"
+msgstr "Новости"
+
+#: .\templates\decort_shop\include\footer.html:55
+msgid "Privacy Policy"
+msgstr "Политика конфиденциальности"
+
+#: .\templates\decort_shop\include\footer.html:56
+msgid "Terms & Conditions"
+msgstr "Условия и положения"
+
+#: .\templates\decort_shop\include\footer.html:62
+msgid "Customer Service"
+msgstr "Обслуживание клиентов"
+
+#: .\templates\decort_shop\include\footer.html:66
+#: .\templates\decort_shop\include\header.html:17
+#: .\templates\decort_shop\include\header.html:107
+msgid "Contacts"
+msgstr "Контакты"
+
+#: .\templates\decort_shop\include\footer.html:67
+msgid "Delivery Information"
+msgstr "Информация о доставке"
+
+#: .\templates\decort_shop\include\footer.html:68
+msgid "Returns"
+msgstr "Возврат"
+
+#: .\templates\decort_shop\include\footer.html:69
+msgid "Site Map"
+msgstr "Карта сайта"
+
+#: .\templates\decort_shop\include\footer.html:75
+#: .\templates\decort_shop\include\footer.html:80
+#, fuzzy
+#| msgid "Account"
+msgid "My Account"
+msgstr "Учетная запись"
+
+#: .\templates\decort_shop\include\footer.html:79
+msgid "Login"
+msgstr "Авторизоваться"
+
+#: .\templates\decort_shop\include\footer.html:81
+#, fuzzy
+#| msgid "Orders"
+msgid "Order History"
+msgstr "Заказы"
+
+#: .\templates\decort_shop\include\footer.html:82
+#, fuzzy
+#| msgid "Wishlist"
+msgid "Wish List"
+msgstr "Список желаний"
 
 #: .\templates\decort_shop\include\header.html:14
 #: .\templates\decort_shop\include\header.html:104
@@ -169,21 +273,6 @@ msgstr "Главная"
 #: .\templates\decort_shop\include\header.html:105
 msgid "Shop"
 msgstr "Каталог"
-
-#: .\templates\decort_shop\include\header.html:16
-#: .\templates\decort_shop\include\header.html:106
-msgid "About Us"
-msgstr "О Нас"
-
-#: .\templates\decort_shop\include\header.html:17
-#: .\templates\decort_shop\include\header.html:107
-msgid "Contacts"
-msgstr "Контакты"
-
-#: .\templates\decort_shop\include\header.html:18
-#: .\templates\decort_shop\include\header.html:108
-msgid "News"
-msgstr "Новости"
 
 #: .\templates\decort_shop\include\header.html:29
 msgid "Currency"
@@ -202,12 +291,6 @@ msgstr "Выйти"
 #: .\templates\decort_shop\include\header.html:85
 msgid "Login to B2B"
 msgstr "Войти в B2B"
-
-#: .\templates\decort_shop\include\header.html:138
-#: .\templates\decort_shop\include\header.html:227
-#: .\templates\decort_shop\include\header.html:277
-msgid "Cart"
-msgstr "Корзина"
 
 #: .\templates\decort_shop\include\header.html:170
 msgid "CATALOG"
@@ -249,23 +332,31 @@ msgstr "В ассортименте более 2000 позиций различ�
 msgid "100%% Money Back. You have 30 days to Return"
 msgstr "100%% возврат денег. У вас есть 30 дней на возврат"
 
-#: .\templates\decort_shop\index.html:137
+#: .\templates\decort_shop\index.html:126
+msgid ""
+"For all products, depending on the manufacturer, the warranty is up to 12 "
+"months"
+msgstr ""
+"На все товары, в зависимости от производителя, гарантия составляет до 12 "
+"месяцев"
+
+#: .\templates\decort_shop\index.html:136
 msgid "We ensure secure payment"
 msgstr "Обеспечиваем безопасную оплату"
 
-#: .\templates\decort_shop\index.html:153
+#: .\templates\decort_shop\index.html:152
 msgid "Top Quality Partner"
 msgstr "Партнеры высшего качества"
 
-#: .\templates\decort_shop\index.html:154
+#: .\templates\decort_shop\index.html:153
 msgid "Shop By Brands"
 msgstr "Покупки по Бренду"
 
-#: .\templates\decort_shop\index.html:190
+#: .\templates\decort_shop\index.html:189
 msgid "Our Recent Posts"
 msgstr "Наши последние сообщения"
 
-#: .\templates\decort_shop\index.html:191
+#: .\templates\decort_shop\index.html:190
 msgid "From Our Blogs"
 msgstr "Из наших Блогов"
 
@@ -274,7 +365,7 @@ msgid "Catalog"
 msgstr "Каталог"
 
 #: .\templates\decort_shop\product\product_detail.html:62
-#: .\templates\decort_shop\product\product_sidebar.html:36
+#: .\templates\decort_shop\product\product_sidebar.html:49
 msgid "Brands"
 msgstr "Бренды"
 
@@ -291,7 +382,7 @@ msgid "Availability"
 msgstr "Доступность"
 
 #: .\templates\decort_shop\product\product_detail.html:66
-#: .\templates\decort_shop\product\product_sidebar.html:48
+#: .\templates\decort_shop\product\product_sidebar.html:61
 msgid "Сar Manufacturer"
 msgstr "Производитель автомобилей"
 
@@ -308,7 +399,7 @@ msgid "Pieces per package"
 msgstr "Количество в ящике"
 
 #: .\templates\decort_shop\product\product_detail.html:77
-#: .\templates\decort_shop\product\product_sidebar.html:71
+#: .\templates\decort_shop\product\product_sidebar.html:84
 #, fuzzy
 #| msgid "Unit Price"
 msgid "Price"
@@ -320,23 +411,23 @@ msgstr "Цена за единиц"
 msgid "Add To Cart"
 msgstr "Добавить в корзину"
 
-#: .\templates\decort_shop\product\product_detail.html:116
+#: .\templates\decort_shop\product\product_detail.html:118
 msgid "Description"
 msgstr "Описание"
 
-#: .\templates\decort_shop\product\product_detail.html:118
+#: .\templates\decort_shop\product\product_detail.html:120
 msgid "Cross Code"
 msgstr "Кросс-код"
 
-#: .\templates\decort_shop\product\product_detail.html:119
+#: .\templates\decort_shop\product\product_detail.html:121
 msgid "Applicability"
 msgstr "Применимость"
 
-#: .\templates\decort_shop\product\product_detail.html:120
+#: .\templates\decort_shop\product\product_detail.html:122
 msgid "Reviews"
 msgstr "Отзывы"
 
-#: .\templates\decort_shop\product\product_detail.html:121
+#: .\templates\decort_shop\product\product_detail.html:123
 msgid "Tags"
 msgstr "Теги"
 
@@ -352,6 +443,6 @@ msgstr "Показать"
 msgid "Categories"
 msgstr "Категории"
 
-#: .\templates\decort_shop\product\product_sidebar.html:59
+#: .\templates\decort_shop\product\product_sidebar.html:72
 msgid "Offer"
 msgstr "Предложение"

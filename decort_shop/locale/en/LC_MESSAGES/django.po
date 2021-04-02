@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-31 16:43+0300\n"
+"POT-Creation-Date: 2021-04-02 14:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,22 +19,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\templates\cart\detail.html:22
-#: .\templates\decort_shop\account\wishlist.html:16
+#: .\templates\decort_shop\account\wishlist.html:18
 msgid "Remove"
 msgstr ""
 
 #: .\templates\cart\detail.html:23
-#: .\templates\decort_shop\account\wishlist.html:17
+#: .\templates\decort_shop\account\wishlist.html:19
 msgid "Images"
 msgstr ""
 
 #: .\templates\cart\detail.html:24
-#: .\templates\decort_shop\account\wishlist.html:18
+#: .\templates\decort_shop\account\wishlist.html:20
 msgid "Product"
 msgstr ""
 
 #: .\templates\cart\detail.html:25
-#: .\templates\decort_shop\account\wishlist.html:19
+#: .\templates\decort_shop\account\wishlist.html:21
 msgid "Unit Price"
 msgstr ""
 
@@ -51,11 +51,11 @@ msgstr ""
 msgid "Cart Totals"
 msgstr ""
 
-#: .\templates\cart\detail.html:69
+#: .\templates\cart\detail.html:70
 msgid "Proceed to checkout"
 msgstr ""
 
-#: .\templates\cart\detail.html:70
+#: .\templates\cart\detail.html:72
 msgid "Continue shopping"
 msgstr ""
 
@@ -123,6 +123,13 @@ msgstr ""
 msgid "Wishlist"
 msgstr ""
 
+#: .\templates\decort_shop\account\dashboard_sidebar.html:22
+#: .\templates\decort_shop\include\header.html:138
+#: .\templates\decort_shop\include\header.html:227
+#: .\templates\decort_shop\include\header.html:277
+msgid "Cart"
+msgstr ""
+
 #: .\templates\decort_shop\account\dashboard_sidebar.html:25
 msgid "Addresses"
 msgstr ""
@@ -147,12 +154,97 @@ msgstr ""
 msgid "MY WISHLIST"
 msgstr ""
 
-#: .\templates\decort_shop\account\wishlist.html:20
+#: .\templates\decort_shop\account\wishlist.html:22
 msgid "Stock Status"
 msgstr ""
 
-#: .\templates\decort_shop\account\wishlist.html:21
+#: .\templates\decort_shop\account\wishlist.html:23
 msgid "Add to Cart"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:17
+msgid ""
+"Torsion Group LLC is a national company specializing in the wholesale of "
+"automotive parts for a wide range of vehicles."
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:23
+msgid "Address"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:23
+msgid "03061 Ukraine, Kyiv, Otradny Avenue, 103"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:26
+msgid "Call Us"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:28
+msgid "Email"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:49
+msgid "Information"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:53
+#: .\templates\decort_shop\include\header.html:16
+#: .\templates\decort_shop\include\header.html:106
+msgid "About Us"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:54
+#: .\templates\decort_shop\include\header.html:18
+#: .\templates\decort_shop\include\header.html:108
+msgid "News"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:55
+msgid "Privacy Policy"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:56
+msgid "Terms & Conditions"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:62
+msgid "Customer Service"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:66
+#: .\templates\decort_shop\include\header.html:17
+#: .\templates\decort_shop\include\header.html:107
+msgid "Contacts"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:67
+msgid "Delivery Information"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:68
+msgid "Returns"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:69
+msgid "Site Map"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:75
+#: .\templates\decort_shop\include\footer.html:80
+msgid "My Account"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:79
+msgid "Login"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:81
+msgid "Order History"
+msgstr ""
+
+#: .\templates\decort_shop\include\footer.html:82
+msgid "Wish List"
 msgstr ""
 
 #: .\templates\decort_shop\include\header.html:14
@@ -164,21 +256,6 @@ msgstr ""
 #: .\templates\decort_shop\include\header.html:15
 #: .\templates\decort_shop\include\header.html:105
 msgid "Shop"
-msgstr ""
-
-#: .\templates\decort_shop\include\header.html:16
-#: .\templates\decort_shop\include\header.html:106
-msgid "About Us"
-msgstr ""
-
-#: .\templates\decort_shop\include\header.html:17
-#: .\templates\decort_shop\include\header.html:107
-msgid "Contacts"
-msgstr ""
-
-#: .\templates\decort_shop\include\header.html:18
-#: .\templates\decort_shop\include\header.html:108
-msgid "News"
 msgstr ""
 
 #: .\templates\decort_shop\include\header.html:29
@@ -197,12 +274,6 @@ msgstr ""
 #: .\templates\decort_shop\include\header.html:83
 #: .\templates\decort_shop\include\header.html:85
 msgid "Login to B2B"
-msgstr ""
-
-#: .\templates\decort_shop\include\header.html:138
-#: .\templates\decort_shop\include\header.html:227
-#: .\templates\decort_shop\include\header.html:277
-msgid "Cart"
 msgstr ""
 
 #: .\templates\decort_shop\include\header.html:170
@@ -243,23 +314,29 @@ msgstr ""
 msgid "100%% Money Back. You have 30 days to Return"
 msgstr ""
 
-#: .\templates\decort_shop\index.html:137
+#: .\templates\decort_shop\index.html:126
+msgid ""
+"For all products, depending on the manufacturer, the warranty is up to 12 "
+"months"
+msgstr ""
+
+#: .\templates\decort_shop\index.html:136
 msgid "We ensure secure payment"
 msgstr ""
 
-#: .\templates\decort_shop\index.html:153
+#: .\templates\decort_shop\index.html:152
 msgid "Top Quality Partner"
 msgstr ""
 
-#: .\templates\decort_shop\index.html:154
+#: .\templates\decort_shop\index.html:153
 msgid "Shop By Brands"
 msgstr ""
 
-#: .\templates\decort_shop\index.html:190
+#: .\templates\decort_shop\index.html:189
 msgid "Our Recent Posts"
 msgstr ""
 
-#: .\templates\decort_shop\index.html:191
+#: .\templates\decort_shop\index.html:190
 msgid "From Our Blogs"
 msgstr ""
 
@@ -268,7 +345,7 @@ msgid "Catalog"
 msgstr ""
 
 #: .\templates\decort_shop\product\product_detail.html:62
-#: .\templates\decort_shop\product\product_sidebar.html:36
+#: .\templates\decort_shop\product\product_sidebar.html:49
 msgid "Brands"
 msgstr ""
 
@@ -285,7 +362,7 @@ msgid "Availability"
 msgstr ""
 
 #: .\templates\decort_shop\product\product_detail.html:66
-#: .\templates\decort_shop\product\product_sidebar.html:48
+#: .\templates\decort_shop\product\product_sidebar.html:61
 msgid "Сar Manufacturer"
 msgstr ""
 
@@ -302,7 +379,7 @@ msgid "Pieces per package"
 msgstr ""
 
 #: .\templates\decort_shop\product\product_detail.html:77
-#: .\templates\decort_shop\product\product_sidebar.html:71
+#: .\templates\decort_shop\product\product_sidebar.html:84
 msgid "Price"
 msgstr ""
 
@@ -310,23 +387,23 @@ msgstr ""
 msgid "Add To Cart"
 msgstr ""
 
-#: .\templates\decort_shop\product\product_detail.html:116
+#: .\templates\decort_shop\product\product_detail.html:118
 msgid "Description"
 msgstr ""
 
-#: .\templates\decort_shop\product\product_detail.html:118
+#: .\templates\decort_shop\product\product_detail.html:120
 msgid "Cross Code"
 msgstr ""
 
-#: .\templates\decort_shop\product\product_detail.html:119
+#: .\templates\decort_shop\product\product_detail.html:121
 msgid "Applicability"
 msgstr ""
 
-#: .\templates\decort_shop\product\product_detail.html:120
+#: .\templates\decort_shop\product\product_detail.html:122
 msgid "Reviews"
 msgstr ""
 
-#: .\templates\decort_shop\product\product_detail.html:121
+#: .\templates\decort_shop\product\product_detail.html:123
 msgid "Tags"
 msgstr ""
 
@@ -342,6 +419,6 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: .\templates\decort_shop\product\product_sidebar.html:59
+#: .\templates\decort_shop\product\product_sidebar.html:72
 msgid "Offer"
 msgstr ""

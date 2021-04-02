@@ -66,10 +66,10 @@
                                 <ul>
                                     <li>{% trans 'Total' %}:<span>{{ cart.get_total_price }}</span></li>
                                 </ul>
-                                <a class="header-search_btn" href="{% url 'orders:order_create' %}"><b>{% trans 'Proceed
-                                    to checkout' %}</b></a>
-                                <a href="{% url 'catalog_category_list' %}" class="button light">{% trans 'Continue
-                                    shopping' %}</a>
+                                <a class="header-search_btn" href="{% url 'orders:order_create' %}">
+                                    <b>{% trans 'Proceed to checkout' %}</b></a>
+                                <a href="{% url 'catalog_category_list' %}" class="button light">
+                                    {% trans 'Continue shopping' %}</a>
                             </div>
                         </div>
                     </div>
