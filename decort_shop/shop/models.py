@@ -257,7 +257,7 @@ class Currency(models.Model):
     name = models.CharField(max_length=250)
     title = models.CharField(max_length=250)
     source_id = models.CharField(max_length=300, null=True, blank=True)
-    rate = models.DecimalField(max_digits=15, decimal_places=5)
+    rate = models.DecimalField(max_digits=15, decimal_places=2)
     mult = models.IntegerField()
     name_eng = models.CharField(max_length=250, null=True, blank=True)
 

@@ -152,7 +152,7 @@ class LoadData:
             name character varying(250),
             title character varying(250),
             source_id character varying(300),
-            rate numeric(15,5),
+            rate numeric(15,2),
             mult integer );'''
         cur.execute(t_sql)
         self.conn.commit()
