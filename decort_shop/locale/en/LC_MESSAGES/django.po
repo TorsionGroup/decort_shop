@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-02 14:20+0300\n"
+"POT-Creation-Date: 2021-04-02 15:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,41 +108,53 @@ msgid "Account"
 msgstr ""
 
 #: .\templates\decort_shop\account\dashboard_sidebar.html:10
-msgid "Balance"
+msgid "Social Networks"
 msgstr ""
 
 #: .\templates\decort_shop\account\dashboard_sidebar.html:13
-msgid "Orders"
+msgid "Balance"
 msgstr ""
 
 #: .\templates\decort_shop\account\dashboard_sidebar.html:16
-msgid "Dropshipping"
+msgid "Orders"
 msgstr ""
 
 #: .\templates\decort_shop\account\dashboard_sidebar.html:19
-msgid "Wishlist"
+msgid "Dropshipping"
 msgstr ""
 
 #: .\templates\decort_shop\account\dashboard_sidebar.html:22
+msgid "Wishlist"
+msgstr ""
+
+#: .\templates\decort_shop\account\dashboard_sidebar.html:25
 #: .\templates\decort_shop\include\header.html:138
 #: .\templates\decort_shop\include\header.html:227
 #: .\templates\decort_shop\include\header.html:277
 msgid "Cart"
 msgstr ""
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:25
-msgid "Addresses"
-msgstr ""
-
 #: .\templates\decort_shop\account\dashboard_sidebar.html:28
-msgid "API Integration"
+msgid "Return Product"
 msgstr ""
 
 #: .\templates\decort_shop\account\dashboard_sidebar.html:31
-msgid "Change Password"
+msgid "Addresses"
 msgstr ""
 
 #: .\templates\decort_shop\account\dashboard_sidebar.html:34
+msgid "API Integration"
+msgstr ""
+
+#: .\templates\decort_shop\account\dashboard_sidebar.html:37
+msgid "Appeals and Questions"
+msgstr ""
+
+#: .\templates\decort_shop\account\dashboard_sidebar.html:40
+msgid "Change Password"
+msgstr ""
+
+#: .\templates\decort_shop\account\dashboard_sidebar.html:43
 msgid "Logout"
 msgstr ""
 

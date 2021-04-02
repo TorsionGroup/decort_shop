@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-02 14:20+0300\n"
+"POT-Creation-Date: 2021-04-02 15:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,41 +112,55 @@ msgid "Account"
 msgstr "Учетная запись"
 
 #: .\templates\decort_shop\account\dashboard_sidebar.html:10
+msgid "Social Networks"
+msgstr "Социальные сети"
+
+#: .\templates\decort_shop\account\dashboard_sidebar.html:13
 msgid "Balance"
 msgstr "Баланс"
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:13
+#: .\templates\decort_shop\account\dashboard_sidebar.html:16
 msgid "Orders"
 msgstr "Заказы"
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:16
+#: .\templates\decort_shop\account\dashboard_sidebar.html:19
 msgid "Dropshipping"
 msgstr "Дропшиппинг"
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:19
+#: .\templates\decort_shop\account\dashboard_sidebar.html:22
 msgid "Wishlist"
 msgstr "Список желаний"
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:22
+#: .\templates\decort_shop\account\dashboard_sidebar.html:25
 #: .\templates\decort_shop\include\header.html:138
 #: .\templates\decort_shop\include\header.html:227
 #: .\templates\decort_shop\include\header.html:277
 msgid "Cart"
 msgstr "Корзина"
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:25
+#: .\templates\decort_shop\account\dashboard_sidebar.html:28
+#, fuzzy
+#| msgid "Product"
+msgid "Return Product"
+msgstr "Возврат товара"
+
+#: .\templates\decort_shop\account\dashboard_sidebar.html:31
 msgid "Addresses"
 msgstr "Адреса"
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:28
+#: .\templates\decort_shop\account\dashboard_sidebar.html:34
 msgid "API Integration"
 msgstr "Интеграция API"
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:31
+#: .\templates\decort_shop\account\dashboard_sidebar.html:37
+msgid "Appeals and Questions"
+msgstr "Обращения и вопросы"
+
+#: .\templates\decort_shop\account\dashboard_sidebar.html:40
 msgid "Change Password"
 msgstr "Изменить пароль"
 
-#: .\templates\decort_shop\account\dashboard_sidebar.html:34
+#: .\templates\decort_shop\account\dashboard_sidebar.html:43
 msgid "Logout"
 msgstr "Выйти"
 
@@ -171,6 +185,8 @@ msgid ""
 "Torsion Group LLC is a national company specializing in the wholesale of "
 "automotive parts for a wide range of vehicles."
 msgstr ""
+"ООО Торсион Групп - национальная компания, специализирующаяся на оптовой "
+"продаже автомобильных запчастей для широкого спектра транспортных средств."
 
 #: .\templates\decort_shop\include\footer.html:23
 #, fuzzy
