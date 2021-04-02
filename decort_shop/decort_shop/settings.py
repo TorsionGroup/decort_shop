@@ -53,6 +53,12 @@ INSTALLED_APPS = [
 
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.instagram',
+    'allauth.socialaccount.providers.telegram',
+    'allauth.socialaccount.providers.twitter',
     'creditcards',
     'phonenumber_field',
     'mptt',
@@ -260,3 +266,38 @@ CKEDITOR_CONFIGS = {
 }
 
 MPTT_ADMIN_LEVEL_INDENT = 30
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '',
+            'secret': '',
+            'key': ''
+        }
+    },
+    'facebook': {
+        'APP': {
+            'client_id': '',
+            'secret': '',
+            'key': ''
+        }
+    },
+    'instagram': {
+        'APP': {
+            'client_id': '',
+            'secret': '',
+            'key': ''
+        }
+    },
+    'telegram': {
+        'TOKEN': 'insert-token-received-from-botfather'
+    },
+    'twitter': {
+        'APP': {
+            'client_id': '',
+            'secret': '',
+            'key': ''
+        }
+    },
+}
+
