@@ -13,28 +13,27 @@
                             </a>
                         </div>
                         <div class="widget-short_desc">
-                            <p>Torsion Group LLC is a national company specializing in the wholesale of automotive
-                                parts for a wide range of vehicles.
+                            <p>
+                                {% trans 'Torsion Group LLC is a national company specializing in the wholesale of automotive parts for a wide range of vehicles.' %}
                             </p>
                         </div>
                         <div class="widgets-essential_stuff">
                             <ul>
                                 <li class="torsion-address">
-                                    <span>Address:</span> 03061 Ukraine, Kyiv, Otradny Avenue, 103
+                                    <span>{% trans 'Address' %}:</span> {% trans '03061 Ukraine, Kyiv, Otradny Avenue, 103' %}
                                 </li>
-                                <li class="torsion-phone"><span>Call
-                                        Us:</span> <a href="tel://+380672244702">+38 067 22 44 702</a>
+                                <li class="torsion-phone">
+                                    <span>{% trans 'Call Us' %}:</span> <a href="tel://+380672244702">+38 067 22 44 702</a>
                                 </li>
-                                <li class="torsion-email"><span>Email:</span> <a
-                                        href="mailto://office@torsion.kiev.ua">office@torsion.kiev.ua</a></li>
+                                <li class="torsion-email"><span>{% trans 'Email' %}:</span>
+                                    <a href="mailto://office@torsion.kiev.ua">office@torsion.kiev.ua</a></li>
                             </ul>
                         </div>
                         <div class="torsion-social_link">
                             <ul>
                                 <li class="facebook">
                                     <a href="https://www.facebook.com/torsiongroup/" data-toggle="tooltip"
-                                       target="_blank"
-                                       title="Facebook">
+                                       target="_blank" title="Facebook">
                                         <i class="fab fa-facebook"></i>
                                     </a>
                                 </li>
@@ -47,39 +46,40 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-6">
                                 <div class="footer-widgets_title">
-                                    <h3>Information</h3>
+                                    <h3>{% trans 'Information' %}</h3>
                                 </div>
                                 <div class="footer-widgets">
                                     <ul>
-                                        <li><a href="{% url 'about-us' %}">About Us</a></li>
-                                        <li><a href="javascript:void(0)">Delivery Information</a></li>
-                                        <li><a href="javascript:void(0)">Privacy Policy</a></li>
-                                        <li><a href="javascript:void(0)">Terms & Conditions</a></li>
+                                        <li><a href="{% url 'about-us' %}">{% trans 'About Us' %}</a></li>
+                                        <li><a href="{% url 'news' %}">{% trans 'News' %}</a></li>
+                                        <li><a href="javascript:void(0)">{% trans 'Privacy Policy' %}</a></li>
+                                        <li><a href="javascript:void(0)">{% trans 'Terms & Conditions' %}</a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="footer-widgets_title">
-                                    <h3>Customer Service</h3>
+                                    <h3>{% trans 'Customer Service' %}</h3>
                                 </div>
                                 <div class="footer-widgets">
                                     <ul>
-                                        <li><a href="{% url 'contacts' %}">Contacts</a></li>
-                                        <li><a href="javascript:void(0)">Returns</a></li>
-                                        <li><a href="javascript:void(0)">Site Map</a></li>
-                                        <li><a href="{% url 'news' %}">News</a></li>
+                                        <li><a href="{% url 'contacts' %}">{% trans 'Contacts' %}</a></li>
+                                        <li><a href="javascript:void(0)">{% trans 'Delivery Information' %}</a></li>
+                                        <li><a href="javascript:void(0)">{% trans 'Returns' %}</a></li>
+                                        <li><a href="javascript:void(0)">{% trans 'Site Map' %}</a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="footer-widgets_title">
-                                    <h3>My Account</h3>
+                                    <h3>{% trans 'My Account' %}</h3>
                                 </div>
                                 <div class="footer-widgets">
                                     <ul>
-                                        <li><a href="javascript:void(0)">My Account</a></li>
-                                        <li><a href="javascript:void(0)">Order History</a></li>
-                                        <li><a href="javascript:void(0)">Wish List</a></li>
+                                        <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+                                        <li><a href="{% url 'dashboard' %}">{% trans 'My Account' %}</a></li>
+                                        <li><a href="javascript:void(0)">{% trans 'Order History' %}</a></li>
+                                        <li><a href="javascript:void(0)">{% trans 'Wish List' %}</a></li>
                                     </ul>
                                 </div>
                             </div>

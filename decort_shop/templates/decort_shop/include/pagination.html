@@ -8,7 +8,7 @@
                     <ul class="torsion-pagination-box carlet-color">
 
                         {% if page_obj.has_previous %}
-                        <li><a class="Previous" href="?page={{ page_obj.previous_page_number }}">{% trans 'Previous' %}<</a></li>
+                        <li><a class="Previous" href="?page={{ page_obj.previous_page_number }}">{% trans 'Previous' %}</a></li>
                         {% endif %}
                         <li class="active"><a href="#">{{ page_obj.number }}</a></li>
                         <li><a href="javascript:void(0)">2</a></li>
