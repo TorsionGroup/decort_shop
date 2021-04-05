@@ -203,6 +203,20 @@ class LoadData:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    def load_customers_contacts(self):
+        customers_contacts = self.client.service.GetData('customers_contacts')
+        data = base64.b64decode(customers_contacts)
+        file = open('cache/customers_contacts.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+    def load_returs(self):
+        returs = self.client.service.GetData('returs')
+        data = base64.b64decode(returs)
+        file = open('cache/returs.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
 
 loadData = LoadData()
 loadData.load_managers()
@@ -231,3 +245,6 @@ loadData.load_deficit()
 loadData.load_orders()
 loadData.load_order_items()
 loadData.load_declaration_numbers()
+# loadData.load_customers_contacts()
+# loadData.load_returs()
+
