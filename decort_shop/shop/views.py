@@ -36,15 +36,17 @@ def catalog_product_list(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(CatalogCategory, url=category_slug)
         products = products.filter(category_id=category)
-    return render(request, 'decort_shop/product/product_list.html',
-                  {'page_obj': page_obj, 'category': category, 'categories': categories, 'products': products})
+    context = {
+            'page_obj': page_obj, 'category': category, 'categories': categories, 'products': products
+    }
+    return render(request, 'decort_shop/product/product_list.html', context)
 
 
 def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     cart_product_form = CartAddProductForm()
-    return render(request, 'decort_shop/product/product_detail.html',
-                  {'product': product, 'cart_product_form': cart_product_form})
+    context = {'product': product, 'cart_product_form': cart_product_form}
+    return render(request, 'decort_shop/product/product_detail.html', context)
 
 
 class CatalogCategoryView(BrandOffer, ListView):

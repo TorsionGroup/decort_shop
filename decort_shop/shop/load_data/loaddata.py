@@ -20,6 +20,7 @@ class LoadData:
             database="decort_shop",
             user="torsion_prog",
             password="sdr%7ujK")
+        # self.conn.close()
 
     def load_managers(self):
         managers = self.client.service.GetData('managers')
@@ -49,7 +50,6 @@ class LoadData:
             WHERE m.source_id = b.source_id;'''
         cur.execute(copy_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_customers(self):
         customers = self.client.service.GetData('customers')
@@ -103,7 +103,6 @@ class LoadData:
             WHERE p.main_customer = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_brands(self):
         brands = self.client.service.GetData('brands')
@@ -136,7 +135,6 @@ class LoadData:
             WHERE s.source_id = b.source_id;'''
         cur.execute(copy_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_currencies(self):
         currencies = self.client.service.GetData('currencies')
@@ -173,7 +171,6 @@ class LoadData:
             WHERE c.source_id = b.source_id;'''
         cur.execute(copy_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_price_types(self):
         price_types = self.client.service.GetData('price_types')
@@ -201,7 +198,6 @@ class LoadData:
             WHERE p.source_id = b.source_id;'''
         cur.execute(copy_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_price_categories(self):
         price_categories = self.client.service.GetData('price_categories')
@@ -229,7 +225,6 @@ class LoadData:
             WHERE p.source_id = b.source_id;'''
         cur.execute(copy_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_categories(self):
         categories = self.client.service.GetData('categories')
@@ -284,7 +279,6 @@ class LoadData:
             WHERE p.parent_source = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_product_price_categories(self):
         product_price_categories = self.client.service.GetData('product_price_categories')
@@ -316,7 +310,6 @@ class LoadData:
             WHERE p.source_id = b.product_source;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_offers(self):
         offers = self.client.service.GetData('offers')
@@ -349,7 +342,6 @@ class LoadData:
             WHERE o.source_id = b.source_id;'''
         cur.execute(copy_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_products(self):
         products = self.client.service.GetData('products')
@@ -451,7 +443,6 @@ class LoadData:
             WHERE p.offer = o.source_id;'''
         cur.execute(copy_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_customer_points(self):
         customer_points = self.client.service.GetData('customer_points')
@@ -491,7 +482,6 @@ class LoadData:
             WHERE p.customer = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_customer_agreements(self):
         customer_agreements = self.client.service.GetData('customer_agreements')
@@ -558,7 +548,6 @@ class LoadData:
             WHERE a.price_type = p.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_balances(self):
         balances = self.client.service.GetData('balances')
@@ -614,7 +603,6 @@ class LoadData:
             WHERE b.agreement = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_customer_discounts(self):
         customer_discounts = self.client.service.GetData('customer_discounts')
@@ -675,8 +663,6 @@ class LoadData:
             WHERE b.agreement = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
-
 
     def load_prices(self):
         prices = self.client.service.GetData('prices')
@@ -730,7 +716,6 @@ class LoadData:
             WHERE p.currency = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_sales(self):
         sales = self.client.service.GetData('sales')
@@ -776,7 +761,6 @@ class LoadData:
             WHERE s.customer = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_sale_tasks(self):
         sale_tasks = self.client.service.GetData('sale_tasks')
@@ -821,7 +805,6 @@ class LoadData:
             WHERE s.customer = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_stocks(self):
         stocks = self.client.service.GetData('stocks')
@@ -861,7 +844,6 @@ class LoadData:
             WHERE s.product = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_deficit(self):
         deficit = self.client.service.GetData('deficit')
@@ -899,7 +881,6 @@ class LoadData:
             WHERE d.product = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_description(self):
         description = self.client.service.GetData('description')
@@ -937,7 +918,6 @@ class LoadData:
             WHERE d.product = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_applicability(self):
         applicability = self.client.service.GetData('applicability')
@@ -979,7 +959,6 @@ class LoadData:
             WHERE a.product = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_cross(self):
         cross = self.client.service.GetData('cross')
@@ -1017,8 +996,6 @@ class LoadData:
             WHERE s.product = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
-
 
     def load_dropshipping_wallet(self):
         dropshipping_wallet = self.client.service.GetData('dropshipping_wallet')
@@ -1067,8 +1044,6 @@ class LoadData:
             WHERE d.order_order = o.order_source;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
-
 
     def load_orders(self):
         orders = self.client.service.GetData('orders')
@@ -1119,7 +1094,6 @@ class LoadData:
             WHERE o.agreement = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_order_items(self):
         order_items = self.client.service.GetData('order_items')
@@ -1180,7 +1154,6 @@ class LoadData:
             WHERE o.order_source = c.order_source;'''
         cur.execute(upd_sql)
         self.conn.commit()
-        self.conn.close()
 
     def load_declaration_numbers(self):
         declaration_numbers = self.client.service.GetData('declaration_numbers')
@@ -1209,33 +1182,32 @@ class LoadData:
             WHERE o.order_source = b.order_source;'''
         cur.execute(copy_sql)
         self.conn.commit()
-        self.conn.close()
 
 
 loadData = LoadData()
-# loadData.load_managers()
-# loadData.load_customers()
-# loadData.load_brands()
-# loadData.load_currencies()
-# loadData.load_price_types()
-# loadData.load_price_categories()
-# loadData.load_categories()
-# loadData.load_product_price_categories()
-# loadData.load_offers()
-# loadData.load_products()
-# loadData.load_customer_points()
-# loadData.load_customer_agreements()
-# loadData.load_balances()
-# loadData.load_customer_discounts()
-# loadData.load_prices()
-# loadData.load_sales()
-# loadData.load_sale_tasks()
-# loadData.load_stocks()
-# loadData.load_deficit()
-# loadData.load_description()
-# loadData.load_applicability()
-# loadData.load_cross()
-# loadData.load_dropshipping_wallet()
-# loadData.load_orders()
-# loadData.load_order_items()
-# loadData.load_declaration_numbers()
+loadData.load_managers()
+loadData.load_customers()
+loadData.load_brands()
+loadData.load_currencies()
+loadData.load_price_types()
+loadData.load_price_categories()
+loadData.load_categories()
+loadData.load_product_price_categories()
+loadData.load_offers()
+loadData.load_products()
+loadData.load_customer_points()
+loadData.load_customer_agreements()
+loadData.load_balances()
+loadData.load_customer_discounts()
+loadData.load_prices()
+loadData.load_sales()
+loadData.load_sale_tasks()
+loadData.load_stocks()
+loadData.load_deficit()
+loadData.load_description()
+loadData.load_applicability()
+loadData.load_cross()
+loadData.load_dropshipping_wallet()
+loadData.load_orders()
+loadData.load_order_items()
+loadData.load_declaration_numbers()
