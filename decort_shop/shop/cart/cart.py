@@ -1,7 +1,8 @@
 from decimal import Decimal
 from django.db.models import F, Sum
 from django.conf import settings
-from ..models import Product
+from django.views.generic import ListView, DetailView, View
+from ..models import *
 
 
 class Cart(object):
@@ -53,3 +54,22 @@ class Cart(object):
         del self.session[settings.CART_SESSION_ID]
         self.save()
 
+
+class CartMixin(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            customer = Customer.objects.filter(user=request.user).first()
+            if not customer:
+                customer = Customer.objects.create(
+                    user=request.user
+                )
+            cart = Cart.objects.filter(owner=customer, in_order=False).first()
+            if not cart:
+                cart = Cart.objects.create(owner=customer)
+        else:
+            cart = Cart.objects.filter(for_anonymous_user=True).first()
+            if not cart:
+                cart = Cart.objects.create(for_anonymous_user=True)
+        self.cart = cart
+        return super().dispatch(request, *args, **kwargs)
