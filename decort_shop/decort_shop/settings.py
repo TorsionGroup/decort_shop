@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'shop.shipping',
     'shop.api',
     'shop.tecdoc',
+    'shop.rozetka',
+    'shop.telegram_bot',
 
     'rest_framework',
 
