@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'snowpenguin.django.recaptcha3',
     'ckeditor',
     'ckeditor_uploader',
+    'novaposhta',
 ]
 
 MIDDLEWARE = [
@@ -302,4 +303,6 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     },
 }
+
+NOVA_POSHTA_API_KEY = 'bbe4acfe810f7bfc3a8a624f41c3d336'
 

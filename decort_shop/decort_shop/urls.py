@@ -10,11 +10,13 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('allauth/', include('allauth.urls')),
+
 ]
 
 urlpatterns += i18n_patterns(
     path('cart/', include('shop.cart.urls', namespace='cart')),
     path('', include('shop.urls')),
+    path('novaposhta/', include('novaposhta.urls')),
 )
 
 if settings.DEBUG:
