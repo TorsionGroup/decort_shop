@@ -1,15 +1,11 @@
 from django.db import models
 from datetime import datetime
 from django.core.mail import send_mail
-from creditcards.models import CardNumberField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
 from django.urls import reverse
-from mptt.models import MPTTModel, TreeForeignKey
 from phonenumber_field.modelfields import PhoneNumberField
-from customers.models import Customer, Currency, PriceType
-from managers.models import Manager
-from products.models import Product, Brand
+from .customers.models import Customer
 
 
 class AccountManager(BaseUserManager):

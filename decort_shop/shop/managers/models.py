@@ -1,4 +1,6 @@
-from ..models import *
+from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
+from ..products.models import Product
 
 
 class Manager(models.Model):
@@ -22,8 +24,6 @@ class Manager(models.Model):
 class Sale(models.Model):
     product_id = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="sale_product", null=True, blank=True)
-    customer_id = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="sale_customer", null=True, blank=True)
     qty = models.IntegerField(null=True, blank=True)
     date = models.CharField(max_length=500, null=True, blank=True)
     product = models.CharField(max_length=500, null=True, blank=True)
@@ -40,8 +40,6 @@ class Sale(models.Model):
 class SaleTask(models.Model):
     product_id = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="sale_task_product", null=True, blank=True)
-    customer_id = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="sale_task_customer", null=True, blank=True)
     qty = models.IntegerField(null=True, blank=True)
     product = models.CharField(max_length=500, null=True, blank=True)
     customer = models.CharField(max_length=500, null=True, blank=True)
@@ -57,8 +55,6 @@ class SaleTask(models.Model):
 class SaleHistory(models.Model):
     product_id = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="sale_history_product", null=True, blank=True)
-    customer_id = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="sale_history_customer", null=True, blank=True)
     qty = models.IntegerField(null=True, blank=True)
 
     def __str__(self):

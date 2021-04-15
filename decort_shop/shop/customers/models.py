@@ -1,4 +1,6 @@
-from ..models import *
+from django.db import models
+from creditcards.models import CardNumberField
+from ..managers.models import Manager
 
 
 class Currency(models.Model):
@@ -70,8 +72,6 @@ class CustomerAgreement(models.Model):
     source_id = models.CharField(max_length=300, null=True, blank=True)
     api_available = models.BooleanField(default=0, null=True)
     api_token = models.CharField(max_length=250, null=True, blank=True)
-    api_user_id = models.ForeignKey(
-        Account, on_delete=models.SET_NULL, null=True, blank=True)
     customer = models.CharField(max_length=300, null=True, blank=True)
     currency = models.CharField(max_length=300, null=True, blank=True)
     price_type = models.CharField(max_length=300, null=True, blank=True)
@@ -101,8 +101,6 @@ class CustomerCard(models.Model):
 class CustomerContact(models.Model):
     customer_id = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name="contact_customer", null=True, blank=True)
-    user_id = models.ForeignKey(
-        Account, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=250)
     email = models.EmailField(null=True, blank=True)
     is_user = models.BooleanField(default=1)

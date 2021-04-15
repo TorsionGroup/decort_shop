@@ -1,7 +1,6 @@
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
-
-from ..models import *
+from django.db import models
+from ..products.models import Product
+from ..customers.models import Customer
 
 
 class Cart(models.Model):

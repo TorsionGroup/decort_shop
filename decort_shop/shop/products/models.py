@@ -1,4 +1,7 @@
-from ..models import *
+from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
+from django.urls import reverse
+from ..customers.models import Currency, PriceType
 
 
 class Brand(models.Model):
@@ -232,6 +235,18 @@ class DeficitReserve(models.Model):
     class Meta:
         verbose_name = "DeficitReserve"
         verbose_name_plural = "DeficitReserves"
+
+
+class RatingStar(models.Model):
+    value = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.value}'
+
+    class Meta:
+        verbose_name = "RatingStar"
+        verbose_name_plural = "RatingStars"
+        ordering = ["-value"]
 
 
 class RatingProduct(models.Model):

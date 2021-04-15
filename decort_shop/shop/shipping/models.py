@@ -1,4 +1,5 @@
-from ..models import *
+from django.db import models
+from datetime import datetime
 
 
 class Region(models.Model):
