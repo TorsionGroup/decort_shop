@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'shop.wishlist',
     'shop.dropshipping',
     'shop.returns',
+    'shop.promos',
     'shop.api',
     'shop.tecdoc',
     'shop.rozetka',

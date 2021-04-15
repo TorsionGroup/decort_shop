@@ -37,6 +37,20 @@ class LoadDataCustomers:
             user="torsion_prog",
             password="sdr%7ujK")
 
+    def load_currencies(self):
+        currencies = self.client.service.GetData('currencies')
+        data = base64.b64decode(currencies)
+        file = open('cache/currencies.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+    def load_price_types(self):
+        price_types = self.client.service.GetData('price_types')
+        data = base64.b64decode(price_types)
+        file = open('cache/price_types.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
     def load_customers(self):
         customers = self.client.service.GetData('customers')
         data = base64.b64decode(customers)
@@ -95,13 +109,6 @@ class LoadDataProducts:
             user="torsion_prog",
             password="sdr%7ujK")
 
-    def load_currencies(self):
-        currencies = self.client.service.GetData('currencies')
-        data = base64.b64decode(currencies)
-        file = open('cache/currencies.csv', 'w', newline='', encoding='utf-8')
-        file.write(str(data.decode('utf-8')))
-        file.close()
-
     def load_brands(self):
         brands = self.client.service.GetData('brands')
         data = base64.b64decode(brands)
@@ -134,13 +141,6 @@ class LoadDataProducts:
         applicability = self.client.service.GetData('applicability')
         data = base64.b64decode(applicability)
         file = open('cache/applicability.csv', 'w', newline='', encoding='utf-8')
-        file.write(str(data.decode('utf-8')))
-        file.close()
-
-    def load_price_types(self):
-        price_types = self.client.service.GetData('price_types')
-        data = base64.b64decode(price_types)
-        file = open('cache/price_types.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
 
@@ -315,6 +315,8 @@ class LoadDataReturns:
 
 
 LoadDataCustomers = LoadDataCustomers()
+LoadDataCustomers.load_currencies()
+LoadDataCustomers.load_price_types()
 LoadDataCustomers.load_customers()
 LoadDataCustomers.load_customer_contacts()
 LoadDataCustomers.load_customer_agreements()
@@ -323,13 +325,11 @@ LoadDataCustomers.load_customer_points()
 LoadDataCustomers.load_balances()
 
 LoadDataProducts = LoadDataProducts()
-LoadDataProducts.load_currencies()
 LoadDataProducts.load_brands()
 LoadDataProducts.load_products()
 LoadDataProducts.load_cross()
 LoadDataProducts.load_description()
 LoadDataProducts.load_applicability()
-LoadDataProducts.load_price_types()
 LoadDataProducts.load_price_categories()
 LoadDataProducts.load_categories()
 LoadDataProducts.load_product_price_categories()
