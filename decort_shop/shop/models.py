@@ -8,23 +8,7 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from phonenumber_field.modelfields import PhoneNumberField
 
-
-class Manager(models.Model):
-    inner_name = models.CharField(max_length=250)
-    name = models.CharField(max_length=250, blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
-    phone = PhoneNumberField(blank=True, null=True)
-    skype = models.CharField(max_length=250, blank=True, null=True)
-    comment = models.CharField(max_length=500, blank=True, null=True)
-    source_id = models.CharField(max_length=300, blank=True)
-    is_active = models.BooleanField(default=0, blank=True, null=True)
-
-    def __str__(self):
-        return self.inner_name
-
-    class Meta:
-        verbose_name = "Manager"
-        verbose_name_plural = "Managers"
+from managers.models import Manager
 
 
 class Customer(models.Model):
@@ -868,71 +852,6 @@ class RunString(models.Model):
         verbose_name_plural = "RunStrings"
 
 
-class Sale(models.Model):
-    product_id = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="sale_product", null=True, blank=True)
-    customer_id = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="sale_customer", null=True, blank=True)
-    qty = models.IntegerField(null=True, blank=True)
-    date = models.CharField(max_length=500, null=True, blank=True)
-    product = models.CharField(max_length=500, null=True, blank=True)
-    customer = models.CharField(max_length=500, null=True, blank=True)
-
-    def __str__(self):
-        return self.product_id
-
-    class Meta:
-        verbose_name = "Sale"
-        verbose_name_plural = "Sales"
-
-
-class SaleHistory(models.Model):
-    product_id = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="sale_history_product", null=True, blank=True)
-    customer_id = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="sale_history_customer", null=True, blank=True)
-    qty = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return self.product_id
-
-    class Meta:
-        verbose_name = "SaleHistory"
-        verbose_name_plural = "SaleHistories"
-
-
-class SaleProductRelated(models.Model):
-    product_id = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="sale_related_product", null=True, blank=True)
-    related_product_id = models.IntegerField(null=True, blank=True)
-    qty_index = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    calculation_type = models.CharField(max_length=250, null=True, blank=True)
-
-    def __str__(self):
-        return self.product_id
-
-    class Meta:
-        verbose_name = "SaleProductRelated"
-        verbose_name_plural = "SaleProductRelateds"
-
-
-class SaleTask(models.Model):
-    product_id = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="sale_task_product", null=True, blank=True)
-    customer_id = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="sale_task_customer", null=True, blank=True)
-    qty = models.IntegerField(null=True, blank=True)
-    product = models.CharField(max_length=500, null=True, blank=True)
-    customer = models.CharField(max_length=500, null=True, blank=True)
-
-    def __str__(self):
-        return self.product_id
-
-    class Meta:
-        verbose_name = "SaleTask"
-        verbose_name_plural = "SaleTasks"
-
-
 class ScenarioPolicy(models.Model):
     sale_policy = models.CharField(max_length=250, null=True, blank=True)
     deficit_available = models.BooleanField(default=0, null=True)
@@ -975,21 +894,6 @@ class SearchRequestBufferIgnore(models.Model):
     class Meta:
         verbose_name = "SearchRequestBufferIgnore"
         verbose_name_plural = "SearchRequestBufferIgnores"
-
-
-class SendPriceBuffer(models.Model):
-    agreement_id = models.ForeignKey(
-        CustomerAgreement, on_delete=models.CASCADE, related_name="send_price_buffer_agreement", null=True, blank=True)
-    price_email = models.CharField(max_length=250, null=True, blank=True)
-    customer_id = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="send_price_buffer_customer", null=True, blank=True)
-
-    def __str__(self):
-        return self.agreement_id
-
-    class Meta:
-        verbose_name = "SendPriceBuffer"
-        verbose_name_plural = "SendPriceBuffers"
 
 
 class Token(models.Model):
