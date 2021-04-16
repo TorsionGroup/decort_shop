@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import datetime
-from ..models import Account
-from ..products.models import Product
+from ..models import *
 
 
 class Token(models.Model):

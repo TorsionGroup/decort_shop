@@ -1,59 +1,6 @@
 from django.db import models
 from creditcards.models import CardNumberField
-from ..managers.models import Manager
-
-
-class Currency(models.Model):
-    code = models.CharField(max_length=250)
-    name = models.CharField(max_length=250)
-    title = models.CharField(max_length=250)
-    source_id = models.CharField(max_length=300, null=True, blank=True)
-    rate = models.DecimalField(max_digits=15, decimal_places=2)
-    mult = models.IntegerField()
-    name_eng = models.CharField(max_length=250, null=True, blank=True)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "Currency"
-        verbose_name_plural = "Currencies"
-
-
-class PriceType(models.Model):
-    name = models.CharField(max_length=300)
-    source_id = models.CharField(max_length=300, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "PriceType"
-        verbose_name_plural = "PriceTypes"
-
-
-class Customer(models.Model):
-    code = models.CharField(max_length=250, null=True)
-    name = models.CharField(max_length=300)
-    main_customer_id = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
-    manager_id = models.ForeignKey(
-        Manager, on_delete=models.SET_NULL, related_name="customer_manager", null=True, blank=True)
-    sale_policy = models.CharField(max_length=250, null=True, blank=True)
-    city = models.CharField(max_length=250, null=True, blank=True)
-    region_id = models.CharField(max_length=300, null=True, blank=True)
-    source_id = models.CharField(max_length=300, null=True, blank=True)
-    no_show_balance = models.BooleanField(default=0, null=True)
-    deficit_available = models.BooleanField(default=0, null=True)
-    online_reserve = models.BooleanField(default=0, null=True)
-    main_customer = models.CharField(max_length=300, null=True, blank=True)
-    manager = models.CharField(max_length=300, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Customer"
-        verbose_name_plural = "Customers"
+from ..models import *
 
 
 class CustomerAgreement(models.Model):

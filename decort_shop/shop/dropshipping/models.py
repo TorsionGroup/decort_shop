@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime
 from creditcards.models import CardNumberField
-from ..products.models import Currency
+from ..models import Currency
 from ..customers.models import CustomerAgreement
 from ..orders.models import Order
 

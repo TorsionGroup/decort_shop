@@ -22,7 +22,7 @@ class LoadData:
             password="sdr%7ujK")
 
 
-class LoadDataCustomers:
+class LoadDataShop:
     def __init__(self):
         session = Session()
         session.auth = HTTPBasicAuth('Robot', 'Robot')
@@ -51,12 +51,35 @@ class LoadDataCustomers:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    def load_managers(self):
+        managers = self.client.service.GetData('managers')
+        data = base64.b64decode(managers)
+        file = open('cache/managers.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
     def load_customers(self):
         customers = self.client.service.GetData('customers')
         data = base64.b64decode(customers)
         file = open('cache/customers.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
+
+
+class LoadDataCustomers:
+    def __init__(self):
+        session = Session()
+        session.auth = HTTPBasicAuth('Robot', 'Robot')
+        transport = Transport(session=session, timeout=600)
+        settings = Settings(xml_huge_tree=True)
+        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+
+        self.conn = psycopg2.connect(
+            host="localhost",
+            port="5432",
+            database="decort_shop",
+            user="torsion_prog",
+            password="sdr%7ujK")
 
     def load_customer_contacts(self):
         customer_contacts = self.client.service.GetData('customer_contacts')
@@ -269,13 +292,6 @@ class LoadDataManagers:
             user="torsion_prog",
             password="sdr%7ujK")
 
-    def load_managers(self):
-        managers = self.client.service.GetData('managers')
-        data = base64.b64decode(managers)
-        file = open('cache/managers.csv', 'w', newline='', encoding='utf-8')
-        file.write(str(data.decode('utf-8')))
-        file.close()
-
     def load_sales(self):
         sales = self.client.service.GetData('sales')
         data = base64.b64decode(sales)
@@ -287,6 +303,29 @@ class LoadDataManagers:
         sale_tasks = self.client.service.GetData('sale_tasks')
         data = base64.b64decode(sale_tasks)
         file = open('cache/sale_tasks.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+
+class LoadDataShipping:
+    def __init__(self):
+        session = Session()
+        session.auth = HTTPBasicAuth('Robot', 'Robot')
+        transport = Transport(session=session, timeout=600)
+        settings = Settings(xml_huge_tree=True)
+        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+
+        self.conn = psycopg2.connect(
+            host="localhost",
+            port="5432",
+            database="decort_shop",
+            user="torsion_prog",
+            password="sdr%7ujK")
+
+    def load_regions(self):
+        regions = self.client.service.GetData('regions')
+        data = base64.b64decode(regions)
+        file = open('cache/regions.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
 
@@ -314,10 +353,13 @@ class LoadDataReturns:
         file.close()
 
 
+LoadDataShop = LoadDataShop()
+LoadDataShop.load_currencies()
+LoadDataShop.load_price_types()
+LoadDataShop.load_managers()
+LoadDataShop.load_customers()
+
 LoadDataCustomers = LoadDataCustomers()
-LoadDataCustomers.load_currencies()
-LoadDataCustomers.load_price_types()
-LoadDataCustomers.load_customers()
 LoadDataCustomers.load_customer_contacts()
 LoadDataCustomers.load_customer_agreements()
 LoadDataCustomers.load_customer_discounts()
@@ -347,9 +389,11 @@ LoadDataDropshipping = LoadDataDropshipping()
 LoadDataDropshipping.load_dropshipping_wallet()
 
 LoadDataManagers = LoadDataManagers()
-LoadDataManagers.load_managers()
 LoadDataManagers.load_sales()
 LoadDataManagers.load_sale_tasks()
+
+LoadDataShipping = LoadDataShipping()
+LoadDataShipping.load_regions()
 
 LoadDataReturns = LoadDataReturns()
 LoadDataReturns.load_returns()
