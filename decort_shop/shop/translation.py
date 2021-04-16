@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Product, CatalogCategory, Category, Content, DeliveryMethod, Manager, RunString, UserRequestType
+from .models import Product, CatalogCategory, Category, Content, Manager, RunString
 
 
 @register(Category)
@@ -17,11 +17,6 @@ class CatalogCategoryTranslationOptions(TranslationOptions):
     fields = ('name', 'comment')
 
 
-@register(DeliveryMethod)
-class DeliveryMethodTranslationOptions(TranslationOptions):
-    fields = ('name', 'comment', 'red')
-
-
 @register(Manager)
 class ManagerMethodTranslationOptions(TranslationOptions):
     fields = ('name', 'comment')
@@ -30,11 +25,6 @@ class ManagerMethodTranslationOptions(TranslationOptions):
 @register(RunString)
 class RunStringMethodTranslationOptions(TranslationOptions):
     fields = ('full_text', 'comment')
-
-
-@register(UserRequestType)
-class UserRequestTypeMethodTranslationOptions(TranslationOptions):
-    fields = ('name', 'comment')
 
 
 @register(Content)

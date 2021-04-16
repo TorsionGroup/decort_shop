@@ -1,8 +1,8 @@
 from django.db import models
 from datetime import datetime
 from phonenumber_field.modelfields import PhoneNumberField
-from ..customers.models import Customer, CustomerAgreement, CustomerPoint
-from ..products.models import Product, Currency
+from ..models import *
+from ..customers.models import CustomerAgreement, CustomerPoint
 from ..shipping.models import DeliveryMethod, DeliveryService, DeliveryCity, DeliveryPoint
 
 

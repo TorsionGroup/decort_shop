@@ -17,5 +17,3 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(OrderPayment)
-admin.site.register(DropshippingWallet)
-admin.site.register(DropshippingWalletTransfer)

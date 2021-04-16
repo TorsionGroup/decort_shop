@@ -1,6 +1,5 @@
 from django.db import models
-from ..products.models import Product
-from ..customers.models import Customer
+from ..models import *
 
 
 class PromoSale(models.Model):

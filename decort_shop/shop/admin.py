@@ -149,21 +149,6 @@ class PriceTypeAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-@admin.register(CustomerAgreement)
-class CustomerAgreementAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'customer_id', 'code', 'number', 'currency_id')
-    list_display_links = ('name', 'customer_id',)
-    search_fields = ('name', 'customer_id',)
-
-
 admin.site.register(RatingStar)
 admin.site.register(Currency)
 admin.site.register(ProductImage)
-admin.site.register(CustomerDiscount)
-admin.site.register(CustomerPoint)
-admin.site.register(Balance)
-admin.site.register(Stock)
-admin.site.register(Cross)
-admin.site.register(ProductApplicability)
-admin.site.register(ProductDescription)
-
