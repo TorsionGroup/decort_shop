@@ -16,7 +16,6 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('cart/', include('shop.cart.urls', namespace='cart')),
     path('', include('shop.urls')),
-    path('novaposhta/', include('novaposhta.urls')),
 )
 
 if settings.DEBUG:

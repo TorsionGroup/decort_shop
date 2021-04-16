@@ -358,6 +358,7 @@ LoadDataShop.load_currencies()
 LoadDataShop.load_price_types()
 LoadDataShop.load_managers()
 LoadDataShop.load_customers()
+print('Load Data Shop')
 
 LoadDataCustomers = LoadDataCustomers()
 LoadDataCustomers.load_customer_contacts()
@@ -365,6 +366,7 @@ LoadDataCustomers.load_customer_agreements()
 LoadDataCustomers.load_customer_discounts()
 LoadDataCustomers.load_customer_points()
 LoadDataCustomers.load_balances()
+print('Load Data Customers')
 
 LoadDataProducts = LoadDataProducts()
 LoadDataProducts.load_brands()
@@ -379,24 +381,30 @@ LoadDataProducts.load_offers()
 LoadDataProducts.load_prices()
 LoadDataProducts.load_stocks()
 LoadDataProducts.load_deficit()
+print('Load Data Products')
 
 LoadDataOrders = LoadDataOrders()
 LoadDataOrders.load_orders()
 LoadDataOrders.load_order_items()
 LoadDataOrders.load_declaration_numbers()
+print('Load Data Orders')
 
 LoadDataDropshipping = LoadDataDropshipping()
 LoadDataDropshipping.load_dropshipping_wallet()
+print('Load Data Dropshipping')
 
 LoadDataManagers = LoadDataManagers()
 LoadDataManagers.load_sales()
 LoadDataManagers.load_sale_tasks()
+print('Load Data Managers')
 
 LoadDataShipping = LoadDataShipping()
 LoadDataShipping.load_regions()
+print('Load Data Shipping')
 
 LoadDataReturns = LoadDataReturns()
 LoadDataReturns.load_returns()
+print('Load Data Returns')
 
 
 
