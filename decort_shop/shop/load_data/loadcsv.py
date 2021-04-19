@@ -329,6 +329,34 @@ class LoadDataShipping:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    def load_novaposhta_regions(self):
+        novaposhta_regions = self.client.service.GetData('novaposhta_regions')
+        data = base64.b64decode(novaposhta_regions)
+        file = open('cache/novaposhta_regions.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+    def load_novaposhta_cities(self):
+        novaposhta_cities = self.client.service.GetData('novaposhta_cities')
+        data = base64.b64decode(novaposhta_cities)
+        file = open('cache/novaposhta_cities.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+    def load_novaposhta_branches(self):
+        novaposhta_branches = self.client.service.GetData('novaposhta_branches')
+        data = base64.b64decode(novaposhta_branches)
+        file = open('cache/novaposhta_branches.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+    def load_novaposhta_streetes(self):
+        novaposhta_streetes = self.client.service.GetData('novaposhta_streetes')
+        data = base64.b64decode(novaposhta_streetes)
+        file = open('cache/novaposhta_streetes.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
 
 class LoadDataReturns:
     def __init__(self):
@@ -400,6 +428,10 @@ print('Load Data Managers')
 
 LoadDataShipping = LoadDataShipping()
 LoadDataShipping.load_regions()
+LoadDataShipping.load_novaposhta_regions()
+LoadDataShipping.load_novaposhta_cities()
+LoadDataShipping.load_novaposhta_branches()
+LoadDataShipping.load_novaposhta_streetes()
 print('Load Data Shipping')
 
 LoadDataReturns = LoadDataReturns()
