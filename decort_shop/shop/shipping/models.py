@@ -4,8 +4,8 @@ from ..models import *
 
 
 class Region(models.Model):
-    name = models.CharField(max_length=300)
-    source_id = models.CharField(max_length=300, null=True, blank=True)
+    source = models.CharField(max_length=300, null=True, blank=True)
+    name = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name

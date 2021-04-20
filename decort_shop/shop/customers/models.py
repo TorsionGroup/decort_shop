@@ -4,9 +4,9 @@ from ..models import *
 
 
 class CustomerAgreement(models.Model):
-    code = models.CharField(max_length=250, null=True, blank=True)
-    name = models.CharField(max_length=250)
-    number = models.CharField(max_length=250, null=True, blank=True)
+    code = models.CharField(max_length=300, null=True, blank=True)
+    name = models.CharField(max_length=300)
+    number = models.CharField(max_length=300, null=True, blank=True)
     customer_id = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name="agreement_customer", null=True, blank=True)
     currency_id = models.ForeignKey(
@@ -18,7 +18,7 @@ class CustomerAgreement(models.Model):
     is_active = models.BooleanField(default=1, null=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
     api_available = models.BooleanField(default=0, null=True)
-    api_token = models.CharField(max_length=250, null=True, blank=True)
+    api_token = models.CharField(max_length=300, null=True, blank=True)
     customer = models.CharField(max_length=300, null=True, blank=True)
     currency = models.CharField(max_length=300, null=True, blank=True)
     price_type = models.CharField(max_length=300, null=True, blank=True)
@@ -32,9 +32,8 @@ class CustomerAgreement(models.Model):
 
 
 class CustomerCard(models.Model):
-    customer_id = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, related_name="card_customer", null=True, blank=True)
-    name = models.CharField(max_length=250)
+    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=300)
     card = CardNumberField()
 
     def __str__(self):
@@ -46,12 +45,15 @@ class CustomerCard(models.Model):
 
 
 class CustomerContact(models.Model):
+    source = models.CharField(max_length=300, null=True, blank=True)
+    source_customer = models.CharField(max_length=300, null=True, blank=True)
     customer_id = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name="contact_customer", null=True, blank=True)
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=300, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
-    is_user = models.BooleanField(default=1)
-    source_id = models.CharField(max_length=300, null=True, blank=True)
+    phone = models.CharField(max_length=300, null=True, blank=True)
+    is_user = models.BooleanField(default=1, null=True, blank=True)
+    birthday = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -67,7 +69,7 @@ class CustomerDiscount(models.Model):
     agreement_id = models.ForeignKey(
         CustomerAgreement, on_delete=models.CASCADE, related_name="discount_customer_agreement", null=True, blank=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
-    criteria_type = models.CharField(max_length=250, null=True, blank=True)
+    criteria_type = models.CharField(max_length=300, null=True, blank=True)
     discount = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=0)
     price_type_id = models.ForeignKey(
         PriceType, on_delete=models.CASCADE, related_name="discount_customer_price_type", null=True, blank=True)
