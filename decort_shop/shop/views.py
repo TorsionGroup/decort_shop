@@ -12,48 +12,81 @@ from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, Rati
 from .cart.forms import CartAddProductForm
 
 
-class BrandOffer:
+class BrandsCarsOffers:
+
     def get_brands(self):
-        return Brand.objects.filter(is_recommended=1)
+        return Brand.objects.filter(is_recommended=True)
 
     def get_offers(self):
-        return Offer.objects.all()
+        return Offer.objects.filter(is_recommended=True)
+
+    def get_manufacturer_name(self):
+        manufacturer_name_sorted_list = sorted(
+            set(Product.objects.filter(manufacturer_name__isnull=False).values_list('manufacturer_name', flat=True)))
+        return manufacturer_name_sorted_list
 
 
-class IndexView(BrandOffer, ListView):
+class IndexView(BrandsCarsOffers, ListView):
     model = Manager
     queryset = Manager.objects.all()
     template_name = 'decort_shop/index.html'
 
 
-def catalog_product_list(request, category_slug=None):
-    category = None
-    categories = CatalogCategory.objects.all()
-    products = Product.objects.all()
-    paginator = Paginator(products, 30)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    if category_slug:
-        category = get_object_or_404(CatalogCategory, url=category_slug)
-        products = products.filter(category_id=category)
-    context = {
-            'page_obj': page_obj, 'category': category, 'categories': categories, 'products': products
-    }
-    return render(request, 'decort_shop/product/product_list.html', context)
+class ProductView(BrandsCarsOffers, ListView):
+    model = Product
+    queryset = Product.objects.all()
+    context_object_name = 'product_list'
+    paginate_by = 30
+    template_name = 'decort_shop/product/product_list.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['catalogcategories'] = CatalogCategory.objects.all()
+        return context
+
+    # def catalog_product_list(request, category_slug=None):
+    #     category = None
+    #     categories = CatalogCategory.objects.all()
+    #     products = Product.objects.all()
+    #     paginator = Paginator(products, 30)
+    #     page_number = request.GET.get('page')
+    #     page_obj = paginator.get_page(page_number)
+    #     if category_slug:
+    #         category = get_object_or_404(CatalogCategory, url=category_slug)
+    #         products = products.filter(category_id=category)
+    #     context = {
+    #         'page_obj': page_obj, 'category': category, 'categories': categories, 'products': products
+    #     }
+    #     return render(request, 'decort_shop/product/product_list.html', context)
 
 
-def product_detail(request, id):
-    product = get_object_or_404(Product, id=id)
-    cart_product_form = CartAddProductForm()
-    context = {'product': product, 'cart_product_form': cart_product_form}
-    return render(request, 'decort_shop/product/product_detail.html', context)
+class ProductDetailView(BrandsCarsOffers, DetailView):
+    model = Product
+    pk_url_kwarg = 'id'
+    context_object_name = 'product_detail'
+    template_name = 'decort_shop/product/product_detail.html'
 
 
-class CatalogCategoryView(BrandOffer, ListView):
+    # def product_detail(request, id):
+    #     product = get_object_or_404(Product, id=id)
+    #     cart_product_form = CartAddProductForm()
+    #     context = {'product': product, 'cart_product_form': cart_product_form}
+    #     return render(request, 'decort_shop/product/product_detail.html', context)
+
+
+class CatalogCategoryView(BrandsCarsOffers, ListView):
     model = CatalogCategory
     queryset = CatalogCategory.objects.all()
     context_object_name = 'catalog_category_list'
     template_name = 'decort_shop/product/catalog_category_list.html'
+
+
+class CatalogCategoryDetailView(BrandsCarsOffers, DetailView):
+    model = CatalogCategory
+    slug_field = 'url'
+    context_object_name = 'catalog_product_detail'
+    paginate_by = 30
+    template_name = 'decort_shop/product/product_list.html'
 
 
 class NewsView(ListView):
@@ -106,7 +139,7 @@ class AddStarRatingContent(View):
             return HttpResponse(status=400)
 
 
-class AddReviewProduct(View):
+class AddReviewProduct(BrandsCarsOffers, View):
     def post(self, request, pk):
         form = ReviewProductForm(request.POST)
         product = Product.objects.get(id=pk)
@@ -119,7 +152,7 @@ class AddReviewProduct(View):
         return redirect(product.get_absolute_url())
 
 
-class AddStarRatingProduct(View):
+class AddStarRatingProduct(BrandsCarsOffers, View):
     def get_client_ip(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
@@ -192,4 +225,12 @@ def product_search(request):
         ).filter(similarity__gt=0.4).order_by('-similarity')
     return render(request, 'decort_shop/product/product_search.html', {'form': form, 'query': query,
                                                                        'results': results})
+
+
+class FilterBrandsCarsOffersView(BrandsCarsOffers, ListView):
+    def get_queryset(self):
+        queryset = Product.objects.filter(
+
+        )
+        return queryset
 

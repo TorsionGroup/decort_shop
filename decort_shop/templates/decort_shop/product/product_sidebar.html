@@ -48,35 +48,42 @@
                 <div class="torsion-categories_title">
                     <h5>{% trans 'Brands' %}</h5>
                 </div>
+                {% for brands in view.get_brands %}
                 <ul class="sidebar-checkbox_list">
                     <li>
-                        <a href="#">Brands <span>1</span></a>
+                        <a href="#">{{ brands.name}} </a>
                     </li>
                 </ul>
+                {% endfor %}
             </div>
         </form>
 
         <div class="torsion-sidebar_categories">
             <div class="torsion-categories_title">
-                <h5>{% trans 'Сar Manufacturer' %}</h5>
+                <h5>{% trans 'Offer' %}</h5>
             </div>
+            {% for offers in view.get_offers %}
             <ul class="sidebar-checkbox_list">
                 <li>
-                    <a href="#">Сar Manufacturer <span>1</span></a>
+                    <a href="#">{{ offers.name}} </a>
                 </li>
             </ul>
+            {% endfor %}
         </div>
 
         <div class="torsion-sidebar_categories">
             <div class="torsion-categories_title">
-                <h5>{% trans 'Offer' %}</h5>
+                <h5>{% trans 'Сar Manufacturer' %}</h5>
             </div>
+            {% for manufacturer_name in get_manufacturer_name %}
             <ul class="sidebar-checkbox_list">
                 <li>
-                    <a href="#">Offer <span>1</span></a>
+                    <a href="#">{{ manufacturer_name.name }} </a>
                 </li>
             </ul>
+            {% endfor %}
         </div>
+
 
         {% if request.user.is_authenticated %}
         <div class="torsion-sidebar_categories">
