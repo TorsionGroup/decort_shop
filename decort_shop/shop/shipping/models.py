@@ -80,4 +80,60 @@ class DeliveryPoint(models.Model):
         verbose_name_plural = "DeliveryPoints"
 
 
+class NovaPoshtaRegion(models.Model):
+    source = models.CharField(max_length=300, null=True, blank=True)
+    name = models.CharField(max_length=300, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "NovaPoshtaRegion"
+        verbose_name_plural = "NovaPoshtaRegions"
+
+
+class NovaPoshtaCity(models.Model):
+    source = models.CharField(max_length=300, null=True, blank=True)
+    source_region = models.CharField(max_length=300, null=True, blank=True)
+    name = models.CharField(max_length=300, null=True, blank=True)
+    region = models.ForeignKey(NovaPoshtaRegion, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "NovaPoshtaCity"
+        verbose_name_plural = "NovaPoshtaCities"
+
+
+class NovaPoshtaBranche(models.Model):
+    source = models.CharField(max_length=300, null=True, blank=True)
+    source_city = models.CharField(max_length=300, null=True, blank=True)
+    name = models.CharField(max_length=300, null=True, blank=True)
+    city = models.ForeignKey(NovaPoshtaCity, on_delete=models.CASCADE, null=True, blank=True)
+    branche_type = models.CharField(max_length=300, null=True, blank=True)
+    max_weight_place = models.PositiveIntegerField(default=0, null=True, blank=True)
+    max_weight = models.PositiveIntegerField(default=0, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "NovaPoshtaBranche"
+        verbose_name_plural = "NovaPoshtaBranches"
+
+
+class NovaPoshtaStreet(models.Model):
+    source = models.CharField(max_length=300, null=True, blank=True)
+    source_city = models.CharField(max_length=300, null=True, blank=True)
+    name = models.CharField(max_length=300, null=True, blank=True)
+    city = models.ForeignKey(NovaPoshtaCity, on_delete=models.CASCADE, null=True, blank=True)
+    street_type = models.CharField(max_length=300, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "NovaPoshtaStreet"
+        verbose_name_plural = "NovaPoshtaStreets"
 
