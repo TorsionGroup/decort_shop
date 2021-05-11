@@ -35,6 +35,7 @@ class LoadDataCustomers:
             source_customer character varying(300),
             name character varying(300),
             email character varying(300),
+            phone character varying(300),
             is_user boolean,
             birthday character varying(300) );'''
         cur.execute(t_sql)
@@ -42,14 +43,15 @@ class LoadDataCustomers:
 
         with open('cache/customer_contacts.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customercontact_buffer',
-                          columns=('source', 'source_customer', 'name', 'email', 'is_user', 'birthday'), sep='|')
+                          columns=('source', 'source_customer', 'name', 'email', 'phone', 'is_user', 'birthday'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE customers_customercontact c
             SET 
                 source_customer = b.source_customer,              
                 name = b.name,
-                email = b.email,              
+                email = b.email,
+                phone = b.phone,               
                 is_user = b.is_user,
                 birthday = b.birthday                           
             FROM customers_customercontact_buffer b

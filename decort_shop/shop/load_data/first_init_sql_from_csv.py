@@ -90,7 +90,7 @@ print('Load Customer Discount')
 
 with open('cache/customer_contacts.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'customers_customercontact',
-                  columns=('source', 'source_customer', 'name', 'email', 'is_user', 'birthday'), sep='|')
+                  columns=('source', 'source_customer', 'name', 'email', 'phone', 'is_user', 'birthday'), sep='|')
 conn.commit()
 print('Load Customer Contact')
 

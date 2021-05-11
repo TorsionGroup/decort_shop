@@ -121,8 +121,8 @@ class AccountManager(BaseUserManager):
 class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=250)
-    phone = PhoneNumberField(blank=True)
-    date_of_birth = models.DateField(blank=True, null=True)
+    phone = models.CharField(max_length=250, blank=True, null=True)
+    date_of_birth = models.CharField(max_length=250, blank=True, null=True)
     picture = models.ImageField(upload_to="content/account_image/", blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
