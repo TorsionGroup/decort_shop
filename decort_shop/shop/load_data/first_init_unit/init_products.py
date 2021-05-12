@@ -18,3 +18,40 @@ with open('../cache/products.csv', 'r', encoding='utf-8') as file:
                       'model_name', 'weight', 'pack_qty', 'product_type', 'create_date', 'income_date'), sep='|')
 conn.commit()
 print('Load Product')
+
+with open('../cache/prices.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'products_price',
+                  columns=('product', 'price_type', 'currency', 'price'), sep='|')
+conn.commit()
+print('Load Prices')
+
+with open('../cache/stocks.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'products_stock',
+                  columns=('product', 'stock_name', 'amount_total', 'amount_account'), sep='|')
+conn.commit()
+print('Load Stocks')
+
+with open('../cache/deficit.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'products_deficitreserve',
+                  columns=('product', 'sale_policy', 'amount'), sep='|')
+conn.commit()
+print('Load Deficit')
+
+with open('../cache/description.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'products_productdescription',
+                  columns=('product', 'property', 'value'), sep='|')
+conn.commit()
+print('Load Description')
+
+with open('../cache/applicability.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'products_productapplicability',
+                  columns=('product', 'vehicle', 'modification', 'engine', 'year'), sep='|')
+
+conn.commit()
+print('Load Applicability')
+
+with open('../cache/cross.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'products_cross',
+                  columns=('product', 'brand', 'article_nr'), sep='|')
+conn.commit()
+print('Load Cross')
