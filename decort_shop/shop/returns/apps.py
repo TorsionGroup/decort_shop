@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class ReturnsConfig(AppConfig):
-    name = 'returns'
+    name = 'shop.returns'

@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class RozetkaConfig(AppConfig):
-    name = 'rozetka'
+    name = 'shop.rozetka'

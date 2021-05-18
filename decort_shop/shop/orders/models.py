@@ -131,3 +131,4 @@ class OrderSourceStatistic(models.Model):
     class Meta:
         verbose_name = "OrderSourceStatistic"
         verbose_name_plural = "OrderSourceStatistics"
+
