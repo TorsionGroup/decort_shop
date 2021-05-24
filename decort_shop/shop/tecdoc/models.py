@@ -7,6 +7,7 @@ class Manufacturer(models.Model):
     source = models.CharField(max_length=300, null=True, blank=True)
     name = models.CharField(max_length=300, null=True, blank=True)
     manufacturer_tecdoc_id = models.CharField(max_length=300, null=True, blank=True)
+    country = models.CharField(max_length=300, null=True, blank=True)
     canbedisplayed = models.BooleanField(default=0, null=True, blank=True)
     ispassengercar = models.BooleanField(default=0, null=True, blank=True)
     iscommercialvehicle = models.BooleanField(default=0, null=True, blank=True)
@@ -36,6 +37,7 @@ class ManufacturerModel(models.Model):
     ismotorbike = models.BooleanField(default=0, null=True, blank=True)
     isengine = models.BooleanField(default=0, null=True, blank=True)
     isaxle = models.BooleanField(default=0, null=True, blank=True)
+    commercial = models.BooleanField(default=0, null=True, blank=True)
 
     def __str__(self):
         return self.name

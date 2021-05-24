@@ -34,6 +34,7 @@ class LoadDataTecdoc:
                 source character varying(300),
                 name character varying(300), 
                 manufacturer_tecdoc_id character varying(300),
+                country character varying(300),
                 canbedisplayed boolean,
                 ispassengercar boolean,
                 iscommercialvehicle boolean,
@@ -45,14 +46,15 @@ class LoadDataTecdoc:
 
         with open('cache/tecdoc_manufacturer.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'tecdoc_manufacturer_buffer',
-                          columns=('source', 'name', 'manufacturer_tecdoc_id', 'canbedisplayed', 'ispassengercar',
-                                   'iscommercialvehicle', 'ismotorbike', 'isengine', 'isaxle'), sep='|')
+                          columns=('source', 'name', 'manufacturer_tecdoc_id', 'country', 'canbedisplayed',
+                                   'ispassengercar', 'iscommercialvehicle', 'ismotorbike', 'isengine', 'isaxle'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE tecdoc_manufacturer t
                 SET
                     name = b.name,
                     manufacturer_tecdoc_id = b.manufacturer_tecdoc_id, 
+                    country = b.country,
                     canbedisplayed = b.canbedisplayed,
                     ispassengercar = b.ispassengercar,
                     iscommercialvehicle = b.iscommercialvehicle,
@@ -85,7 +87,8 @@ class LoadDataTecdoc:
                 iscommercialvehicle boolean,
                 ismotorbike boolean,
                 isengine boolean,
-                isaxle boolean );'''
+                isaxle boolean,
+                commercial boolean);'''
         cur.execute(t_sql)
         self.conn.commit()
 
@@ -93,7 +96,7 @@ class LoadDataTecdoc:
             cur.copy_from(file, 'tecdoc_manufacturermodel_buffer',
                           columns=('source', 'source_manufacturer', 'name', 'constructioninterval', 'model_tecdoc_id',
                                    'manufacturer_tecdoc_id', 'canbedisplayed', 'ispassengercar', 'iscommercialvehicle',
-                                   'ismotorbike', 'isengine', 'isaxle'), sep='|')
+                                   'ismotorbike', 'isengine', 'isaxle', 'commercial'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE tecdoc_manufacturermodel t
@@ -108,7 +111,8 @@ class LoadDataTecdoc:
                     iscommercialvehicle = b.iscommercialvehicle,
                     ismotorbike = b.ismotorbike,
                     isengine = b.isengine,                    
-                    isaxle = b.isaxle            
+                    isaxle = b.isaxle,
+                    commercial = b.commercial            
                 FROM tecdoc_manufacturermodel_buffer b
                 WHERE t.source = b.source;'''
         cur.execute(copy_sql)
