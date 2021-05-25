@@ -48,6 +48,6 @@ class LoadDataUsers:
 
 
 LoadDataUsers = LoadDataUsers()
-LoadDataUsers.load_users()
+# LoadDataUsers.load_users()
 # LoadDataUsers.load_new_users()
 print('Load Data Users')
