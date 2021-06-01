@@ -446,7 +446,7 @@ LoadDataProducts.load_offers()
 LoadDataProducts.load_prices()
 LoadDataProducts.load_stocks()
 LoadDataProducts.load_deficit()
-# LoadDataProducts.load_product_manufacturer_model()
+LoadDataProducts.load_product_manufacturer_model()
 print('Load Data Products')
 
 LoadDataOrders = LoadDataOrders()
