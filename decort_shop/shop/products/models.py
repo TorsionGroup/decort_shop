@@ -103,3 +103,20 @@ class DeficitReserve(models.Model):
         verbose_name = "DeficitReserve"
         verbose_name_plural = "DeficitReserves"
 
+
+class ProductManufacturerModel(models.Model):
+    product_id = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="manufacturer_product", null=True, blank=True)
+    product = models.CharField(max_length=300, null=True, blank=True)
+    manufacturer_name = models.CharField(max_length=300, null=True, blank=True)
+    model_name = models.CharField(max_length=300, null=True, blank=True)
+    manufacturer_tecdoc_id = models.CharField(max_length=300, null=True, blank=True)
+    model_tecdoc_id = models.CharField(max_length=300, null=True, blank=True)
+
+    def __str__(self):
+        return self.product
+
+    class Meta:
+        verbose_name = "ProductManufacturerModel"
+        verbose_name_plural = "ProductManufacturerModels"
+

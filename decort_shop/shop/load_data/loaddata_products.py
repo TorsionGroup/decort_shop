@@ -296,6 +296,48 @@ class LoadDataProducts:
         cur.execute(upd_sql)
         self.conn.commit()
 
+    def load_product_manufacturer_model(self):
+        deficit = self.client.service.GetData('product_manufacturer_model')
+        data = base64.b64decode(deficit)
+        file = open('cache/product_manufacturer_model.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE products_productmanufacturermodel_buffer (
+            product character varying(300),
+            manufacturer_name character varying(300),
+            model_name character varying(300),
+            manufacturer_tecdoc_id character varying(300),                
+            model_tecdoc_id character varying(300) );'''
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/product_manufacturer_model.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'products_productmanufacturermodel_buffer',
+                          columns=('product', 'manufacturer_name', 'model_name', 'manufacturer_tecdoc_id',
+                                   'model_tecdoc_id'), sep='|')
+        self.conn.commit()
+
+        copy_sql = '''UPDATE products_productmanufacturermodel m
+            SET
+                manufacturer_name = b.manufacturer_name,
+                model_name = b.model_name,
+                manufacturer_tecdoc_id = b.manufacturer_tecdoc_id,
+                model_tecdoc_id = b.model_tecdoc_id                       
+            FROM products_productmanufacturermodel_buffer b
+            WHERE m.product = b.product;'''
+        cur.execute(copy_sql)
+        self.conn.commit()
+
+        upd_sql = '''UPDATE products_productmanufacturermodel m
+            SET product_id_id = c.id                               
+            FROM shop_product c
+            WHERE m.product = c.source_id;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
+
 
 LoadDataProducts = LoadDataProducts()
 LoadDataProducts.load_cross()
@@ -305,4 +347,6 @@ LoadDataProducts.load_product_price_categories()
 LoadDataProducts.load_prices()
 LoadDataProducts.load_stocks()
 LoadDataProducts.load_deficit()
+LoadDataProducts.load_product_manufacturer_model()
+
 print('Load Data Products')

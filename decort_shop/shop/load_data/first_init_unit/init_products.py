@@ -55,3 +55,11 @@ with open('../cache/cross.csv', 'r', encoding='utf-8') as file:
                   columns=('product', 'brand', 'article_nr'), sep='|')
 conn.commit()
 print('Load Cross')
+
+with open('../cache/product_manufacturer_model.csv', 'r', encoding='utf-8') as file:
+    cur.copy_from(file, 'products_productmanufacturermodel',
+                  columns=('product', 'manufacturer_name', 'model_name', 'manufacturer_tecdoc_id',
+                           'model_tecdoc_id'), sep='|')
+conn.commit()
+print('Load Product Manufacturer Model')
+
