@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, View
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.db.models.functions import Greatest
 
 from .models import *
 from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm, SearchForm
@@ -65,7 +66,6 @@ class ProductDetailView(BrandsCarsOffers, DetailView):
     pk_url_kwarg = 'id'
     context_object_name = 'product_detail'
     template_name = 'decort_shop/product/product_detail.html'
-
 
     # def product_detail(request, id):
     #     product = get_object_or_404(Product, id=id)
@@ -220,9 +220,15 @@ def product_search(request):
         form = SearchForm(request.GET)
     if form.is_valid():
         query = form.cleaned_data['query']
-        results = Product.objects.annotate(similarity=TrigramSimilarity(
-            'article', query),
-        ).filter(similarity__gt=0.4).order_by('-similarity')
+        results = Product.objects.annotate(
+            similarity=Greatest(
+                TrigramSimilarity('article', query),
+                TrigramSimilarity('specification', query),
+                TrigramSimilarity('keywords', query),
+                TrigramSimilarity('name_ru', query),
+                TrigramSimilarity('name_uk', query),
+                TrigramSimilarity('name_en', query))
+            ).filter(similarity__gt=0.4).order_by('-similarity')
     return render(request, 'decort_shop/product/product_search.html', {'form': form, 'query': query,
                                                                        'results': results})
 
@@ -233,4 +239,3 @@ class FilterBrandsCarsOffersView(BrandsCarsOffers, ListView):
 
         )
         return queryset
-
