@@ -40,8 +40,8 @@ class ProductView(BrandsCarsOffers, ListView):
     paginate_by = 30
     template_name = 'decort_shop/product/product_list.html'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['catalogcategories'] = CatalogCategory.objects.all()
         return context
 
@@ -87,6 +87,11 @@ class CatalogCategoryDetailView(BrandsCarsOffers, DetailView):
     context_object_name = 'catalog_product_detail'
     paginate_by = 30
     template_name = 'decort_shop/product/product_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.all()
+        return context
 
 
 class NewsView(ListView):
