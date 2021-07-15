@@ -93,7 +93,7 @@ class CatalogCategoryDetailView(BrandsCarsOffers, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CatalogCategoryDetailView, self).get_context_data(**kwargs)
-        context['products'] = Product.objects.filter(category_id_id=kwargs.get('category_id'))
+        context['products'] = Product.objects.filter(category_id=kwargs.get('category_id'))
         return context
 
 
