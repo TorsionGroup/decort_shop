@@ -88,8 +88,8 @@ class CatalogCategoryDetailView(BrandsCarsOffers, DetailView):
     paginate_by = 30
     template_name = 'decort_shop/product/product_list.html'
 
-    def get_queryset(self):
-        return CatalogCategory.objects.filter(category_id=self.kwargs['category_id'])
+    def get_queryset(self, **kwargs):
+        return CatalogCategory.objects.filter(id=kwargs.get('category_id'))
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
@@ -98,8 +98,7 @@ class CatalogCategoryDetailView(BrandsCarsOffers, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CatalogCategoryDetailView, self).get_context_data(**kwargs)
-        context['products'] = Product.objects.all()
-        context['filtered_products'] = Product.objects.get(category_id_id=self.kwargs['category_id'])
+        context['products'] = Product.objects.get(category_id_id=self.kwargs['category_id'])
         return context
 
 
