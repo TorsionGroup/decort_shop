@@ -33,17 +33,17 @@ class IndexView(BrandsCarsOffers, ListView):
     template_name = 'decort_shop/index.html'
 
 
-class ProductView(BrandsCarsOffers, ListView):
-    model = Product
-    queryset = Product.objects.all()
-    context_object_name = 'product_list'
-    paginate_by = 30
-    template_name = 'decort_shop/product/product_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['catalogcategories'] = CatalogCategory.objects.all()
-        return context
+# class ProductView(BrandsCarsOffers, ListView):
+#     model = Product
+#     queryset = Product.objects.all()
+#     context_object_name = 'product_list'
+#     paginate_by = 30
+#     template_name = 'decort_shop/product/product_list.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['catalogcategories'] = CatalogCategory.objects.all()
+#         return context
 
     # def catalog_product_list(request, category_slug=None):
     #     category = None
@@ -81,7 +81,7 @@ class CatalogCategoryView(BrandsCarsOffers, ListView):
     template_name = 'decort_shop/product/catalog_category_list.html'
 
 
-class CatalogCategoryDetailView(BrandsCarsOffers, DetailView):
+class CatalogCategoryDetailView(BrandsCarsOffers, ListView):
     model = CatalogCategory
     slug_field = 'url'
     context_object_name = 'catalog_product_detail'
@@ -91,14 +91,9 @@ class CatalogCategoryDetailView(BrandsCarsOffers, DetailView):
     def get_queryset(self, **kwargs):
         return CatalogCategory.objects.filter(id=kwargs.get('category_id'))
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['products'] = Product.objects.filter(category_id=category)
-    #     return context
-
     def get_context_data(self, **kwargs):
         context = super(CatalogCategoryDetailView, self).get_context_data(**kwargs)
-        context['products'] = Product.objects.get(category_id_id=self.kwargs['category_id'])
+        context['products'] = Product.objects.filter(category_id_id=kwargs.get('category_id'))
         return context
 
 
