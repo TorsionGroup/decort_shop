@@ -230,7 +230,7 @@ class Product(models.Model):
     offer_id = models.ForeignKey(
         Offer, on_delete=models.SET_NULL, blank=True, null=True)
     category_id = models.ForeignKey(
-        CatalogCategory, on_delete=models.SET_NULL, blank=True, null=True)
+        CatalogCategory, on_delete=models.SET_NULL, blank=True, null=True, related_name='category_id')
     source_id = models.CharField(max_length=300, null=True, blank=True)
     search_key = models.CharField(max_length=250, null=True, blank=True)
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0, null=True)
