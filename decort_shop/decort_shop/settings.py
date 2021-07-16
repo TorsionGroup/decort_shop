@@ -126,14 +126,14 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     },
-    'tecdoc': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'td3q2017',
-        'USER': 'torsion_prog',
-        'PASSWORD': 'sdr%7ujK',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    # 'tecdoc': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'td3q2017',
+    #     'USER': 'torsion_prog',
+    #     'PASSWORD': 'sdr%7ujK',
+    #     'HOST': 'localhost',
+    #     'PORT': '5433',
+    # }
 }
 
 AUTHENTICATION_BACKENDS = (
