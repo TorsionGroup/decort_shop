@@ -384,6 +384,7 @@ class LoadDataShop:
                 brand = b.brand,
                 offer = b.offer,
                 code = b.code,
+                source_type = '1C',
                 name_ru = b.name_ru,
                 name_uk = b.name_uk,
                 name_en = b.name_en,
