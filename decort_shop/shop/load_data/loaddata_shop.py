@@ -361,10 +361,21 @@ class LoadDataShop:
                           columns=(
                               'source_id', 'category', 'brand', 'offer', 'code', 'name_ru', 'name_uk', 'name_en',
                               'comment_ru', 'comment_uk', 'comment_en', 'article', 'specification', 'abc',
-                              'price_category',
-                              'advanced_description', 'keywords_ru', 'keywords_uk', 'keywords_en', 'manufacturer_name',
-                              'model_name', 'weight', 'pack_qty', 'product_type', 'create_date', 'income_date'),
+                              'price_category', 'advanced_description', 'keywords_ru', 'keywords_uk', 'keywords_en',
+                              'manufacturer_name', 'model_name', 'weight', 'pack_qty', 'product_type',
+                              'create_date', 'income_date'),
                           sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shop_product (source_id, code)
+        SELECT source_id, code FROM shop_product_buffer
+        WHERE source_id NOT IN(SELECT source_id FROM shop_product WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shop_product
+        WHERE source_id NOT IN (SELECT source_id FROM shop_product_buffer);'''
+        cur.execute(del_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_product p
