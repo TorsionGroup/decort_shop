@@ -429,8 +429,7 @@ class LoadDataShop:
             SET parent_category_id_id = c.id
             FROM shop_catalogcategory c
             WHERE c.id IN (SELECT parent_id FROM shop_catalogcategory с
-            INNER JOIN shop_product p
-            ON p.category_id_id = c.id);'''
+            WHERE c.parent_source = c.source_id);'''
         cur.execute(copy_sql)
         self.conn.commit()
 
