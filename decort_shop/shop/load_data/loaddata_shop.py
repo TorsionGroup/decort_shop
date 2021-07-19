@@ -428,7 +428,8 @@ class LoadDataShop:
         copy_sql = '''UPDATE shop_product p
             SET parent_category_id_id = c.id
             FROM shop_catalogcategory c
-            WHERE c.id IN (SELECT parent_id FROM shop_catalogcategory WHERE parent_id IS NOT NULL);'''
+            WHERE c.id IN (SELECT parent_id FROM shop_catalogcategory 
+            WHERE p.category = c.source_id);'''
         cur.execute(copy_sql)
         self.conn.commit()
 
