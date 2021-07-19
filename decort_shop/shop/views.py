@@ -81,20 +81,20 @@ class CatalogCategoryView(BrandsCarsOffers, ListView):
     template_name = 'decort_shop/product/catalog_category_list.html'
 
 
-class CatalogCategoryDetailView(BrandsCarsOffers, ListView):
-    model = CatalogCategory
-    slug_field = 'url'
-    context_object_name = 'catalog_product_detail'
-    paginate_by = 30
-    template_name = 'decort_shop/product/product_list.html'
-
-    def get_queryset(self, **kwargs):
-        return CatalogCategory.objects.filter(id=kwargs.get('category_id'))
-
-    def get_context_data(self, **kwargs):
-        context = super(CatalogCategoryDetailView, self).get_context_data(**kwargs)
-        context['products'] = Product.objects.select_related('category_id')
-        return context
+# class CatalogCategoryDetailView(BrandsCarsOffers, ListView):
+#     model = CatalogCategory
+#     slug_field = 'url'
+#     context_object_name = 'catalog_product_detail'
+#     paginate_by = 30
+#     template_name = 'decort_shop/product/product_list.html'
+#
+#     def get_queryset(self, **kwargs):
+#         return CatalogCategory.objects.filter(id=kwargs.get('category_id'))
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(CatalogCategoryDetailView, self).get_context_data(**kwargs)
+#         context['products'] = Product.objects.select_related('category_id')
+#         return context
 
 
 class NewsView(ListView):
