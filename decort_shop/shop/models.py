@@ -226,11 +226,14 @@ class Offer(models.Model):
 class Product(models.Model):
     specification = models.CharField(max_length=250, null=True)
     article = models.CharField(max_length=250, null=True)
-    brand_id = models.ForeignKey(Brand, on_delete=models.SET_NULL, blank=True, null=True)
+    brand_id = models.ForeignKey(Brand, on_delete=models.SET_NULL, blank=True, null=True,
+                                 related_name='product_brand_id')
     offer_id = models.ForeignKey(
-        Offer, on_delete=models.SET_NULL, blank=True, null=True)
+        Offer, on_delete=models.SET_NULL, blank=True, null=True, related_name='product_offer_id')
     category_id = models.ForeignKey(
-        CatalogCategory, on_delete=models.SET_NULL, blank=True, null=True, related_name='category_id')
+        CatalogCategory, on_delete=models.SET_NULL, blank=True, null=True, related_name='product_category_id')
+    parent_category_id = models.ForeignKey(
+        CatalogCategory, on_delete=models.SET_NULL, blank=True, null=True, related_name='product_parent_category_id')
     source_id = models.CharField(max_length=300, null=True, blank=True)
     search_key = models.CharField(max_length=250, null=True, blank=True)
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0, null=True)
@@ -241,7 +244,8 @@ class Product(models.Model):
     is_exists = models.BooleanField(default=0, null=True)
     code = models.CharField(max_length=250, null=True, blank=True)
     source_type = models.CharField(max_length=250, default='1C', null=True)
-    price_category_id = models.ForeignKey(PriceCategory, on_delete=models.SET_NULL, blank=True, null=True)
+    price_category_id = models.ForeignKey(PriceCategory, on_delete=models.SET_NULL, blank=True, null=True,
+                                          related_name='product_price_category_id')
     product_type = models.IntegerField(null=True, blank=True)
     delete_flag = models.BooleanField(default=0, null=True)
     advanced_description = models.TextField("Advanced description", null=True, blank=True)
@@ -429,4 +433,3 @@ class ReviewProduct(models.Model):
     class Meta:
         verbose_name = "ReviewProduct"
         verbose_name_plural = "ReviewProducts"
-
