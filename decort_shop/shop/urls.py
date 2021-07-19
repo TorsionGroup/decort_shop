@@ -14,7 +14,6 @@ urlpatterns = [
     path('contacts/', views.ContactsView.as_view(), name='contacts'),
     path('catalog/', views.CatalogCategoryView.as_view(), name='catalog_category_list'),
     path('catalog/<slug:category_slug>/', views.catalog_product_list, name='catalog_product_detail'),
-    path('product/', views.catalog_product_list, name='product_list'),
     path('product/<int:id>/', views.product_detail, name='product_detail'),
     path('product/search/', views.product_search, name='product_search'),
     path('product/compare/', views.compare, name='compare'),
