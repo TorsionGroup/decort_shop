@@ -45,33 +45,33 @@ class IndexView(BrandsCarsOffers, ListView):
 #         context['catalogcategories'] = CatalogCategory.objects.all()
 #         return context
 
-    # def catalog_product_list(request, category_slug=None):
-    #     category = None
-    #     categories = CatalogCategory.objects.all()
-    #     products = Product.objects.all()
-    #     paginator = Paginator(products, 30)
-    #     page_number = request.GET.get('page')
-    #     page_obj = paginator.get_page(page_number)
-    #     if category_slug
-    #         category = get_object_or_404(CatalogCategory, url=category_slug)
-    #         products = products.filter(category_id=category)
-    #     context = {
-    #         'page_obj': page_obj, 'category': category, 'categories': categories, 'products': products
-    #     }
-    #     return render(request, 'decort_shop/product/product_list.html', context)
+def catalog_product_list(request, category_slug=None):
+    category = None
+    categories = CatalogCategory.objects.all()
+    products = Product.objects.all()
+    paginator = Paginator(products, 30)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    if category_slug:
+        category = get_object_or_404(CatalogCategory, url=category_slug)
+        products = products.filter(category_id=category)
+    context = {
+        'page_obj': page_obj, 'category': category, 'categories': categories, 'products': products
+    }
+    return render(request, 'decort_shop/product/product_list.html', context)
 
 
-class ProductDetailView(BrandsCarsOffers, DetailView):
-    model = Product
-    pk_url_kwarg = 'id'
-    context_object_name = 'product_detail'
-    template_name = 'decort_shop/product/product_detail.html'
+# class ProductDetailView(BrandsCarsOffers, DetailView):
+#     model = Product
+#     pk_url_kwarg = 'id'
+#     context_object_name = 'product_detail'
+#     template_name = 'decort_shop/product/product_detail.html'
 
-    # def product_detail(request, id):
-    #     product = get_object_or_404(Product, id=id)
-    #     cart_product_form = CartAddProductForm()
-    #     context = {'product': product, 'cart_product_form': cart_product_form}
-    #     return render(request, 'decort_shop/product/product_detail.html', context)
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+    cart_product_form = CartAddProductForm()
+    context = {'product': product, 'cart_product_form': cart_product_form}
+    return render(request, 'decort_shop/product/product_detail.html', context)
 
 
 class CatalogCategoryView(BrandsCarsOffers, ListView):
