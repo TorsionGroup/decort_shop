@@ -21,8 +21,9 @@
 <p>There are no results for your query.</p>
 {% endfor %}
 <p><a href="{% url 'product_search' %}">Search again</a></p>
+
 {% else %}
-<h1>Search for posts</h1>
+<h1>Search for Auto Parts</h1>
 <form action="." method="get">
     {{ form.as_p }}
     <input type="submit" value="Search">

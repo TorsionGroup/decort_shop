@@ -26,16 +26,19 @@
                             <ul>{% if request.user.is_authenticated %}
                                 {% get_currency as currency_list %}
                                 {% for currencies in currency_list %}
-                                <li><a href="javascript:void(0)">{% trans 'Currency' %} <i class="fa fa-chevron-down"></i></a>
+                                <li><a href="javascript:void(0)">{% trans 'Currency' %} <i
+                                        class="fa fa-chevron-down"></i></a>
                                     <ul class="ht-dropdown ht-currency">
                                         <li class="active"><a href="#">$ {{ currencies.rate }}</a></li>
                                     </ul>
                                 </li>
                                 {% endfor %}
-                                <li><a href="javascript:void(0)">{% trans 'Language' %} <i class="fa fa-chevron-down"></i></a>
+                                <li><a href="javascript:void(0)">{% trans 'Language' %} <i
+                                        class="fa fa-chevron-down"></i></a>
                                     <form action="{% url 'set_language' %}" method="post">
                                         {% csrf_token %}
-                                        <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}" />
+                                        <input name="next" type="hidden"
+                                               value="{{ request.get_full_path|slice:'3:' }}"/>
                                         <ul class="ht-dropdown">
                                             {% get_current_language as LANGUAGE_CODE %}
                                             {% get_available_languages as LANGUAGES %}
@@ -43,9 +46,9 @@
                                             {% for language in languages %}
                                             <li class="active">
                                                 <button type="submit" name="language"
-                                                   value="{{ language.code }}"
-                                                   class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}">
-                                                   {{ language.name_local }}
+                                                        value="{{ language.code }}"
+                                                        class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}">
+                                                    {{ language.name_local }}
                                                 </button>
                                             </li>
                                             {% endfor %}
@@ -60,10 +63,12 @@
                                     </ul>
                                 </li>
                                 {% else %}
-                                <li><a href="javascript:void(0)">{% trans 'Language' %} <i class="fa fa-chevron-down"></i></a>
+                                <li><a href="javascript:void(0)">{% trans 'Language' %} <i
+                                        class="fa fa-chevron-down"></i></a>
                                     <form action="{% url 'set_language' %}" method="post">
                                         {% csrf_token %}
-                                        <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}" />
+                                        <input name="next" type="hidden"
+                                               value="{{ request.get_full_path|slice:'3:' }}"/>
                                         <ul class="ht-dropdown">
                                             {% get_current_language as LANGUAGE_CODE %}
                                             {% get_available_languages as LANGUAGES %}
@@ -71,18 +76,20 @@
                                             {% for language in languages %}
                                             <li class="active">
                                                 <button type="submit" name="language"
-                                                   value="{{ language.code }}"
-                                                   class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}">
-                                                   {{ language.name_local }}
+                                                        value="{{ language.code }}"
+                                                        class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}">
+                                                    {{ language.name_local }}
                                                 </button>
                                             </li>
                                             {% endfor %}
                                         </ul>
                                     </form>
                                 </li>
-                                <li><a href="{% url 'dashboard' %}">{% trans 'Login to B2B' %} <i class="fa fa-chevron-down"></i></a>
+                                <li><a href="{% url 'dashboard' %}">{% trans 'Login to B2B' %} <i
+                                        class="fa fa-chevron-down"></i></a>
                                     <ul class="ht-dropdown ht-my_account">
-                                        <li class="active"><a href="{% url 'login' %}">{% trans 'Login to B2B' %}</a></li>
+                                        <li class="active"><a href="{% url 'login' %}">{% trans 'Login to B2B' %}</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 {% endif %}
@@ -175,13 +182,15 @@
                                 {% get_catalogcategories as catalog_category_list %}
                                 {% recursetree catalog_category_list %}
                                 <li class="right-menu">
-                                    <a href="{% url 'catalog_product_detail' node.url %}">{{ node.name }}</a>
+                                    <a>{{ node.name }}</a>
                                     {% if not node.is_leaf_node %}
+                                    {% for child in node.children.all %}
                                     <ul class="cat-dropdown">
                                         <li>
-                                            {{ children }}
+                                            <a href="{% url 'catalog_product_detail' child.url %}">{{ child.name }}</a>
                                         </li>
                                     </ul>
+                                    {% endfor %}
                                     {% endif %}
                                 </li>
                                 {% endrecursetree %}
@@ -192,15 +201,19 @@
 
                 <div class="custom-search_col col-12">
                     <div class="hm-form_area">
-                        <form action="#" class="hm-searchbox">
+
+                        <form action="." class="hm-searchbox" method="get">
                             <select class="nice-select select-search-category">
                                 <option value="0">All Categories</option>
-
                             </select>
+
                             <input type="text" placeholder="Enter your search key ...">
+
                             <button class="header-search_btn" type="submit">
-                                <i class="ion-ios-search-strong"><span>{% trans 'Search' %}</span></i></button>
+                                <i class="ion-ios-search-strong"><span>{% trans 'Search' %}</span></i>
+                            </button>
                         </form>
+
                     </div>
                 </div>
 
@@ -277,7 +290,8 @@
                    class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">{% trans 'Cart' %}</a>
             </div>
             <div class="minicart-btn_area">
-                <a href="{% url 'orders:order_create' %}" class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">{% trans 'Checkout' %}</a>
+                <a href="{% url 'orders:order_create' %}" class="torsion-btn torsion-btn_dark torsion-btn_fullwidth">{%
+                    trans 'Checkout' %}</a>
             </div>
         </div>
     </div>

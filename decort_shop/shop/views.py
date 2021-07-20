@@ -45,16 +45,13 @@ class IndexView(BrandsCarsOffers, ListView):
 #         context['catalogcategories'] = CatalogCategory.objects.all()
 #         return context
 
-def catalog_product_list(request, category_slug=None):
-    category = None
+def catalog_product_list(request, category_slug):
     categories = CatalogCategory.objects.all()
-    products = Product.objects.all()
+    category = get_object_or_404(CatalogCategory, url=category_slug)
+    products = Product.objects.filter(category_id=category)
     paginator = Paginator(products, 30)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    if category_slug:
-        category = get_object_or_404(CatalogCategory, url=category_slug)
-        products = products.filter(category_id=category)
     context = {
         'page_obj': page_obj, 'category': category, 'categories': categories, 'products': products
     }
