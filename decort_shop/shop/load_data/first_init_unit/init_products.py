@@ -52,7 +52,7 @@ print('Load Applicability')
 
 with open('../cache/cross.csv', 'r', encoding='utf-8') as file:
     cur.copy_from(file, 'products_cross',
-                  columns=('product', 'brand', 'article_nr'), sep='|')
+                  columns=('product', 'brand', 'article_nr', 'search_nr'), sep='|')
 conn.commit()
 print('Load Cross')
 
