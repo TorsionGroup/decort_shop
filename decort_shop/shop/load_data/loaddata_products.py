@@ -271,19 +271,21 @@ class LoadDataProducts:
         t_sql = '''CREATE TEMP TABLE products_cross_buffer (
             product character varying(300),
             brand character varying(300),                
-            article_nr character varying(300) );'''
+            article_nr character varying(300),
+            search_nr character varying(300) );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/cross.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'products_cross_buffer',
-                          columns=('product', 'brand', 'article_nr'), sep='|')
+                          columns=('product', 'brand', 'article_nr', 'search_nr'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE products_cross p
             SET
                 brand = b.brand,
-                article_nr = b.article_nr                       
+                article_nr = b.article_nr, 
+                search_nr = b.search_nr                       
             FROM products_cross_buffer b
             WHERE p.product = b.product;'''
         cur.execute(copy_sql)
