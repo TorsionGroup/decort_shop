@@ -18,13 +18,17 @@
                         <a class="nav-link nav-link-collapse active"
                            data-toggle="collapse" data-target="#collapseSubItems{{ node.id }}"
                            aria-controls="collapseSubItems{{ node.id }}" aria-expanded="false"
-                           href="{% url 'catalog_product_detail' node.url %}">{{ node.name }}</a>
+                           href="{% url 'catalog_product_detail' node.url %}">
+                            {{ node.name }}
+                        </a>
                         {% if not node.is_leaf_node %}
                         {% for child in node.children.all %}
                         <ul class="module-sub-list_item nav-second-level collapse"
                             id="collapseSubItems{{ node.id }}">
                             <li>
-                                <a href="{% url 'catalog_product_detail' child.url %}">{{ child.name }}</a>
+                                <a href="{% url 'catalog_product_detail' child.url %}">
+                                    {{ child.name }}
+                                </a>
                             </li>
                         </ul>
                         {% endfor %}
