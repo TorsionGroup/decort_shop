@@ -223,6 +223,13 @@ class LoadDataProducts:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    def load_product_images(self):
+        deficit = self.client.service.GetData('product_images')
+        data = base64.b64decode(deficit)
+        file = open('cache/product_images.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
 
 class LoadDataOrders:
     def __init__(self):
@@ -447,6 +454,7 @@ LoadDataProducts.load_prices()
 LoadDataProducts.load_stocks()
 LoadDataProducts.load_deficit()
 LoadDataProducts.load_product_manufacturer_model()
+LoadDataProducts.load_product_images()
 print('Load Data Products')
 
 LoadDataOrders = LoadDataOrders()
