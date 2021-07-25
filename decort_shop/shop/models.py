@@ -273,10 +273,12 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    name = models.CharField(max_length=250, default='ProductImage')
+    name = models.CharField(max_length=250, default='ProductImage', null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     product_id = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(upload_to="product/product_image/", null=True, blank=True)
+    source_url = models.CharField(max_length=300, null=True, blank=True)
+    image_url = models.URLField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)
