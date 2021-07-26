@@ -45,8 +45,9 @@ class Manager(models.Model):
     phone = models.CharField(max_length=250, blank=True, null=True)
     skype = models.CharField(max_length=250, blank=True, null=True)
     comment = models.CharField(max_length=500, blank=True, null=True)
-    source_id = models.CharField(max_length=300, blank=True)
+    source_id = models.CharField(max_length=300, blank=True, null=True)
     is_active = models.BooleanField(default=0, blank=True, null=True)
+    source_customer = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.inner_name
