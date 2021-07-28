@@ -45,6 +45,17 @@ class LoadDataDropshipping:
                           columns=('agreement', 'order_order', 'credit', 'debit', 'balance'), sep='|')
         self.conn.commit()
 
+        ins_sql='''INSERT INTO dropshipping_dropshippingwallet (agreement, order_order)
+                    SELECT agreement, order_order FROM dropshipping_dropshippingwallet_buffer
+                    WHERE order_order NOT IN (SELECT order_order FROM dropshipping_dropshippingwallet WHERE order_order IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM dropshipping_dropshippingwallet
+                        WHERE order_order NOT IN (SELECT order_order FROM dropshipping_dropshippingwallet_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE dropshipping_dropshippingwallet d
                 SET
                     agreement = b.agreement,
@@ -69,7 +80,6 @@ class LoadDataDropshipping:
             WHERE d.order_order = o.order_source;'''
         cur.execute(upd_sql)
         self.conn.commit()
-
 
 LoadDataDropshipping = LoadDataDropshipping()
 LoadDataDropshipping.load_dropshipping_wallet()
