@@ -88,6 +88,17 @@ class LoadDataCustomers:
                           columns=('customer', 'source_id', 'name', 'add'), sep='|')
         self.conn.commit()
 
+        ins_sql = '''INSERT INTO customers_customerpoint (customer, source_id, name)
+                 SELECT customer, source_id, name FROM customers_customerpoint_buffer
+                 WHERE source_id NOT IN (SELECT source_id FROM customers_customerpoint WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM customers_customerpoint
+                 WHERE source_id NOT IN (SELECT source_id FROM customers_customerpoint_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE customers_customerpoint c
             SET 
                 customer = b.customer,              

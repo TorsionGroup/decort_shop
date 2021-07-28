@@ -44,6 +44,17 @@ class LoadDataShop:
                                                                 'phone', 'is_active'), sep='|')
         self.conn.commit()
 
+        ins_sql = '''INSERT INTO shop_manager (source_id, inner_name)
+        SELECT source_id, inner_name FROM shop_manager_buffer
+        WHERE source_id NOT IN (SELECT source_id FROM shop_manager WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shop_manager
+        WHERE source_id NOT IN (SELECT source_id FROM shop_manager_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE shop_manager m
             SET                 
                 inner_name  = b.inner_name,
@@ -80,6 +91,12 @@ class LoadDataShop:
             cur.copy_from(file, 'shop_customer_buffer', columns=(
                 'source_id', 'main_customer_id', 'manager_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
                           sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shop_customer (source_id, name)
+                SELECT source_id, name FROM shop_customer_buffer
+                WHERE source_id NOT IN (SELECT source_id FROM shop_customer WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_customer c
@@ -132,6 +149,17 @@ class LoadDataShop:
                           sep='|')
         self.conn.commit()
 
+        ins_sql = '''INSERT INTO shop_currency (source_id, name)
+        SELECT source_id, name FROM shop_currency_buffer
+        WHERE source_id NOT IN (SELECT source_id FROM shop_currency WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shop_currency
+        WHERE source_id NOT IN (SELECT source_id FROM shop_currency_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE shop_currency c
             SET
                code  = b.code,
@@ -161,6 +189,17 @@ class LoadDataShop:
 
         with open('cache/price_types.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_pricetype_buffer', columns=('source_id', 'name'), sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shop_pricetype (source_id, name)
+                SELECT source_id, name FROM shop_pricetype_buffer
+                WHERE source_id NOT IN (SELECT source_id FROM shop_pricetype WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shop_pricetype
+                WHERE source_id NOT IN (SELECT source_id FROM shop_pricetype_buffer);'''
+        cur.execute(del_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_pricetype p
@@ -193,6 +232,17 @@ class LoadDataShop:
                           sep='|')
         self.conn.commit()
 
+        ins_sql = '''INSERT INTO shop_brand (source_id, name)
+                SELECT source_id, name FROM shop_brand_buffer
+                WHERE source_id NOT IN (SELECT source_id FROM shop_brand WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shop_brand
+                WHERE source_id NOT IN (SELECT source_id FROM shop_brand_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE shop_brand s
             SET               
                 name  = b.name,
@@ -220,6 +270,17 @@ class LoadDataShop:
 
         with open('cache/price_categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_pricecategory_buffer', columns=('source_id', 'inner_name'), sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shop_pricecategory (source_id, inner_name)
+                        SELECT source_id, inner_name FROM shop_pricecategory_buffer
+                        WHERE source_id NOT IN (SELECT source_id FROM shop_pricecategory WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shop_pricecategory
+                        WHERE source_id NOT IN (SELECT source_id FROM shop_pricecategory_buffer);'''
+        cur.execute(del_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_pricecategory p
@@ -307,6 +368,17 @@ class LoadDataShop:
                           columns=('source_id', 'name', 'group_name', 'title'), sep='|')
         self.conn.commit()
 
+        ins_sql = '''INSERT INTO shop_offer (source_id, name)
+                        SELECT source_id, name FROM shop_offer_buffer
+                        WHERE source_id NOT IN (SELECT source_id FROM shop_offer WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shop_offer
+                        WHERE source_id NOT IN (SELECT source_id FROM shop_offer_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE shop_offer o
             SET               
                 name = b.name,
@@ -369,7 +441,7 @@ class LoadDataShop:
 
         ins_sql = '''INSERT INTO shop_product (source_id, code)
         SELECT source_id, code FROM shop_product_buffer
-        WHERE source_id NOT IN(SELECT source_id FROM shop_product WHERE source_id IS NOT NULL);'''
+        WHERE source_id NOT IN (SELECT source_id FROM shop_product WHERE source_id IS NOT NULL);'''
         cur.execute(ins_sql)
         self.conn.commit()
 

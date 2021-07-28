@@ -88,7 +88,7 @@ class CustomerDiscount(models.Model):
 
 class CustomerPoint(models.Model):
     customer_id = models.ForeignKey(
-        Customer, on_delete=models.SET_NULL, null=True, blank=True, related_name="point_customer")
+        Customer, on_delete=models.CASCADE, null=True, blank=True, related_name="point_customer")
     name = models.CharField(max_length=500)
     source_id = models.CharField(max_length=300, null=True, blank=True)
     add = models.CharField(max_length=500, null=True, blank=True)
