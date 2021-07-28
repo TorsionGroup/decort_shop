@@ -46,6 +46,17 @@ class LoadDataCustomers:
                           columns=('source', 'source_customer', 'name', 'email', 'phone', 'is_user', 'birthday'), sep='|')
         self.conn.commit()
 
+        ins_sql = '''INSERT INTO customers_customercontact (source, source_customer, name)
+                 SELECT source, source_customer, name FROM customers_customercontact_buffer
+                 WHERE source NOT IN (SELECT source FROM customers_customercontact WHERE source IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM customers_customercontact
+                 WHERE source NOT IN (SELECT source FROM customers_customercontact_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE customers_customercontact c
             SET 
                 source_customer = b.source_customer,              
@@ -145,6 +156,17 @@ class LoadDataCustomers:
                                    'code', 'name', 'number', 'discount', 'is_status', 'is_active'), sep='|')
         self.conn.commit()
 
+        ins_sql = '''INSERT INTO customers_customeragreement (source_id, customer, name)
+                         SELECT source_id, customer, name FROM customers_customeragreement_buffer
+                         WHERE source_id NOT IN (SELECT source_id FROM customers_customeragreement WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM customers_customeragreement
+                         WHERE source_id NOT IN (SELECT source_id FROM customers_customeragreement_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE customers_customeragreement c
             SET
                 customer = b.customer,
@@ -205,6 +227,17 @@ class LoadDataCustomers:
                           columns=('customer', 'agreement', 'currency', 'balance', 'past_due'), sep='|')
         self.conn.commit()
 
+        ins_sql = '''INSERT INTO customers_balance (customer, agreement)
+                        SELECT customer, agreement FROM customers_balance_buffer
+                        WHERE customer NOT IN (SELECT customer FROM customers_balance WHERE customer IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM customers_balance
+                        WHERE customer NOT IN (SELECT customer FROM customers_balance_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
         copy_sql = '''UPDATE customers_balance c
             SET
                 agreement = b.agreement,
@@ -261,6 +294,17 @@ class LoadDataCustomers:
             cur.copy_from(file, 'customers_customerdiscount_buffer',
                           columns=('source_id', 'brand', 'customer', 'agreement',
                                    'price_type', 'criteria_type', 'discount'), sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO customers_customerdiscount (source_id, customer)
+                        SELECT source_id, customer FROM customers_customerdiscount_buffer
+                        WHERE source_id NOT IN (SELECT source_id FROM customers_balance WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM customers_customerdiscount
+                        WHERE source_id NOT IN (SELECT source_id FROM customers_customerdiscount_buffer);'''
+        cur.execute(del_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE customers_customerdiscount c

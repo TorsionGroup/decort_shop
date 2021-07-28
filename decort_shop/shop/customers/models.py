@@ -13,7 +13,7 @@ class CustomerAgreement(models.Model):
         Currency, on_delete=models.CASCADE, related_name="agreement_currency", null=True, blank=True)
     price_type_id = models.ForeignKey(
         PriceType, on_delete=models.CASCADE, related_name="agreement_price_type", null=True, blank=True)
-    is_status = models.BooleanField()
+    is_status = models.BooleanField(default=1, null=True)
     discount = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
     is_active = models.BooleanField(default=1, null=True)
     source_id = models.CharField(max_length=300, null=True, blank=True)
