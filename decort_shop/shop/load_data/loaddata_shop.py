@@ -32,7 +32,6 @@ class LoadDataShop:
 
         t_sql = '''CREATE TEMP TABLE shop_manager_buffer (
             source_id character varying(300),
-            source_customer character varying(300),
             inner_name character varying(250),
             email character varying(250),
             phone character varying(250),
@@ -41,13 +40,12 @@ class LoadDataShop:
         self.conn.commit()
 
         with open('cache/managers.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_manager_buffer', columns=('source_id', 'source_customer', 'inner_name', 'email', 'phone',
-                                                                'is_active'), sep='|')
+            cur.copy_from(file, 'shop_manager_buffer', columns=('source_id', 'inner_name', 'email',
+                                                                'phone', 'is_active'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_manager m
-            SET 
-                source_customer  = b.source_customer,              
+            SET                 
                 inner_name  = b.inner_name,
                 email  = b.email,
                 phone  = b.phone,
