@@ -210,6 +210,47 @@ class LoadDataShop:
         cur.execute(copy_sql)
         self.conn.commit()
 
+    def load_manufacturer_brand(self):
+        brands = self.client.service.GetData('manufacturer_brand')
+        data = base64.b64decode(brands)
+        file = open('cache/manufacturer_brand.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE shop_manufacturerbrand_buffer (
+            source_id character varying(300),
+            name character varying(300),
+            manufacturer_id character varying(300) );'''
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/manufacturer_brand.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'shop_manufacturerbrand_buffer', columns=('source_id', 'name', 'manufacturer_id'),
+                          sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shop_manufacturerbrand (source_id, name)
+                SELECT source_id, name FROM shop_manufacturerbrand_buffer
+                WHERE source_id NOT IN (SELECT source_id FROM shop_manufacturerbrand WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shop_manufacturerbrand
+                WHERE source_id NOT IN (SELECT source_id FROM shop_manufacturerbrand_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_manufacturerbrand s
+            SET               
+                name  = b.name,
+                manufacturer_id = b.manufacturer_id              
+            FROM shop_manufacturerbrand_buffer b
+            WHERE s.source_id = b.source_id;'''
+        cur.execute(copy_sql)
+        self.conn.commit()
+
     def load_brands(self):
         brands = self.client.service.GetData('brands')
         data = base64.b64decode(brands)
@@ -221,6 +262,7 @@ class LoadDataShop:
 
         t_sql = '''CREATE TEMP TABLE shop_brand_buffer (
             source_id character varying(300),
+            manufacturer_brand_source character varying(300),
             name character varying(250),
             supplier_id character varying(300),
             is_recommended boolean );'''
@@ -228,8 +270,8 @@ class LoadDataShop:
         self.conn.commit()
 
         with open('cache/brands.csv', 'r', encoding='utf-8') as file:
-            cur.copy_from(file, 'shop_brand_buffer', columns=('source_id', 'name', 'supplier_id', 'is_recommended'),
-                          sep='|')
+            cur.copy_from(file, 'shop_brand_buffer', columns=('source_id', 'manufacturer_brand_source', 'name',
+                                                              'supplier_id', 'is_recommended'), sep='|')
         self.conn.commit()
 
         ins_sql = '''INSERT INTO shop_brand (source_id, name)
@@ -246,10 +288,18 @@ class LoadDataShop:
         copy_sql = '''UPDATE shop_brand s
             SET               
                 name  = b.name,
+                manufacturer_brand_source = b.manufacturer_brand_source,
                 supplier_id  = b.supplier_id,
                 is_recommended  = b.is_recommended               
             FROM shop_brand_buffer b
             WHERE s.source_id = b.source_id;'''
+        cur.execute(copy_sql)
+        self.conn.commit()
+
+        copy_sql = '''UPDATE shop_brand b
+                    SET manufacturer_brand_id = m.id
+                    FROM shop_manufacturerbrand m
+                    WHERE b.manufacturer_brand_source = m.source_id;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
@@ -318,8 +368,8 @@ class LoadDataShop:
         with open('cache/categories.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_catalogcategory_buffer',
                           columns=(
-                          'source_id', 'parent_source', 'name_ru', 'name_uk', 'name_en', 'url', 'enabled', 'level',
-                          'lft', 'rght', 'tree_id'), sep='|')
+                              'source_id', 'parent_source', 'name_ru', 'name_uk', 'name_en', 'url', 'enabled', 'level',
+                              'lft', 'rght', 'tree_id'), sep='|')
         self.conn.commit()
 
         copy_sql = '''UPDATE shop_catalogcategory p
@@ -513,10 +563,11 @@ class LoadDataShop:
 
 
 LoadDataShop = LoadDataShop()
-LoadDataShop.load_currencies()
+# LoadDataShop.load_currencies()
 LoadDataShop.load_price_types()
 LoadDataShop.load_managers()
 LoadDataShop.load_customers()
+LoadDataShop.load_manufacturer_brand()
 LoadDataShop.load_brands()
 LoadDataShop.load_price_categories()
 LoadDataShop.load_categories()

@@ -139,6 +139,13 @@ class LoadDataProducts:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    def load_manufacturer_brand(self):
+        brands = self.client.service.GetData('manufacturer_brand')
+        data = base64.b64decode(brands)
+        file = open('cache/manufacturer_brand.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
     def load_products(self):
         products = self.client.service.GetData('products')
         data = base64.b64decode(products)
@@ -442,6 +449,7 @@ print('Load Data Customers')
 
 LoadDataProducts = LoadDataProducts()
 LoadDataProducts.load_brands()
+LoadDataProducts.load_manufacturer_brand()
 LoadDataProducts.load_products()
 LoadDataProducts.load_cross()
 LoadDataProducts.load_description()

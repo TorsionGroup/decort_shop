@@ -148,6 +148,19 @@ class Account(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
+class ManufacturerBrand(models.Model):
+    name = models.CharField(max_length=300)
+    source_id = models.CharField(max_length=300, null=True, blank=True)
+    manufacturer_id = models.CharField(max_length=300, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "ManufacturerBrand"
+        verbose_name_plural = "ManufacturerBrands"
+
+
 class Brand(models.Model):
     name = models.CharField(max_length=300)
     enabled = models.BooleanField(default=1, null=True, blank=True)
@@ -161,6 +174,8 @@ class Brand(models.Model):
     kind = models.CharField(max_length=250, default='secondary', null=True, blank=True)
     brand_image = models.ImageField(upload_to="content/brand_image/", blank=True, null=True)
     supplier_id = models.CharField(max_length=300, null=True, blank=True)
+    manufacturer_brand = models.ForeignKey(ManufacturerBrand, on_delete=models.SET_NULL, blank=True, null=True)
+    manufacturer_brand_source = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
