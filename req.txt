@@ -1,4 +1,4 @@
-amqp==5.0.6
+ÿþamqp==5.0.6
 appdirs==1.4.4
 asgiref==3.4.1
 attrs==21.2.0
@@ -65,4 +65,4 @@ urllib3==1.26.6
 vine==5.0.0
 Wand==0.6.6
 wcwidth==0.2.5
-zeep==4.0.0
+zeep==4.0.0ýÿ
