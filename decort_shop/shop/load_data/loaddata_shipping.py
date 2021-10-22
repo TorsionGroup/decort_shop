@@ -58,21 +58,31 @@ class LoadDataShipping:
         cur = self.conn.cursor()
 
         t_sql = '''CREATE TEMP TABLE shipping_novaposhtaregion_buffer (
-            source character varying(300),
-            name character varying(300) );'''
+            name character varying(300),
+            center character varying(300),
+            area_ref character varying(300),
+            center_ref character varying(300) );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/novaposhta_regions.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shipping_novaposhtaregion_buffer',
-                          columns=('source', 'name'), sep='|')
+                          columns=('name', 'center', 'area_ref', 'center_ref'), sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shipping_novaposhtaregion (area_ref)
+                 SELECT area_ref FROM shipping_novaposhtaregion_buffer
+                 WHERE area_ref NOT IN (SELECT area_ref FROM shipping_novaposhtaregion WHERE area_ref IS NOT NULL);'''
+        cur.execute(ins_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shipping_novaposhtaregion r
             SET
-                name = b.name       
+                name = b.name,
+                center = b.center,
+                center_ref = b.center_ref       
             FROM shipping_novaposhtaregion_buffer b
-            WHERE r.source = b.source;'''
+            WHERE r.area_ref = b.area_ref;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
@@ -86,30 +96,43 @@ class LoadDataShipping:
         cur = self.conn.cursor()
 
         t_sql = '''CREATE TEMP TABLE shipping_novaposhtacity_buffer (
-            source character varying(300),
-            source_region character varying(300),
-            name character varying(300) );'''
+            name character varying(300),
+            name_ru character varying(300),
+            region character varying(300),
+            city_ref character varying(300),
+            area_ref character varying(300),
+            city_id character varying(300) );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/novaposhta_cities.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shipping_novaposhtacity_buffer',
-                          columns=('source', 'source_region', 'name'), sep='|')
+                          columns=('name', 'name_ru', 'region', 'city_ref', 'area_ref', 'city_id'), sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shipping_novaposhtacity (city_ref)
+                         SELECT city_ref FROM shipping_novaposhtacity_buffer
+                         WHERE city_ref NOT IN (SELECT city_ref FROM shipping_novaposhtacity WHERE city_ref IS NOT NULL);'''
+        cur.execute(ins_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shipping_novaposhtacity c
             SET
-                source_region = b.source_region,
-                name = b.name       
+                name = b.name,
+                name_ru = b.name_ru,
+                region = b.region,
+                city_ref = b.city_ref,
+                area_ref = b.area_ref,
+                city_id = b.city_id       
             FROM shipping_novaposhtacity_buffer b
-            WHERE c.source = b.source;'''
+            WHERE c.city_ref = b.city_ref;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
         upd_sql = '''UPDATE shipping_novaposhtacity c
-            SET region_id = r.id                               
+            SET region_id_id = r.id                               
             FROM shipping_novaposhtaregion r
-            WHERE c.source_region = r.source;'''
+            WHERE c.area_ref = r.area_ref;'''
         cur.execute(upd_sql)
         self.conn.commit()
 
@@ -123,37 +146,57 @@ class LoadDataShipping:
         cur = self.conn.cursor()
 
         t_sql = '''CREATE TEMP TABLE shipping_novaposhtabranche_buffer (
-            source character varying(300),
-            source_city character varying(300),
             name character varying(300),
+            name_ru character varying(300),
             branche_type character varying(300),
+            city character varying(300),
+            number integer,
             max_weight_place integer,
-            max_weight integer );'''
+            max_weight integer,
+            wh_ref character varying(300),
+            wh_type_ref character varying(300),
+            city_ref character varying(300),
+            latitude character varying(300),
+            longitude character varying(300)      );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/novaposhta_branches.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shipping_novaposhtabranche_buffer',
-                          columns=('source', 'source_city', 'name', 'branche_type', 'max_weight_place', 'max_weight'),
+                          columns=('name', 'name_ru', 'branche_type', 'city', 'number', 'max_weight_place', 'max_weight',
+                                   'wh_ref', 'wh_type_ref', 'city_ref', 'latitude', 'longitude'),
                           sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shipping_novaposhtabranche (wh_ref)
+                        SELECT wh_ref FROM shipping_novaposhtabranche_buffer
+                        WHERE wh_ref NOT IN (SELECT wh_ref FROM shipping_novaposhtabranche WHERE wh_ref IS NOT NULL);'''
+        cur.execute(ins_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shipping_novaposhtabranche c
             SET
-                source_city = b.source_city,
                 name = b.name,
+                name_ru = b.name_ru,
                 branche_type = b.branche_type,
+                city = b.city,
+                number = b.number,
                 max_weight_place = b.max_weight_place,
-                max_weight = b.max_weight       
+                max_weight = b.max_weight,
+                wh_ref = b.wh_ref,
+                wh_type_ref = b.wh_type_ref,
+                city_ref = b.city_ref,
+                latitude = b.latitude,
+                longitude = b.longitude       
             FROM shipping_novaposhtabranche_buffer b
-            WHERE c.source = b.source;'''
+            WHERE c.wh_ref = b.wh_ref;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
         upd_sql = '''UPDATE shipping_novaposhtabranche b
-            SET city_id = c.id                               
+            SET city_id_id = c.id                               
             FROM shipping_novaposhtacity c
-            WHERE b.source_city = c.source;'''
+            WHERE b.city_ref = c.city_ref;'''
         cur.execute(upd_sql)
         self.conn.commit()
 
@@ -167,32 +210,42 @@ class LoadDataShipping:
         cur = self.conn.cursor()
 
         t_sql = '''CREATE TEMP TABLE shipping_novaposhtastreet_buffer (
-            source character varying(300),
-            source_city character varying(300),
             name character varying(300),
-            street_type character varying(300) );'''
+            street_type character varying(300),
+            city character varying(300),
+            street_type_ref character varying(300),
+            street_ref character varying(300),
+            city_ref character varying(300)   );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/novaposhta_streetes.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shipping_novaposhtastreet_buffer',
-                          columns=('source', 'source_city', 'name', 'street_type'), sep='|')
+                          columns=('name', 'street_type', 'city', 'street_type_ref', 'street_ref', 'city_ref'), sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO shipping_novaposhtastreet (street_ref)
+                        SELECT street_ref FROM shipping_novaposhtastreet_buffer
+                        WHERE street_ref NOT IN (SELECT street_ref FROM shipping_novaposhtastreet WHERE street_ref IS NOT NULL);'''
+        cur.execute(ins_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shipping_novaposhtastreet c
             SET
-                source_city = b.source_city,
                 name = b.name,
-                street_type = b.street_type       
+                street_type = b.street_type,                
+                city = b.city,
+                street_type_ref = b.street_type_ref,                   
+                city_ref = b.city_ref       
             FROM shipping_novaposhtastreet_buffer b
-            WHERE c.source = b.source;'''
+            WHERE c.street_ref = b.street_ref;'''
         cur.execute(copy_sql)
         self.conn.commit()
 
         upd_sql = '''UPDATE shipping_novaposhtastreet s
-            SET city_id = c.id                               
+            SET city_id_id = c.id                               
             FROM shipping_novaposhtacity c
-            WHERE s.source_city = c.source;'''
+            WHERE s.city_ref = c.city_ref;'''
         cur.execute(upd_sql)
         self.conn.commit()
 

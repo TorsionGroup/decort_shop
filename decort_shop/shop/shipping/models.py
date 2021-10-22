@@ -81,8 +81,10 @@ class DeliveryPoint(models.Model):
 
 
 class NovaPoshtaRegion(models.Model):
-    source = models.CharField(max_length=300, null=True, blank=True)
     name = models.CharField(max_length=300, null=True, blank=True)
+    center = models.CharField(max_length=300, null=True, blank=True)
+    area_ref = models.CharField(max_length=300, null=True, blank=True)
+    center_ref = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -93,10 +95,14 @@ class NovaPoshtaRegion(models.Model):
 
 
 class NovaPoshtaCity(models.Model):
-    source = models.CharField(max_length=300, null=True, blank=True)
-    source_region = models.CharField(max_length=300, null=True, blank=True)
     name = models.CharField(max_length=300, null=True, blank=True)
-    region = models.ForeignKey(NovaPoshtaRegion, on_delete=models.CASCADE, null=True, blank=True)
+    name_ru = models.CharField(max_length=300, null=True, blank=True)
+    region = models.CharField(max_length=300, null=True, blank=True)
+    city_ref = models.CharField(max_length=300, null=True, blank=True)
+    area_ref = models.CharField(max_length=300, null=True, blank=True)
+    city_id = models.CharField(max_length=300, null=True, blank=True)
+    region_id = models.ForeignKey(NovaPoshtaRegion, on_delete=models.CASCADE, null=True, blank=True)
+
 
     def __str__(self):
         return self.name
@@ -107,13 +113,19 @@ class NovaPoshtaCity(models.Model):
 
 
 class NovaPoshtaBranche(models.Model):
-    source = models.CharField(max_length=300, null=True, blank=True)
-    source_city = models.CharField(max_length=300, null=True, blank=True)
     name = models.CharField(max_length=300, null=True, blank=True)
-    city = models.ForeignKey(NovaPoshtaCity, on_delete=models.CASCADE, null=True, blank=True)
+    name_ru = models.CharField(max_length=300, null=True, blank=True)
     branche_type = models.CharField(max_length=300, null=True, blank=True)
+    city = models.CharField(max_length=300, null=True, blank=True)
+    number = models.PositiveIntegerField(null=True, blank=True)
     max_weight_place = models.PositiveIntegerField(default=0, null=True, blank=True)
     max_weight = models.PositiveIntegerField(default=0, null=True, blank=True)
+    wh_ref = models.CharField(max_length=300, null=True, blank=True)
+    wh_type_ref = models.CharField(max_length=300, null=True, blank=True)
+    city_ref = models.CharField(max_length=300, null=True, blank=True)
+    latitude = models.CharField(max_length=300, null=True, blank=True)
+    longitude = models.CharField(max_length=300, null=True, blank=True)
+    city_id = models.ForeignKey(NovaPoshtaCity, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -124,11 +136,13 @@ class NovaPoshtaBranche(models.Model):
 
 
 class NovaPoshtaStreet(models.Model):
-    source = models.CharField(max_length=300, null=True, blank=True)
-    source_city = models.CharField(max_length=300, null=True, blank=True)
     name = models.CharField(max_length=300, null=True, blank=True)
-    city = models.ForeignKey(NovaPoshtaCity, on_delete=models.CASCADE, null=True, blank=True)
     street_type = models.CharField(max_length=300, null=True, blank=True)
+    city = models.CharField(max_length=300, null=True, blank=True)
+    street_type_ref = models.CharField(max_length=300, null=True, blank=True)
+    street_ref = models.CharField(max_length=300, null=True, blank=True)
+    city_ref = models.CharField(max_length=300, null=True, blank=True)
+    city_id = models.ForeignKey(NovaPoshtaCity, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
