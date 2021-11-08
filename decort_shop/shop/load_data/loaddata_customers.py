@@ -12,7 +12,7 @@ class LoadDataCustomers:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -343,9 +343,9 @@ class LoadDataCustomers:
 
 
 LoadDataCustomers = LoadDataCustomers()
-LoadDataCustomers.load_customer_contacts()
+# LoadDataCustomers.load_customer_contacts()
 LoadDataCustomers.load_customer_agreements()
-LoadDataCustomers.load_customer_discounts()
-LoadDataCustomers.load_customer_points()
-LoadDataCustomers.load_balances()
+# LoadDataCustomers.load_customer_discounts()
+# LoadDataCustomers.load_customer_points()
+# LoadDataCustomers.load_balances()
 print('Load Data Customers')

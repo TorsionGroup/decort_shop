@@ -12,7 +12,7 @@ class LoadDataShop:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -77,8 +77,8 @@ class LoadDataShop:
 
         t_sql = '''CREATE TEMP TABLE shop_customer_buffer (
             source_id character varying(300),
-            main_customer_id character varying(300),
-            manager_id character varying(300),
+            main_customer character varying(300),
+            manager character varying(300),
             code character varying(300),
             name character varying(250),
             sale_policy character varying(300),
@@ -89,7 +89,7 @@ class LoadDataShop:
 
         with open('cache/customers.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shop_customer_buffer', columns=(
-                'source_id', 'main_customer_id', 'manager_id', 'code', 'name', 'sale_policy', 'city', 'region_id'),
+                'source_id', 'main_customer', 'manager', 'code', 'name', 'sale_policy', 'city', 'region_id'),
                           sep='|')
         self.conn.commit()
 
@@ -104,7 +104,9 @@ class LoadDataShop:
                 code = b.code, 
                 name = b.name, 
                 sale_policy = b.sale_policy, 
-                city = b.city, 
+                city = b.city,
+                main_customer = b.main_customer,
+                manager = b.manager, 
                 region_id = b.region_id             
             FROM shop_customer_buffer b
             WHERE c.source_id = b.source_id;'''
@@ -564,13 +566,13 @@ class LoadDataShop:
 
 LoadDataShop = LoadDataShop()
 # LoadDataShop.load_currencies()
-LoadDataShop.load_price_types()
+# LoadDataShop.load_price_types()
 LoadDataShop.load_managers()
-LoadDataShop.load_customers()
-LoadDataShop.load_manufacturer_brand()
-LoadDataShop.load_brands()
-LoadDataShop.load_price_categories()
-LoadDataShop.load_categories()
-LoadDataShop.load_products()
-LoadDataShop.load_offers()
+# LoadDataShop.load_customers()
+# LoadDataShop.load_manufacturer_brand()
+# LoadDataShop.load_brands()
+# LoadDataShop.load_price_categories()
+# LoadDataShop.load_categories()
+# LoadDataShop.load_products()
+# LoadDataShop.load_offers()
 print('Load Data Shop')
