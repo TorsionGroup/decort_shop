@@ -341,11 +341,51 @@ class LoadDataProducts:
         self.conn.commit()
 
     # def load_product_images(self):
-    #     deficit = self.client.service.GetData('product_images_hort')
-    #     data = base64.b64decode(deficit)
+    #     product_images = self.client.service.GetData('product_images_hort')
+    #     data = base64.b64decode(product_images)
     #     file = open('cache/product_images.csv', 'w', newline='', encoding='utf-8')
     #     file.write(str(data.decode('utf-8')))
     #     file.close()
+    #
+    #     cur = self.conn.cursor()
+    #
+    #     t_sql = '''CREATE TEMP TABLE hort_productimage_buffer (
+    #                 source_product character varying(300),
+    #                 image_url character varying(300) );'''
+    #     cur.execute(t_sql)
+    #     self.conn.commit()
+    #
+    #     with open('cache/product_images.csv', 'r', encoding='utf-8') as file:
+    #         cur.copy_from(file, 'hort_productimage_buffer',
+    #                       columns=('source_product', 'image_url'), sep='|')
+    #     self.conn.commit()
+    #
+    #     ins_sql = '''INSERT INTO hort_productimage (source_product)
+    #                     SELECT source_product FROM hort_productimage_buffer
+    #                     WHERE source_product NOT IN (SELECT source_product FROM hort_productimage
+    #                     WHERE source_product IS NOT NULL);'''
+    #     cur.execute(ins_sql)
+    #     self.conn.commit()
+    #
+    #     del_sql = '''DELETE FROM hort_productimage
+    #                     WHERE source_product NOT IN (SELECT source_product FROM hort_productimage_buffer);'''
+    #     cur.execute(del_sql)
+    #     self.conn.commit()
+    #
+    #     copy_sql = '''UPDATE hort_productimage p
+    #                 SET
+    #                     image_url = b.image_url
+    #                 FROM hort_productimage_buffer b
+    #                 WHERE p.source_product = b.source_product;'''
+    #     cur.execute(copy_sql)
+    #     self.conn.commit()
+    #
+    #     upd_sql = '''UPDATE hort_productimage a
+    #                 SET product_id = c.id
+    #                 FROM hort_product c
+    #                 WHERE a.source_product = c.source_id;'''
+    #     cur.execute(upd_sql)
+    #     self.conn.commit()
 
 
 LoadDataProducts = LoadDataProducts()
@@ -357,5 +397,6 @@ LoadDataProducts.load_prices()
 LoadDataProducts.load_stocks()
 LoadDataProducts.load_deficit()
 LoadDataProducts.load_product_manufacturer_model()
+# LoadDataProducts.load_product_images()
 
 print('Load Data Products')
