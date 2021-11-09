@@ -343,8 +343,8 @@ class LoadDataCustomers:
 
 
 LoadDataCustomers = LoadDataCustomers()
-# LoadDataCustomers.load_customer_contacts()
-LoadDataCustomers.load_customer_agreements()
+LoadDataCustomers.load_customer_contacts()
+# LoadDataCustomers.load_customer_agreements()
 # LoadDataCustomers.load_customer_discounts()
 # LoadDataCustomers.load_customer_points()
 # LoadDataCustomers.load_balances()

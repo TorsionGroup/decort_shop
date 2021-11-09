@@ -12,7 +12,7 @@ class LoadDataProducts:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -339,6 +339,13 @@ class LoadDataProducts:
             WHERE m.product = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
+
+    # def load_product_images(self):
+    #     deficit = self.client.service.GetData('product_images_hort')
+    #     data = base64.b64decode(deficit)
+    #     file = open('cache/product_images.csv', 'w', newline='', encoding='utf-8')
+    #     file.write(str(data.decode('utf-8')))
+    #     file.close()
 
 
 LoadDataProducts = LoadDataProducts()

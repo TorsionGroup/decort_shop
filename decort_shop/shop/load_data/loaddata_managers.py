@@ -12,7 +12,7 @@ class LoadDataManagers:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport,
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport,
                              settings=settings)
 
         self.conn = psycopg2.connect(
