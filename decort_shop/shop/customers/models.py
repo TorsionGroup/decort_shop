@@ -22,6 +22,7 @@ class CustomerAgreement(models.Model):
     customer = models.CharField(max_length=300, null=True, blank=True)
     currency = models.CharField(max_length=300, null=True, blank=True)
     price_type = models.CharField(max_length=300, null=True, blank=True)
+    finish_date = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name

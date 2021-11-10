@@ -43,7 +43,8 @@ class LoadDataCustomers:
 
         with open('cache/customer_contacts.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customercontact_buffer',
-                          columns=('source', 'source_customer', 'name', 'email', 'phone', 'is_user', 'birthday'), sep='|')
+                          columns=('source', 'source_customer', 'name', 'email', 'phone', 'is_user', 'birthday'),
+                          sep='|')
         self.conn.commit()
 
         ins_sql = '''INSERT INTO customers_customercontact (source, source_customer, name)
@@ -146,14 +147,16 @@ class LoadDataCustomers:
             number character varying(300),
             discount numeric(15,2),
             is_status boolean,
-            is_active boolean );'''
+            is_active boolean,
+            finish_date character varying(300)  );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/customer_agreements.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customeragreement_buffer',
                           columns=('source_id', 'customer', 'currency', 'price_type',
-                                   'code', 'name', 'number', 'discount', 'is_status', 'is_active'), sep='|')
+                                   'code', 'name', 'number', 'discount', 'is_status', 'is_active', 'finish_date'),
+                          sep='|')
         self.conn.commit()
 
         ins_sql = '''INSERT INTO customers_customeragreement (source_id, customer, name)
@@ -177,7 +180,8 @@ class LoadDataCustomers:
                 number = b.number,
                 discount = b.discount,
                 is_status = b.is_status,
-                is_active = b.is_active                                   
+                is_active = b.is_active,
+                finish_date = b.finish_date                                    
             FROM customers_customeragreement_buffer b
             WHERE c.source_id = b.source_id;'''
         cur.execute(copy_sql)
@@ -343,8 +347,8 @@ class LoadDataCustomers:
 
 
 LoadDataCustomers = LoadDataCustomers()
-LoadDataCustomers.load_customer_contacts()
-# LoadDataCustomers.load_customer_agreements()
+# LoadDataCustomers.load_customer_contacts()
+LoadDataCustomers.load_customer_agreements()
 # LoadDataCustomers.load_customer_discounts()
 # LoadDataCustomers.load_customer_points()
 # LoadDataCustomers.load_balances()
