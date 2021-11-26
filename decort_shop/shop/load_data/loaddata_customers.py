@@ -133,11 +133,74 @@ class LoadDataCustomers:
         self.conn.commit()
 
     def load_customer_points_gps(self):
-        customer_points = self.client.service.GetData('customer_points_gps')
-        data = base64.b64decode(customer_points)
+        customer_points_gps = self.client.service.GetData('customer_points_gps')
+        data = base64.b64decode(customer_points_gps)
         file = open('cache/customer_points_gps.csv', 'w', newline='', encoding='utf-8')
         file.write(str(data.decode('utf-8')))
         file.close()
+
+        cur = self.conn.cursor()
+
+        t_sql = '''CREATE TEMP TABLE customers_customerpointgps_buffer (
+                    customer character varying(300),        
+                    source_id character varying(300),
+                    name character varying(300),
+                    add_name character varying(300),
+                    extra_name character varying(300),
+                    area_ref character varying(300),
+                    city_ref character varying(300),
+                    street_type_ref character varying(300),
+                    street_ref character varying(300),
+                    extra_street character varying(300),
+                    house_number character varying(300),
+                    latitude character varying(300),
+                    longitude character varying(300) );'''
+        cur.execute(t_sql)
+        self.conn.commit()
+
+        with open('cache/customer_points_gps.csv', 'r', encoding='utf-8') as file:
+            cur.copy_from(file, 'customers_customerpointgps_buffer',
+                          columns=('customer', 'source_id', 'name', 'add_name', 'extra_name', 'area_ref', 'city_ref',
+                                   'street_type_ref', 'street_ref', 'extra_street', 'house_number',
+                                   'latitude', 'longitude'), sep='|')
+        self.conn.commit()
+
+        ins_sql = '''INSERT INTO customers_customerpointgps (customer, source_id, name)
+                         SELECT customer, source_id, name FROM customers_customerpointgps_buffer
+                         WHERE source_id NOT IN (SELECT source_id FROM customers_customerpointgps WHERE source_id IS NOT NULL);'''
+        cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM customers_customerpointgps
+                         WHERE source_id NOT IN (SELECT source_id FROM customers_customerpointgps_buffer);'''
+        cur.execute(del_sql)
+        self.conn.commit()
+
+        copy_sql = '''UPDATE customers_customerpointgps c
+                    SET 
+                        customer = b.customer,              
+                        name = b.name,
+                        add_name = b.add_name,
+                        extra_name = b.extra_name,
+                        area_ref = b.area_ref,
+                        city_ref = b.city_ref,
+                        street_type_ref = b.street_type_ref,
+                        street_ref = b.street_ref,
+                        extra_street = b.extra_street,
+                        house_number = b.house_number,
+                        latitude = b.latitude,
+                        longitude = b.longitude                           
+                    FROM customers_customerpointgps_buffer b
+                    WHERE c.source_id = b.source_id;'''
+        cur.execute(copy_sql)
+        self.conn.commit()
+
+        upd_sql = '''UPDATE customers_customerpointgps p
+                    SET customer_id_id = c.id                               
+                    FROM shop_customer c
+                    WHERE p.customer = c.source_id;'''
+        cur.execute(upd_sql)
+        self.conn.commit()
 
     def load_customer_agreements(self):
         customer_agreements = self.client.service.GetData('customer_agreements')
@@ -362,6 +425,6 @@ LoadDataCustomers = LoadDataCustomers()
 # LoadDataCustomers.load_customer_agreements()
 # LoadDataCustomers.load_customer_discounts()
 LoadDataCustomers.load_customer_points()
-# LoadDataCustomers.load_customer_points_gps()
+LoadDataCustomers.load_customer_points_gps()
 # LoadDataCustomers.load_balances()
 print('Load Data Customers')
