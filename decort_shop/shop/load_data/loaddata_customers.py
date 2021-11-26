@@ -91,13 +91,15 @@ class LoadDataCustomers:
             customer character varying(300),        
             source_id character varying(300),
             name character varying(300),
-            add character varying(300) );'''
+            add character varying(300),
+            latitude character varying(300),
+            longitude character varying(300) );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/customer_points.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customerpoint_buffer',
-                          columns=('customer', 'source_id', 'name', 'add'), sep='|')
+                          columns=('customer', 'source_id', 'name', 'add', 'latitude', 'longitude'), sep='|')
         self.conn.commit()
 
         ins_sql = '''INSERT INTO customers_customerpoint (customer, source_id, name)
@@ -115,7 +117,9 @@ class LoadDataCustomers:
             SET 
                 customer = b.customer,              
                 name = b.name,
-                add = b.add                           
+                add = b.add,
+                latitude = b.latitude,
+                longitude = b.longitude                           
             FROM customers_customerpoint_buffer b
             WHERE c.source_id = b.source_id;'''
         cur.execute(copy_sql)
@@ -127,6 +131,13 @@ class LoadDataCustomers:
             WHERE p.customer = c.source_id;'''
         cur.execute(upd_sql)
         self.conn.commit()
+
+    def load_customer_points_gps(self):
+        customer_points = self.client.service.GetData('customer_points_gps')
+        data = base64.b64decode(customer_points)
+        file = open('cache/customer_points_gps.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
 
     def load_customer_agreements(self):
         customer_agreements = self.client.service.GetData('customer_agreements')
@@ -348,8 +359,9 @@ class LoadDataCustomers:
 
 LoadDataCustomers = LoadDataCustomers()
 # LoadDataCustomers.load_customer_contacts()
-LoadDataCustomers.load_customer_agreements()
+# LoadDataCustomers.load_customer_agreements()
 # LoadDataCustomers.load_customer_discounts()
-# LoadDataCustomers.load_customer_points()
+LoadDataCustomers.load_customer_points()
+# LoadDataCustomers.load_customer_points_gps()
 # LoadDataCustomers.load_balances()
 print('Load Data Customers')

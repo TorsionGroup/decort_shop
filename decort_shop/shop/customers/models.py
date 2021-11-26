@@ -94,6 +94,33 @@ class CustomerPoint(models.Model):
     source_id = models.CharField(max_length=300, null=True, blank=True)
     add = models.CharField(max_length=500, null=True, blank=True)
     customer = models.CharField(max_length=500, null=True, blank=True)
+    latitude = models.CharField(max_length=500, null=True, blank=True)
+    longitude = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "CustomerPoint"
+        verbose_name_plural = "CustomerPoints"
+
+
+class CustomerPointGPS(models.Model):
+    customer_id = models.ForeignKey(
+        Customer, on_delete=models.CASCADE, null=True, blank=True, related_name="point_gps_customer")
+    name = models.CharField(max_length=500)
+    source_id = models.CharField(max_length=300, null=True, blank=True)
+    add_name = models.CharField(max_length=500, null=True, blank=True)
+    customer = models.CharField(max_length=500, null=True, blank=True)
+    latitude = models.CharField(max_length=500, null=True, blank=True)
+    longitude = models.CharField(max_length=500, null=True, blank=True)
+    extra_name = models.CharField(max_length=500, null=True, blank=True)
+    area_ref = models.CharField(max_length=300, null=True, blank=True)
+    city_ref = models.CharField(max_length=300, null=True, blank=True)
+    street_type_ref = models.CharField(max_length=300, null=True, blank=True)
+    street_ref = models.CharField(max_length=300, null=True, blank=True)
+    extra_street = models.CharField(max_length=300, null=True, blank=True)
+    house_number = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
