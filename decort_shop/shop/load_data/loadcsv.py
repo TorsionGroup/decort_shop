@@ -12,7 +12,7 @@ class LoadData:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -28,7 +28,7 @@ class LoadDataShop:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -72,7 +72,7 @@ class LoadDataCustomers:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -109,6 +109,13 @@ class LoadDataCustomers:
         file.write(str(data.decode('utf-8')))
         file.close()
 
+    def load_customer_points_gps(self):
+        customer_points = self.client.service.GetData('customer_points_gps')
+        data = base64.b64decode(customer_points)
+        file = open('cache/customer_points_gps.csv', 'w', newline='', encoding='utf-8')
+        file.write(str(data.decode('utf-8')))
+        file.close()
+
     def load_balances(self):
         balances = self.client.service.GetData('balances')
         data = base64.b64decode(balances)
@@ -123,7 +130,7 @@ class LoadDataProducts:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -244,7 +251,7 @@ class LoadDataOrders:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -281,7 +288,7 @@ class LoadDataDropshipping:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -304,7 +311,7 @@ class LoadDataManagers:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -334,7 +341,7 @@ class LoadDataShipping:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -385,7 +392,7 @@ class LoadDataReturns:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -408,7 +415,7 @@ class LoadDataTecdoc:
         session.auth = HTTPBasicAuth('Robot', 'Robot')
         transport = Transport(session=session, timeout=600)
         settings = Settings(xml_huge_tree=True)
-        self.client = Client('http://192.168.75.115:8005/live/ws/decort?wsdl', transport=transport, settings=settings)
+        self.client = Client('http://192.168.75.104/live/ws/decort?wsdl', transport=transport, settings=settings)
 
         self.conn = psycopg2.connect(
             host="localhost",
@@ -439,13 +446,14 @@ class LoadDataTecdoc:
 # LoadDataShop.load_customers()
 # print('Load Data Shop')
 #
-# LoadDataCustomers = LoadDataCustomers()
-# LoadDataCustomers.load_customer_contacts()
-# LoadDataCustomers.load_customer_agreements()
-# LoadDataCustomers.load_customer_discounts()
-# LoadDataCustomers.load_customer_points()
-# LoadDataCustomers.load_balances()
-# print('Load Data Customers')
+LoadDataCustomers = LoadDataCustomers()
+LoadDataCustomers.load_customer_contacts()
+LoadDataCustomers.load_customer_agreements()
+LoadDataCustomers.load_customer_discounts()
+LoadDataCustomers.load_customer_points()
+LoadDataCustomers.load_customer_points_gps()
+LoadDataCustomers.load_balances()
+print('Load Data Customers')
 #
 # LoadDataProducts = LoadDataProducts()
 # LoadDataProducts.load_brands()
@@ -480,13 +488,13 @@ class LoadDataTecdoc:
 # LoadDataManagers.load_sale_tasks()
 # print('Load Data Managers')
 
-LoadDataShipping = LoadDataShipping()
-LoadDataShipping.load_regions()
-LoadDataShipping.load_novaposhta_regions()
-LoadDataShipping.load_novaposhta_cities()
-LoadDataShipping.load_novaposhta_branches()
-LoadDataShipping.load_novaposhta_streetes()
-print('Load Data Shipping')
+# LoadDataShipping = LoadDataShipping()
+# LoadDataShipping.load_regions()
+# LoadDataShipping.load_novaposhta_regions()
+# LoadDataShipping.load_novaposhta_cities()
+# LoadDataShipping.load_novaposhta_branches()
+# LoadDataShipping.load_novaposhta_streetes()
+# print('Load Data Shipping')
 
 # LoadDataReturns = LoadDataReturns()
 # LoadDataReturns.load_returns()
