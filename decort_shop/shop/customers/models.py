@@ -121,13 +121,14 @@ class CustomerPointGPS(models.Model):
     street_ref = models.CharField(max_length=300, null=True, blank=True)
     extra_street = models.CharField(max_length=300, null=True, blank=True)
     house_number = models.CharField(max_length=300, null=True, blank=True)
+    comments = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = "CustomerPoint"
-        verbose_name_plural = "CustomerPoints"
+        verbose_name = "CustomerPointGPS"
+        verbose_name_plural = "CustomerPointGPS"
 
 
 class Balance(models.Model):

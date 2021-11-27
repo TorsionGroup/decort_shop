@@ -153,6 +153,7 @@ class LoadDataCustomers:
                     street_ref character varying(300),
                     extra_street character varying(300),
                     house_number character varying(300),
+                    comments character varying(300),
                     latitude character varying(300),
                     longitude character varying(300) );'''
         cur.execute(t_sql)
@@ -161,7 +162,7 @@ class LoadDataCustomers:
         with open('cache/customer_points_gps.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customerpointgps_buffer',
                           columns=('customer', 'source_id', 'name', 'add_name', 'extra_name', 'area_ref', 'city_ref',
-                                   'street_type_ref', 'street_ref', 'extra_street', 'house_number',
+                                   'street_type_ref', 'street_ref', 'extra_street', 'house_number', 'comments',
                                    'latitude', 'longitude'), sep='|')
         self.conn.commit()
 
@@ -188,6 +189,7 @@ class LoadDataCustomers:
                         street_ref = b.street_ref,
                         extra_street = b.extra_street,
                         house_number = b.house_number,
+                        comments = b.comments,
                         latitude = b.latitude,
                         longitude = b.longitude                           
                     FROM customers_customerpointgps_buffer b

@@ -102,7 +102,9 @@ class NovaPoshtaCity(models.Model):
     area_ref = models.CharField(max_length=300, null=True, blank=True)
     city_id = models.CharField(max_length=300, null=True, blank=True)
     region_id = models.ForeignKey(NovaPoshtaRegion, on_delete=models.CASCADE, null=True, blank=True)
-
+    settlement_type = models.CharField(max_length=300, null=True, blank=True)
+    settlement_type_description_ru = models.CharField(max_length=300, null=True, blank=True)
+    settlement_type_description = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name

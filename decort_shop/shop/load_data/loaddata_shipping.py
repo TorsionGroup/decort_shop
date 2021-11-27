@@ -101,19 +101,28 @@ class LoadDataShipping:
             region character varying(300),
             city_ref character varying(300),
             area_ref character varying(300),
-            city_id character varying(300) );'''
+            city_id character varying(300),
+            settlement_type character varying(300),
+            settlement_type_description_ru character varying(300),
+            settlement_type_description character varying(300)  );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/novaposhta_cities.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shipping_novaposhtacity_buffer',
-                          columns=('name', 'name_ru', 'region', 'city_ref', 'area_ref', 'city_id'), sep='|')
+                          columns=('name', 'name_ru', 'region', 'city_ref', 'area_ref', 'city_id', 'settlement_type',
+                                   'settlement_type_description_ru', 'settlement_type_description'), sep='|')
         self.conn.commit()
 
         ins_sql = '''INSERT INTO shipping_novaposhtacity (city_ref)
                          SELECT city_ref FROM shipping_novaposhtacity_buffer
                          WHERE city_ref NOT IN (SELECT city_ref FROM shipping_novaposhtacity WHERE city_ref IS NOT NULL);'''
         cur.execute(ins_sql)
+        self.conn.commit()
+
+        del_sql = '''DELETE FROM shipping_novaposhtacity
+                        WHERE city_ref NOT IN (SELECT city_ref FROM shipping_novaposhtacity);'''
+        cur.execute(del_sql)
         self.conn.commit()
 
         copy_sql = '''UPDATE shipping_novaposhtacity c
@@ -123,7 +132,10 @@ class LoadDataShipping:
                 region = b.region,
                 city_ref = b.city_ref,
                 area_ref = b.area_ref,
-                city_id = b.city_id       
+                city_id = b.city_id,
+                settlement_type = b.settlement_type,
+                settlement_type_description_ru = b.settlement_type_description_ru,
+                settlement_type_description = b.settlement_type_description      
             FROM shipping_novaposhtacity_buffer b
             WHERE c.city_ref = b.city_ref;'''
         cur.execute(copy_sql)
@@ -251,9 +263,9 @@ class LoadDataShipping:
 
 
 LoadDataShipping = LoadDataShipping()
-LoadDataShipping.load_regions()
-LoadDataShipping.load_novaposhta_regions()
+# LoadDataShipping.load_regions()
+# LoadDataShipping.load_novaposhta_regions()
 LoadDataShipping.load_novaposhta_cities()
-LoadDataShipping.load_novaposhta_branches()
-LoadDataShipping.load_novaposhta_streetes()
+# LoadDataShipping.load_novaposhta_branches()
+# LoadDataShipping.load_novaposhta_streetes()
 print('Load Data Shipping')
