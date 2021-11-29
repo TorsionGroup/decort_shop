@@ -148,8 +148,11 @@ class LoadDataCustomers:
                     add_name character varying(300),
                     extra_name character varying(300),
                     area_ref character varying(300),
+                    settlement_type character varying(300),
+                    settlement_type_description character varying(300),
                     city_ref character varying(300),
                     street_type_ref character varying(300),
+                    street_type character varying(300),
                     street_ref character varying(300),
                     extra_street character varying(300),
                     house_number character varying(300),
@@ -161,8 +164,9 @@ class LoadDataCustomers:
 
         with open('cache/customer_points_gps.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customerpointgps_buffer',
-                          columns=('customer', 'source_id', 'name', 'add_name', 'extra_name', 'area_ref', 'city_ref',
-                                   'street_type_ref', 'street_ref', 'extra_street', 'house_number', 'comments',
+                          columns=('customer', 'source_id', 'name', 'add_name', 'extra_name', 'area_ref',
+                                   'settlement_type', 'settlement_type_description', 'city_ref', 'street_type_ref',
+                                   'street_type', 'street_ref', 'extra_street', 'house_number', 'comments',
                                    'latitude', 'longitude'), sep='|')
         self.conn.commit()
 
@@ -184,8 +188,11 @@ class LoadDataCustomers:
                         add_name = b.add_name,
                         extra_name = b.extra_name,
                         area_ref = b.area_ref,
+                        settlement_type = b.settlement_type,
+                        settlement_type_description = b.settlement_type_description,
                         city_ref = b.city_ref,
                         street_type_ref = b.street_type_ref,
+                        street_type = b.street_type,
                         street_ref = b.street_ref,
                         extra_street = b.extra_street,
                         house_number = b.house_number,
