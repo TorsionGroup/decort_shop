@@ -144,13 +144,17 @@ class LoadDataCustomers:
         t_sql = '''CREATE TEMP TABLE customers_customerpointgps_buffer (
                     customer character varying(300),        
                     source_id character varying(300),
+                    region_id character varying(300),
                     name character varying(300),
                     add_name character varying(300),
                     extra_name character varying(300),
+                    oblast character varying(300),
                     area_ref character varying(300),
+                    city character varying(300),
                     settlement_type character varying(300),
                     settlement_type_description character varying(300),
                     city_ref character varying(300),
+                    street character varying(300),
                     street_type_ref character varying(300),
                     street_type character varying(300),
                     street_ref character varying(300),
@@ -164,10 +168,10 @@ class LoadDataCustomers:
 
         with open('cache/customer_points_gps.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customerpointgps_buffer',
-                          columns=('customer', 'source_id', 'name', 'add_name', 'extra_name', 'area_ref',
-                                   'settlement_type', 'settlement_type_description', 'city_ref', 'street_type_ref',
-                                   'street_type', 'street_ref', 'extra_street', 'house_number', 'comments',
-                                   'latitude', 'longitude'), sep='|')
+                          columns=('customer', 'source_id', 'region_id', 'name', 'add_name', 'extra_name', 'oblast',
+                                   'area_ref', 'city', 'settlement_type', 'settlement_type_description', 'city_ref',
+                                   'street', 'street_type_ref', 'street_type', 'street_ref', 'extra_street',
+                                   'house_number', 'comments', 'latitude', 'longitude'), sep='|')
         self.conn.commit()
 
         ins_sql = '''INSERT INTO customers_customerpointgps (customer, source_id, name)
@@ -183,14 +187,18 @@ class LoadDataCustomers:
 
         copy_sql = '''UPDATE customers_customerpointgps c
                     SET 
-                        customer = b.customer,              
+                        customer = b.customer, 
+                        region_id = b.region_id,             
                         name = b.name,
                         add_name = b.add_name,
                         extra_name = b.extra_name,
+                        oblast = b.oblast,
                         area_ref = b.area_ref,
+                        city = b.city,
                         settlement_type = b.settlement_type,
                         settlement_type_description = b.settlement_type_description,
                         city_ref = b.city_ref,
+                        street = b.street,
                         street_type_ref = b.street_type_ref,
                         street_type = b.street_type,
                         street_ref = b.street_ref,
