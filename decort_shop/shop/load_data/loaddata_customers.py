@@ -247,7 +247,7 @@ class LoadDataCustomers:
         with open('cache/customer_agreements.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customeragreement_buffer',
                           columns=('source_id', 'customer', 'currency', 'price_type',
-                                   'code', 'name', 'number', 'discount', 'is_status', 'is_active', 'is_dropshipping',
+                                   'code', 'name', 'number', 'discount', 'is_status', 'is_dropshipping', 'is_active',
                                    'finish_date'),
                           sep='|')
         self.conn.commit()
