@@ -238,6 +238,7 @@ class LoadDataCustomers:
             number character varying(300),
             discount numeric(15,2),
             is_status boolean,
+            is_dropshipping boolean,
             is_active boolean,
             finish_date character varying(300)  );'''
         cur.execute(t_sql)
@@ -246,7 +247,8 @@ class LoadDataCustomers:
         with open('cache/customer_agreements.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'customers_customeragreement_buffer',
                           columns=('source_id', 'customer', 'currency', 'price_type',
-                                   'code', 'name', 'number', 'discount', 'is_status', 'is_active', 'finish_date'),
+                                   'code', 'name', 'number', 'discount', 'is_status', 'is_active', 'is_dropshipping',
+                                   'finish_date'),
                           sep='|')
         self.conn.commit()
 
@@ -271,6 +273,7 @@ class LoadDataCustomers:
                 number = b.number,
                 discount = b.discount,
                 is_status = b.is_status,
+                is_dropshipping = b.is_dropshipping,
                 is_active = b.is_active,
                 finish_date = b.finish_date                                    
             FROM customers_customeragreement_buffer b
@@ -439,9 +442,9 @@ class LoadDataCustomers:
 
 LoadDataCustomers = LoadDataCustomers()
 # LoadDataCustomers.load_customer_contacts()
-# LoadDataCustomers.load_customer_agreements()
+LoadDataCustomers.load_customer_agreements()
 # LoadDataCustomers.load_customer_discounts()
-LoadDataCustomers.load_customer_points()
-LoadDataCustomers.load_customer_points_gps()
+# LoadDataCustomers.load_customer_points()
+# LoadDataCustomers.load_customer_points_gps()
 # LoadDataCustomers.load_balances()
 print('Load Data Customers')
