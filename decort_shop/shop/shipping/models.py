@@ -105,6 +105,14 @@ class NovaPoshtaCity(models.Model):
     settlement_type = models.CharField(max_length=300, null=True, blank=True)
     settlement_type_description_ru = models.CharField(max_length=300, null=True, blank=True)
     settlement_type_description = models.CharField(max_length=300, null=True, blank=True)
+    np_region = models.CharField(max_length=300, null=True, blank=True)
+    regions_description = models.CharField(max_length=300, null=True, blank=True)
+    regions_description_ru = models.CharField(max_length=300, null=True, blank=True)
+    index1 = models.CharField(max_length=300, null=True, blank=True)
+    index2 = models.CharField(max_length=300, null=True, blank=True)
+    index_coatsu1 = models.CharField(max_length=300, null=True, blank=True)
+    np_latitude = models.CharField(max_length=300, null=True, blank=True)
+    np_longitude = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name

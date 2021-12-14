@@ -130,6 +130,12 @@ class CustomerPointGPS(models.Model):
     extra_street = models.CharField(max_length=300, null=True, blank=True)
     house_number = models.CharField(max_length=300, null=True, blank=True)
     comments = models.CharField(max_length=300, null=True, blank=True)
+    regions_description = models.CharField(max_length=300, null=True, blank=True)
+    index1 = models.CharField(max_length=300, null=True, blank=True)
+    index2 = models.CharField(max_length=300, null=True, blank=True)
+    index_coatsu1 = models.CharField(max_length=300, null=True, blank=True)
+    np_latitude = models.CharField(max_length=300, null=True, blank=True)
+    np_longitude = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.name
