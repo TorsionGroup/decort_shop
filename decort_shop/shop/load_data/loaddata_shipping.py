@@ -104,14 +104,24 @@ class LoadDataShipping:
             city_id character varying(300),
             settlement_type character varying(300),
             settlement_type_description_ru character varying(300),
-            settlement_type_description character varying(300)  );'''
+            settlement_type_description character varying(300),
+            np_region character varying(300),
+            regions_description character varying(300),
+            regions_description_ru character varying(300),
+            index1 character varying(300),
+            index2 character varying(300),
+            index_coatsu1 character varying(300),
+            np_latitude character varying(300),
+            np_longitude character varying(300)  );'''
         cur.execute(t_sql)
         self.conn.commit()
 
         with open('cache/novaposhta_cities.csv', 'r', encoding='utf-8') as file:
             cur.copy_from(file, 'shipping_novaposhtacity_buffer',
                           columns=('name', 'name_ru', 'region', 'city_ref', 'area_ref', 'city_id', 'settlement_type',
-                                   'settlement_type_description_ru', 'settlement_type_description'), sep='|')
+                                   'settlement_type_description_ru', 'settlement_type_description', 'np_region',
+                                   'regions_description', 'regions_description_ru', 'index1', 'index2', 'index_coatsu1',
+                                   'np_latitude', 'np_longitude'), sep='|')
         self.conn.commit()
 
         ins_sql = '''INSERT INTO shipping_novaposhtacity (city_ref)
@@ -135,7 +145,15 @@ class LoadDataShipping:
                 city_id = b.city_id,
                 settlement_type = b.settlement_type,
                 settlement_type_description_ru = b.settlement_type_description_ru,
-                settlement_type_description = b.settlement_type_description      
+                settlement_type_description = b.settlement_type_description,
+                np_region = b.np_region,
+                regions_description = b.regions_description,
+                regions_description_ru = b.regions_description_ru,
+                index1 = b.index1,
+                index2 = b.index2,
+                index_coatsu1 = b.index_coatsu1,
+                np_latitude = b.np_latitude,
+                np_longitude = b.np_longitude                      
             FROM shipping_novaposhtacity_buffer b
             WHERE c.city_ref = b.city_ref;'''
         cur.execute(copy_sql)

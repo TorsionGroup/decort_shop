@@ -161,8 +161,14 @@ class LoadDataCustomers:
                     extra_street character varying(300),
                     house_number character varying(300),
                     comments character varying(300),
+                    regions_description character varying(300),
+                    index1 character varying(300),
+                    index2 character varying(300),
+                    index_coatsu1 character varying(300),
+                    np_latitude character varying(300),
+                    np_longitude character varying(300),
                     latitude character varying(300),
-                    longitude character varying(300) );'''
+                    longitude character varying(300)  );'''
         cur.execute(t_sql)
         self.conn.commit()
 
@@ -171,7 +177,8 @@ class LoadDataCustomers:
                           columns=('customer', 'source_id', 'region_id', 'name', 'add_name', 'extra_name', 'oblast',
                                    'area_ref', 'city', 'settlement_type', 'settlement_type_description', 'city_ref',
                                    'street', 'street_type_ref', 'street_type', 'street_ref', 'extra_street',
-                                   'house_number', 'comments', 'latitude', 'longitude'), sep='|')
+                                   'house_number', 'comments', 'regions_description', 'index1', 'index2',
+                                   'index_coatsu1', 'np_latitude', 'np_longitude', 'latitude', 'longitude'), sep='|')
         self.conn.commit()
 
         ins_sql = '''INSERT INTO customers_customerpointgps (customer, source_id, name)
@@ -205,6 +212,12 @@ class LoadDataCustomers:
                         extra_street = b.extra_street,
                         house_number = b.house_number,
                         comments = b.comments,
+                        regions_description = b.regions_description,
+                        index1 = b.index1,
+                        index2 = b.index2,
+                        index_coatsu1 = b.index_coatsu1,
+                        np_latitude = b.np_latitude,
+                        np_longitude = b.np_longitude,
                         latitude = b.latitude,
                         longitude = b.longitude                           
                     FROM customers_customerpointgps_buffer b
@@ -442,9 +455,9 @@ class LoadDataCustomers:
 
 LoadDataCustomers = LoadDataCustomers()
 # LoadDataCustomers.load_customer_contacts()
-LoadDataCustomers.load_customer_agreements()
+# LoadDataCustomers.load_customer_agreements()
 # LoadDataCustomers.load_customer_discounts()
 # LoadDataCustomers.load_customer_points()
-# LoadDataCustomers.load_customer_points_gps()
+LoadDataCustomers.load_customer_points_gps()
 # LoadDataCustomers.load_balances()
 print('Load Data Customers')
