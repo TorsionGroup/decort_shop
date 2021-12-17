@@ -454,10 +454,10 @@ class LoadDataCustomers:
 
 
 LoadDataCustomers = LoadDataCustomers()
-# LoadDataCustomers.load_customer_contacts()
-# LoadDataCustomers.load_customer_agreements()
-# LoadDataCustomers.load_customer_discounts()
-# LoadDataCustomers.load_customer_points()
+LoadDataCustomers.load_customer_contacts()
+LoadDataCustomers.load_customer_agreements()
+LoadDataCustomers.load_customer_discounts()
+LoadDataCustomers.load_customer_points()
 LoadDataCustomers.load_customer_points_gps()
-# LoadDataCustomers.load_balances()
+LoadDataCustomers.load_balances()
 print('Load Data Customers')

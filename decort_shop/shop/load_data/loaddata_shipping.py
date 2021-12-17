@@ -281,9 +281,9 @@ class LoadDataShipping:
 
 
 LoadDataShipping = LoadDataShipping()
-# LoadDataShipping.load_regions()
-# LoadDataShipping.load_novaposhta_regions()
+LoadDataShipping.load_regions()
+LoadDataShipping.load_novaposhta_regions()
 LoadDataShipping.load_novaposhta_cities()
-# LoadDataShipping.load_novaposhta_branches()
-# LoadDataShipping.load_novaposhta_streetes()
+LoadDataShipping.load_novaposhta_branches()
+LoadDataShipping.load_novaposhta_streetes()
 print('Load Data Shipping')
