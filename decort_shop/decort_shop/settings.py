@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'creditcards',
     'phonenumber_field',
     'mptt',
-    'snowpenguin',
     'ckeditor',
     'ckeditor_uploader',
     'allauth',
