@@ -9,7 +9,6 @@ urlpatterns = [
     path('api/', include('shop.api.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
-    path('allauth/', include('allauth.urls')),
 
 ]
 

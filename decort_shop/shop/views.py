@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Greatest
 
 from .models import *
-from .forms import ReviewContentForm, RatingContentForm, ReviewProductForm, RatingProductForm, SearchForm
+from .forms import SearchForm
 from .cart.forms import CartAddProductForm
 
 

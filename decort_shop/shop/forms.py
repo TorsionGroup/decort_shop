@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from snowpenguin.django.recaptcha3.fields import ReCaptchaField
-from phonenumber_field.formfields import PhoneNumberField
 
 from .models import *
 
@@ -56,50 +54,48 @@ class UserChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
-class ReviewContentForm(forms.ModelForm):
-    captcha = ReCaptchaField()
-
-    class Meta:
-        model = ReviewContent
-        fields = ("name", "email", "text", "captcha")
-        widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control border"}),
-            "email": forms.EmailInput(attrs={"class": "form-control border"}),
-            "text": forms.Textarea(attrs={"class": "form-control border"})
-        }
-
-
-class RatingContentForm(forms.ModelForm):
-    star = forms.ModelChoiceField(
-        queryset=RatingStar.objects.all(), widget=forms.RadioSelect(), empty_label=None
-    )
-
-    class Meta:
-        model = RatingContent
-        fields = ("star",)
-
-
-class ReviewProductForm(forms.ModelForm):
-    captcha = ReCaptchaField()
-
-    class Meta:
-        model = ReviewProduct
-        fields = ("name", "email", "text", "captcha")
-        widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control border"}),
-            "email": forms.EmailInput(attrs={"class": "form-control border"}),
-            "text": forms.Textarea(attrs={"class": "form-control border"})
-        }
-
-
-class RatingProductForm(forms.ModelForm):
-    star = forms.ModelChoiceField(
-        queryset=RatingStar.objects.all(), widget=forms.RadioSelect(), empty_label=None
-    )
-
-    class Meta:
-        model = RatingProduct
-        fields = ("star",)
+# class ReviewContentForm(forms.ModelForm):
+#
+#     class Meta:
+#         model = ReviewContent
+#         fields = ("name", "email", "text", "captcha")
+#         widgets = {
+#             "name": forms.TextInput(attrs={"class": "form-control border"}),
+#             "email": forms.EmailInput(attrs={"class": "form-control border"}),
+#             "text": forms.Textarea(attrs={"class": "form-control border"})
+#         }
+#
+#
+# class RatingContentForm(forms.ModelForm):
+#     star = forms.ModelChoiceField(
+#         queryset=RatingStar.objects.all(), widget=forms.RadioSelect(), empty_label=None
+#     )
+#
+#     class Meta:
+#         model = RatingContent
+#         fields = ("star",)
+#
+#
+# class ReviewProductForm(forms.ModelForm):
+#
+#     class Meta:
+#         model = ReviewProduct
+#         fields = ("name", "email", "text", "captcha")
+#         widgets = {
+#             "name": forms.TextInput(attrs={"class": "form-control border"}),
+#             "email": forms.EmailInput(attrs={"class": "form-control border"}),
+#             "text": forms.Textarea(attrs={"class": "form-control border"})
+#         }
+#
+#
+# class RatingProductForm(forms.ModelForm):
+#     star = forms.ModelChoiceField(
+#         queryset=RatingStar.objects.all(), widget=forms.RadioSelect(), empty_label=None
+#     )
+#
+#     class Meta:
+#         model = RatingProduct
+#         fields = ("star",)
 
 
 class SearchForm(forms.Form):

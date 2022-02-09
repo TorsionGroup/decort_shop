@@ -47,16 +47,13 @@ INSTALLED_APPS = [
     'shop.telegram_bot',
     'shop.laximo',
 
-    'rest_framework',
-
-    'creditcards',
-    'phonenumber_field',
     'mptt',
     'ckeditor',
     'ckeditor_uploader',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    'phonenumber_field',
+    'creditcards',
+    'rest_framework',
+
 ]
 
 MIDDLEWARE = [
